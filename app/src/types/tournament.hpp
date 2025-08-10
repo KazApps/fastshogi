@@ -37,23 +37,11 @@ struct Tournament {
     TournamentType type = TournamentType::ROUNDROBIN;
     int gauntlet_seeds  = 1;
 
-#ifdef USE_CUTE
-    // output format, fastshogi or cutechess
-    OutputType output    = OutputType::CUTECHESS;
-    int autosaveinterval = 0;
-    int ratinginterval   = 0;
-    int games            = 1;
-    int rounds           = 1;
-    bool report_penta    = false;
-#else
-    // output format, fastshogi or cutechess
-    OutputType output    = OutputType::FASTSHOGI;
     int autosaveinterval = 20;
     int ratinginterval   = 10;
     std::size_t games    = 2;
     std::size_t rounds   = 2;
     bool report_penta    = true;
-#endif
 
     uint64_t seed = random::random_uint64();
 
@@ -75,7 +63,7 @@ struct Tournament {
     Log log = {};
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Tournament, resign, draw, maxmoves, tb_adjudication, opening, pgn, epd, sprt,
-                                   config_name, output, seed, variant, type, gauntlet_seeds, ratinginterval,
+                                   config_name, seed, variant, type, gauntlet_seeds, ratinginterval,
                                    scoreinterval, wait, autosaveinterval, games, rounds, concurrency, force_concurrency,
                                    recover, noswap, reverse, report_penta, affinity, show_latency, log)
 

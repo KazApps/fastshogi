@@ -168,11 +168,6 @@ ifneq ($(COMPILE_MSG),)
 	CXXFLAGS += -DCOMPILE_MSG="\"$(COMPILE_MSG)\""
 endif
 
-# Compile with Cutechess output support
-ifeq ($(USE_CUTE), true)
-	CXXFLAGS += -DUSE_CUTE
-endif
-
 ifeq ($(ZLIB), true)
 	CXXFLAGS += -DUSE_ZLIB
 	SRC_FILES += third_party/gzip/gzstream.cpp

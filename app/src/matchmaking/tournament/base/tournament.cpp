@@ -19,7 +19,6 @@
 #include <game/pgn/pgn_builder.hpp>
 #include <matchmaking/match/match.hpp>
 #include <matchmaking/output/output.hpp>
-#include <matchmaking/output/output_factory.hpp>
 #include <matchmaking/scoreboard.hpp>
 #include <matchmaking/tournament/schedule/scheduler.hpp>
 #include <types/tournament.hpp>
@@ -33,7 +32,7 @@ BaseTournament::BaseTournament(const stats_map &results) {
     initial_matchcount_ = total;
     match_count_        = total;
 
-    output_ = OutputFactory::create(config.output, config.report_penta);
+    output_ = std::make_unique<Output>(config.report_penta);
     cores_  = std::make_unique<affinity::AffinityManager>(config.affinity, config.affinity_cpus,
                                                           getMaxAffinity(*config::EngineConfigs));
     book_   = std::make_unique<book::OpeningBook>(config, initial_matchcount_);
@@ -54,20 +53,18 @@ BaseTournament::~BaseTournament() {
 
     pool_.kill();
 
-    if (config::TournamentConfig->output == OutputType::FASTSHOGI) {
-        if (tracker_.begin() != tracker_.end()) {
-            Logger::print<Logger::Level::INFO>("");
-        }
+    if (tracker_.begin() != tracker_.end()) {
+        Logger::print<Logger::Level::INFO>("");
+    }
 
-        for (const auto &[name, tracked] : tracker_) {
-            Logger::print<Logger::Level::INFO>("Player: {}", name);
-            Logger::print<Logger::Level::INFO>("  Timeouts: {}", tracked.timeouts);
-            Logger::print<Logger::Level::INFO>("  Crashed: {}", tracked.disconnects);
-        }
+    for (const auto &[name, tracked] : tracker_) {
+        Logger::print<Logger::Level::INFO>("Player: {}", name);
+        Logger::print<Logger::Level::INFO>("  Timeouts: {}", tracked.timeouts);
+        Logger::print<Logger::Level::INFO>("  Crashed: {}", tracked.disconnects);
+    }
 
-        if (tracker_.begin() != tracker_.end()) {
-            Logger::print<Logger::Level::INFO>("");
-        }
+    if (tracker_.begin() != tracker_.end()) {
+        Logger::print<Logger::Level::INFO>("");
     }
 
     saveJson();

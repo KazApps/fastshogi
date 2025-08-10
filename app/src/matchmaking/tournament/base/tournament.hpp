@@ -60,7 +60,7 @@ class BaseTournament {
     util::ThreadPool pool_ = util::ThreadPool{1};
 
     std::unique_ptr<Scheduler> generator_;
-    std::unique_ptr<IOutput> output_;
+    std::unique_ptr<Output> output_;
     std::unique_ptr<affinity::AffinityManager> cores_;
     std::unique_ptr<util::FileWriter> file_writer_pgn_;
     std::unique_ptr<util::FileWriter> file_writer_epd_;

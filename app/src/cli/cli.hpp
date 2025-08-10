@@ -81,10 +81,6 @@ class OptionsParser {
 #    endif
 #endif
 
-#ifdef USE_CUTE
-        ss << " (compiled with cutechess output)";
-#endif
-
         return ss.str();
     }
 

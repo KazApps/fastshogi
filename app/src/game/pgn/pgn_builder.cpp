@@ -39,11 +39,7 @@ PgnBuilder::PgnBuilder(const config::Pgn &pgn_config, const MatchData &match, st
     }
 
     if (is_frc_variant) {
-#ifdef USE_CUTE
-        addHeader("Variant", "fischerandom");
-#else
         addHeader("Variant", "Shogi960");
-#endif
     }
 
     if (!pgn_config_.min) {

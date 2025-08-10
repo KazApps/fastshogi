@@ -12,7 +12,6 @@
 #include <core/memory/scope_guard.hpp>
 #include <core/rand.hpp>
 #include <game/pgn/pgn_builder.hpp>
-#include <matchmaking/output/output_factory.hpp>
 #include <matchmaking/tournament/roundrobin/scheduler.hpp>
 
 namespace fastshogi {

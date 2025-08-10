@@ -23,9 +23,6 @@ short time controls (0.2+0.002s), it exhibits minimal timeout issues, with only
   allowing you to verify that engines adhere to the UCI protocol.  
   To use this feature, simply run the following command:
   `./fastshogi --compliance ENGINE_PATH [ENGINE_ARGS]`
-- **Enhanced Cutechess Output**: The Cutechess output support has been refined to
-  enhance compatibility with other tools. Simply switch the `-output` option to
-  cutechess to enable it.
 - **Extended PGN Data**: You can now track nodes, seldepth, nps (nodes per
   second), hashfull, tbhits, and time left in the PGN output. Refer to the `-pgnout`
   option for detailed information.

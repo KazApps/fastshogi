@@ -122,9 +122,6 @@ The following options are available:
     - PLIES - number of plies for pgn. Defaults to max available plies.
     - START - starting index of the opening book. Default is 1.
 
-- -output format=FORMAT  
-    Choose the output format for game results (cutechess or fastshogi). Default is fastshogi.
-
 - -pgnout file=NAME notation=(san|lan|uci) [nodes=(true|false)] [seldepth=(true|false)] [nps=(true|false)] [hashfull=(true|false)] [tbhits=(true|false)] [timeleft=(true|false)] [latency=(true|false)] [min=(true|false)] [match_line=REGEX]
     Export games in PGN format with specified notations and optional tracking of nodes, seldepth, and others.
 

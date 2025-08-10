@@ -23,9 +23,6 @@ void sanitize(config::Tournament& config) {
         }
     }
 
-    // fix wrong config
-    if (config.report_penta && config.output == OutputType::CUTECHESS) config.report_penta = false;
-
     if (config.report_penta && config.games != 2) config.report_penta = false;
 
     // throw error for invalid sprt config

@@ -325,8 +325,6 @@ TEST_SUITE("Option Parsing Tests") {
                                     "start=4",
                                     "-variant",
                                     "fischerandom",
-                                    "-output",
-                                    "format=cutechess",
                                     "-srand",
                                     "1234",
                                     "-report",
@@ -367,7 +365,6 @@ TEST_SUITE("Option Parsing Tests") {
         CHECK(gameOptions.resign.enabled);
         CHECK(gameOptions.maxmoves.move_count == 150);
         CHECK(gameOptions.maxmoves.enabled);
-        CHECK(gameOptions.output == OutputType::CUTECHESS);
         CHECK(gameOptions.affinity);
         CHECK(gameOptions.seed == 1234);
         CHECK(gameOptions.report_penta == false);

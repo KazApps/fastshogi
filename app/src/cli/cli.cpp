@@ -5,7 +5,6 @@
 #include <core/filesystem/file_system.hpp>
 #include <core/logger/logger.hpp>
 #include <core/rand.hpp>
-#include <matchmaking/output/output_factory.hpp>
 #include <matchmaking/scoreboard.hpp>
 #include <types/engine_config.hpp>
 #include <types/tournament.hpp>
@@ -519,16 +518,6 @@ void parseReport(const std::vector<std::string> &params, ArgumentData &argument_
     });
 }
 
-void parseOutput(const std::vector<std::string> &params, ArgumentData &argument_data) {
-    parseDashOptions(params, [&](const std::string &key, const std::string &value) {
-        if (key == "format" && (value == "cutechess" || value == "fastshogi")) {
-            argument_data.tournament_config.output = OutputFactory::getType(value);
-        } else {
-            OptionsParser::throwMissing("output", key, value);
-        }
-    });
-}
-
 void parseConcurrency(const std::vector<std::string> &params, ArgumentData &argument_data) {
     parseValue(params, argument_data.tournament_config.concurrency);
 }
@@ -679,8 +668,6 @@ void parseQuick(const std::vector<std::string> &params, ArgumentData &argument_d
     argument_data.tournament_config.draw.move_number = 30;
     argument_data.tournament_config.draw.move_count  = 8;
     argument_data.tournament_config.draw.score       = 8;
-
-    argument_data.tournament_config.output = OutputType::CUTECHESS;
 }
 
 void parseAffinity(const std::vector<std::string> &params, ArgumentData &argument_data) {
@@ -732,7 +719,6 @@ OptionsParser::OptionsParser(const cli::Args &args) {
     addOption("log", parseLog);
     addOption("config", json_config::parseConfig);
     addOption("report", parseReport);
-    addOption("output", parseOutput);
     addOption("concurrency", parseConcurrency);
     addOption("crc32", parseCrc);
     addOption("force-concurrency", parseForceConcurrency);
