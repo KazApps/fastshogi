@@ -1,0 +1,91 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# CMake
+cmake-build-debug
+cmake-build-release
+**/CMakeCache.txt
+**/cmake_install.cmake
+**/install_manifest.txt
+**/CMakeFiles/
+**/CTestTestfile.cmake
+**/*.cbp
+**/CMakeScripts
+**/compile_commands.json
+Testing
+.cmake
+
+#Executable files
+fast-chess*
+fastchess*
+dummy_engine
+random_mover
+
+# IDE
+*.vscode
+.idea
+
+# Mac
+.DS_Store
+
+# Config files
+*.json
+
+# Scripts
+*.bat
+
+# Chess related
+*.pgn
+*.epd
+UHO*
+
+# Build
+tmp
+
+#
+log.txt
+log
+log*.gz
+
+!app/tests/data/*
+!app/tests/configs
+
+app/coverage
+
+**/*.gcda
+**/*.gcno
+
+test
+test.c
+
+.cache
