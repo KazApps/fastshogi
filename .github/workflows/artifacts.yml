@@ -71,12 +71,12 @@ jobs:
 
       # Compiles
 
-      - name: Building fastchess
+      - name: Building fastshogi
         run: |
           make -j2 build=release COMPILE_MSG="compiled for ${{ matrix.config.os }} ${{ env.COMMIT_DATE }}-${{ env.COMMIT_SHA }} (CI)"
-          strip ./fastchess$EXT
-          mv fastchess$EXT fastchess-$OS$EXT
-          ./fastchess* -version
+          strip ./fastshogi$EXT
+          mv fastshogi$EXT fastshogi-$OS$EXT
+          ./fastshogi* -version
 
       - name: Find and remove empty files
         run: rm -rf *.o *.d sha
@@ -85,7 +85,7 @@ jobs:
       - name: Archive binaries
         uses: actions/upload-artifact@v4
         with:
-          name: fastchess-${{ matrix.config.os }}
+          name: fastshogi-${{ matrix.config.os }}
           path: |
             app
             .clang-format
@@ -94,4 +94,4 @@ jobs:
             man
             README.md
             LICENSE
-            fastchess-${{ matrix.config.os }}${{ matrix.config.ext }}
+            fastshogi-${{ matrix.config.os }}${{ matrix.config.ext }}

@@ -43,7 +43,7 @@ std::istream& safeGetline(std::istream& is, std::string& t) {
 }
 }  // namespace
 
-namespace fastchess::book {
+namespace fastshogi::book {
 
 EpdReader::EpdReader(const std::string& epd_file_path) : epd_file_(epd_file_path) {
     bool is_gzipped = epd_file_path.size() >= 3 && epd_file_path.substr(epd_file_path.size() - 3) == ".gz";
@@ -77,4 +77,4 @@ EpdReader::EpdReader(const std::string& epd_file_path) : epd_file_(epd_file_path
     }
 }
 
-}  // namespace fastchess::book
+}  // namespace fastshogi::book

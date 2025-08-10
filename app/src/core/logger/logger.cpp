@@ -11,7 +11,7 @@
 #    include <gzip/gzstream.h>
 #endif
 
-namespace fastchess {
+namespace fastshogi {
 
 bool Logger::compress_               = false;
 Logger::Level Logger::level_         = Logger::Level::WARN;
@@ -93,4 +93,4 @@ void Logger::readFromEngine(const std::string &msg, const std::string &time, con
     std::visit([&](auto &&arg) { arg << fmt_message << std::flush; }, log_);
 }
 
-}  // namespace fastchess
+}  // namespace fastshogi

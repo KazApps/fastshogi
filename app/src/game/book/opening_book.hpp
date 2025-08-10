@@ -13,7 +13,7 @@
 #include <types/enums.hpp>
 #include <types/tournament.hpp>
 
-namespace fastchess::book {
+namespace fastshogi::book {
 
 struct Openings {
     // Fisher-Yates / Knuth shuffle
@@ -73,4 +73,4 @@ class OpeningBook {
     std::variant<EpdReader, PgnReader> openings_;
 };
 
-}  // namespace fastchess::book
+}  // namespace fastshogi::book

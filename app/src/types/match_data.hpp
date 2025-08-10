@@ -6,13 +6,13 @@
 #include <utility>
 #include <vector>
 
-#include <chess.hpp>
+#include <shogi.hpp>
 
 #include <core/time/time.hpp>
 #include <matchmaking/game_pair.hpp>
 #include <types/engine_config.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 struct MoveData {
     MoveData(std::string _move, std::string _score_string, int64_t _elapsed_millis, int _depth, int _seldepth,
@@ -58,7 +58,7 @@ enum class MatchTermination {
 struct MatchData {
     struct PlayerInfo {
         EngineConfiguration config;
-        chess::GameResult result = chess::GameResult::NONE;
+        shogi::GameResult result = shogi::GameResult::NONE;
     };
 
     MatchData() {}
@@ -91,4 +91,4 @@ struct MatchData {
     bool needs_restart = false;
 };
 
-}  // namespace fastchess
+}  // namespace fastshogi

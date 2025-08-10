@@ -12,7 +12,7 @@
 #include <core/logger/logger.hpp>
 #include <matchmaking/stats.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 SPRT::SPRT(double alpha, double beta, double elo0, double elo1, std::string model, bool enabled) {
     enabled_ = enabled;
@@ -343,4 +343,4 @@ double SPRT::getUpperBound() const noexcept { return upper_; }
 
 bool SPRT::isEnabled() const noexcept { return enabled_; }
 
-}  // namespace fastchess
+}  // namespace fastshogi

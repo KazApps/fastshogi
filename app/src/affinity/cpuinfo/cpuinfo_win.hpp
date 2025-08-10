@@ -9,7 +9,7 @@
 #include <affinity/cpuinfo/cpu_info.hpp>
 #include <core/logger/logger.hpp>
 
-namespace fastchess::affinity::cpu_info {
+namespace fastshogi::affinity::cpu_info {
 
 [[nodiscard]] inline int lsb(uint64_t bits) noexcept {
     assert(bits != 0);
@@ -92,4 +92,4 @@ inline CpuInfo getCpuInfo() noexcept(false) {
     return cpu_info;
 }
 
-}  // namespace fastchess::affinity::cpu_info
+}  // namespace fastshogi::affinity::cpu_info

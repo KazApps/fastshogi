@@ -4,7 +4,7 @@
 #include <iostream>
 #include <memory>
 
-#include <chess.hpp>
+#include <shogi.hpp>
 
 #include <core/logger/logger.hpp>
 #include <game/book/opening.hpp>
@@ -13,17 +13,17 @@
 #    include <gzip/gzstream.h>
 #endif
 
-namespace fastchess::book {
+namespace fastshogi::book {
 
-class PGNVisitor : public chess::pgn::Visitor {
+class PGNVisitor : public shogi::pgn::Visitor {
    public:
     PGNVisitor(std::vector<Opening>& pgns, int plies_limit) : pgns_(pgns), plies_limit_(plies_limit) {}
     virtual ~PGNVisitor() {}
 
     void startPgn() override {
-        board_.setFen(chess::constants::STARTPOS);
+        board_.setFen(shogi::constants::STARTPOS);
 
-        pgn_.fen_epd = chess::constants::STARTPOS;
+        pgn_.fen_epd = shogi::constants::STARTPOS;
         pgn_.moves.clear();
         plie_count_ = 0;
         early_stop_ = false;
@@ -42,11 +42,11 @@ class PGNVisitor : public chess::pgn::Visitor {
         if (early_stop_) return;
         if (plie_count_++ >= plies_limit_ && plies_limit_ != -1) return;
 
-        chess::Move move_i;
+        shogi::Move move_i;
 
         try {
-            move_i = chess::uci::parseSan(board_, move);
-        } catch (const chess::uci::SanParseError& e) {
+            move_i = shogi::uci::parseSan(board_, move);
+        } catch (const shogi::uci::SanParseError& e) {
             LOG_ERR("Failed to parse move: {}", e.what());
             early_stop_ = true;
             return;
@@ -54,7 +54,7 @@ class PGNVisitor : public chess::pgn::Visitor {
 
         board_.makeMove<true>(move_i);
 
-        if (board_.isGameOver().second != chess::GameResult::NONE) {
+        if (board_.isGameOver().second != shogi::GameResult::NONE) {
             early_stop_ = true;
             return;
         }
@@ -67,7 +67,7 @@ class PGNVisitor : public chess::pgn::Visitor {
    private:
     std::vector<Opening>& pgns_;
     Opening pgn_;
-    chess::Board board_;
+    shogi::Board board_;
     const int plies_limit_;
     int plie_count_  = 0;
     bool early_stop_ = false;
@@ -98,11 +98,11 @@ PgnReader::PgnReader(const std::string& pgn_file_path, int plies_limit)
         }
     }
 
-    chess::pgn::StreamParser parser(*input_stream);
+    shogi::pgn::StreamParser parser(*input_stream);
     parser.readGames(*vis);
     if (pgns_.empty()) {
         throw std::runtime_error("No openings found in file: " + file_name_);
     }
 }
 
-}  // namespace fastchess::book
+}  // namespace fastshogi::book

@@ -8,7 +8,7 @@
 
 #include <json.hpp>
 
-namespace fastchess::str_utils {
+namespace fastshogi::str_utils {
 
 // @todo unnecessary with c++20
 [[nodiscard]] inline bool startsWith(std::string_view haystack, std::string_view needle) noexcept {
@@ -69,4 +69,4 @@ template <typename T>
 
     return result;
 }
-}  // namespace fastchess::str_utils
+}  // namespace fastshogi::str_utils

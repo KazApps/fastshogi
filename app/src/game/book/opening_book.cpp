@@ -3,14 +3,14 @@
 #include <optional>
 #include <string>
 
-#include <chess.hpp>
+#include <shogi.hpp>
 
 #include <core/config/config.hpp>
 #include <core/logger/logger.hpp>
 #include <game/book/epd_reader.hpp>
 #include <game/book/pgn_reader.hpp>
 
-namespace fastchess::book {
+namespace fastshogi::book {
 
 OpeningBook::OpeningBook(const config::Tournament& config, std::size_t initial_matchcount) {
     start_  = config.opening.start;
@@ -52,7 +52,7 @@ void OpeningBook::setup(const std::string& file, FormatType type) {
 }
 
 Opening OpeningBook::operator[](std::optional<std::size_t> idx) const noexcept {
-    if (!idx.has_value()) return {chess::constants::STARTPOS, {}};
+    if (!idx.has_value()) return {shogi::constants::STARTPOS, {}};
 
     assert(idx.value() < std::visit([](const auto& arg) { return arg.get().size(); }, openings_));
 
@@ -75,4 +75,4 @@ Opening OpeningBook::operator[](std::optional<std::size_t> idx) const noexcept {
     return idx % book_size;
 }
 
-}  // namespace fastchess::book
+}  // namespace fastshogi::book

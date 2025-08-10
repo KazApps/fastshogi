@@ -2,7 +2,7 @@
 
 #include <doctest/doctest.hpp>
 
-using namespace fastchess;
+using namespace fastshogi;
 
 TEST_SUITE("TimeControl") {
     TEST_CASE("moves/time+increment") {

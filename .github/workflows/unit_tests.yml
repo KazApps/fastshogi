@@ -68,7 +68,7 @@ jobs:
           ${{ runner.os == 'Windows' && format('{0} --version', matrix.config.cxx) || 'echo "Non-Windows platform"' }}
           make clean
           ${{ runner.os == 'Windows' && format('make -j2 tests CXX={0}', matrix.config.cxx) || 'make -j2 tests' }}
-          ./fastchess-tests*
+          ./fastshogi-tests*
 
   # AddressSanitizer tests (Unix only)
   asan-tests:
@@ -103,13 +103,13 @@ jobs:
         run: |
           make clean
           make -j2 tests san=asan
-          ./fastchess-tests* -tse="*PERFT*"
+          ./fastshogi-tests* -tse="*PERFT*"
 
       - name: Running AddressSanitizer Tests (clang++)
         run: |
           make clean
           make -j2 tests san=asan CXX=clang++
-          ./fastchess-tests*
+          ./fastshogi-tests*
 
   # ThreadSanitizer tests (Unix only)
   tsan-tests:
@@ -144,7 +144,7 @@ jobs:
         run: |
           make clean
           make -j2 tests san=thread
-          ./fastchess-tests* -tse="*PERFT*"
+          ./fastshogi-tests* -tse="*PERFT*"
 
   # UndefinedBehaviorSanitizer tests (Unix only)
   ubsan-tests:
@@ -179,7 +179,7 @@ jobs:
         run: |
           make clean
           make -j2 tests san=undefined CXX=clang++
-          ./fastchess-tests* -tse="*PERFT*"
+          ./fastshogi-tests* -tse="*PERFT*"
 
   # Valgrind tests (Linux only)
   valgrind-tests:
@@ -203,4 +203,4 @@ jobs:
         run: |
           make clean
           make -j2 tests CXX=g++
-          valgrind --quiet --track-fds=yes --error-exitcode=1 --errors-for-leak-kinds=all --leak-check=full ./fastchess-tests* -tse="*PERFT*"
+          valgrind --quiet --track-fds=yes --error-exitcode=1 --errors-for-leak-kinds=all --leak-check=full ./fastshogi-tests* -tse="*PERFT*"

@@ -5,7 +5,7 @@
 #include <string>
 #include <unordered_map>
 
-namespace fastchess {
+namespace fastshogi {
 
 struct Tracker {
     std::atomic<std::size_t> timeouts    = 0;
@@ -35,4 +35,4 @@ class PlayerTracker {
     std::mutex mutex_;
 };
 
-}  // namespace fastchess
+}  // namespace fastshogi

@@ -6,13 +6,13 @@
 #include <string>
 #include <vector>
 
-#include <chess.hpp>
+#include <shogi.hpp>
 
 #include <core/config/config.hpp>
 #include <core/helper.hpp>
 #include <core/logger/logger.hpp>
 
-namespace fastchess::engine {
+namespace fastshogi::engine {
 
 // A counting semaphore to limit the number of threads
 class CountingSemaphore {
@@ -108,7 +108,7 @@ bool UciEngine::position(const std::vector<std::string> &moves, const std::strin
     return writeEngine(position);
 }
 
-bool UciEngine::go(const TimeControl &our_tc, const TimeControl &enemy_tc, chess::Color stm) {
+bool UciEngine::go(const TimeControl &our_tc, const TimeControl &enemy_tc, shogi::Color stm) {
     std::stringstream input;
     input << "go";
 
@@ -126,8 +126,8 @@ bool UciEngine::go(const TimeControl &our_tc, const TimeControl &enemy_tc, chess
         return writeEngine(input.str());
     }
 
-    const auto &white = stm == chess::Color::WHITE ? our_tc : enemy_tc;
-    const auto &black = stm == chess::Color::WHITE ? enemy_tc : our_tc;
+    const auto &white = stm == shogi::Color::WHITE ? our_tc : enemy_tc;
+    const auto &black = stm == shogi::Color::WHITE ? enemy_tc : our_tc;
 
     if (our_tc.isTimed() || our_tc.isIncrement()) {
         if (white.isTimed() || white.isIncrement()) {
@@ -347,9 +347,9 @@ bool UciEngine::refreshUci() {
 
     if (config_.variant == VariantType::FRC) {
         try {
-            sendSetoption("UCI_Chess960", "true");
+            sendSetoption("UCI_Shogi960", "true");
         } catch (const std::exception &e) {
-            Logger::print<Logger::Level::WARN>("Warning; Failed to set UCI_Chess960 option for engine {}: {}",
+            Logger::print<Logger::Level::WARN>("Warning; Failed to set UCI_Shogi960 option for engine {}: {}",
                                                config_.name, e.what());
         }
     }
@@ -457,4 +457,4 @@ bool UciEngine::outputIncludesBestmove() const {
     return false;
 }
 
-}  // namespace fastchess::engine
+}  // namespace fastshogi::engine

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <chess.hpp>
+#include <shogi.hpp>
 
 #include <cli/cli.hpp>
 #include <core/config/config.hpp>
@@ -9,7 +9,7 @@
 #include <matchmaking/syzygy.hpp>
 #include <types/match_data.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 class DrawTracker {
    public:
@@ -54,7 +54,7 @@ class ResignTracker {
     ResignTracker(config::ResignAdjudication resign_adjudication)
         : ResignTracker(resign_adjudication.score, resign_adjudication.move_count, resign_adjudication.twosided) {}
 
-    void update(const int score, engine::ScoreType score_type, chess::Color color) noexcept {
+    void update(const int score, engine::ScoreType score_type, shogi::Color color) noexcept {
         if (twosided_) {
             if ((std::abs(score) >= resign_score && score_type == engine::ScoreType::CP) ||
                 score_type == engine::ScoreType::MATE) {
@@ -63,7 +63,7 @@ class ResignTracker {
                 resign_moves = 0;
             }
         } else {
-            int& counter = (color == chess::Color::BLACK) ? resign_moves_black : resign_moves_white;
+            int& counter = (color == shogi::Color::BLACK) ? resign_moves_black : resign_moves_white;
             if ((score <= -resign_score && score_type == engine::ScoreType::CP) ||
                 (score < 0 && score_type == engine::ScoreType::MATE)) {
                 counter++;
@@ -114,14 +114,14 @@ class TbAdjudicationTracker {
     TbAdjudicationTracker(config::TbAdjudication tb_adjudication)
         : TbAdjudicationTracker(tb_adjudication.max_pieces, tb_adjudication.ignore_50_move_rule) {}
 
-    [[nodiscard]] bool adjudicatable(const chess::Board& board) const noexcept {
+    [[nodiscard]] bool adjudicatable(const shogi::Board& board) const noexcept {
         if (max_pieces_ != 0 && board.occ().count() > max_pieces_) {
             return false;
         }
         return canProbeSyzgyWdl(board);
     }
 
-    [[nodiscard]] chess::GameResult adjudicate(const chess::Board& board) const noexcept {
+    [[nodiscard]] shogi::GameResult adjudicate(const shogi::Board& board) const noexcept {
         return probeSyzygyWdl(board, ignore_50_move_rule_);
     }
 
@@ -147,8 +147,8 @@ class Match {
    private:
     void gameLoop(Player& first, Player& second);
 
-    // returns the reason and the result of the game, different order than chess lib function
-    [[nodiscard]] std::pair<chess::GameResultReason, chess::GameResult> isGameOver() const;
+    // returns the reason and the result of the game, different order than shogi lib function
+    [[nodiscard]] std::pair<shogi::GameResultReason, shogi::GameResult> isGameOver() const;
 
     void setEngineCrashStatus(Player& loser, Player& winner);
     void setEngineStallStatus(Player& loser, Player& winner);
@@ -170,14 +170,14 @@ class Match {
     // returns true if adjudicated
     [[nodiscard]] bool adjudicate(Player& us, Player& them) noexcept;
 
-    [[nodiscard]] static std::string convertChessReason(const std::string&, chess::GameResultReason) noexcept;
+    [[nodiscard]] static std::string convertShogiReason(const std::string&, shogi::GameResultReason) noexcept;
 
-    bool isLegal(chess::Move move) const noexcept;
+    bool isLegal(shogi::Move move) const noexcept;
 
     const book::Opening& opening_;
 
     MatchData data_     = {};
-    chess::Board board_ = chess::Board();
+    shogi::Board board_ = shogi::Board();
 
     DrawTracker draw_tracker_;
     ResignTracker resign_tracker_;
@@ -207,4 +207,4 @@ class Match {
     inline static constexpr char STALL_MSG[]                = /*.. */ "'s connection stalls";
     inline static constexpr char INTERRUPTED_MSG[]          = "Game interrupted";
 };
-}  // namespace fastchess
+}  // namespace fastshogi

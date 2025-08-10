@@ -4,19 +4,19 @@
 #include <algorithm>
 #include <regex>
 
-#include <chess.hpp>
+#include <shogi.hpp>
 #include <core/globals/globals.hpp>
 #include <core/helper.hpp>
 #include <core/logger/logger.hpp>
 #include <core/time/time.hpp>
 #include <types/tournament.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 namespace chrono = std::chrono;
 
 using namespace std::literals;
-using namespace chess;
+using namespace shogi;
 using clock = chrono::steady_clock;
 
 namespace {
@@ -77,10 +77,10 @@ Match::Match(const book::Opening& opening)
     const auto fen = board_.getFen();
 
     data_           = MatchData(fen);
-    start_position_ = fen == chess::constants::STARTPOS ? "startpos" : fen;
+    start_position_ = fen == shogi::constants::STARTPOS ? "startpos" : fen;
 
     const auto insert_move = [&](const auto& opening_move) {
-        const auto move = uci::moveToUci(opening_move, board_.chess960());
+        const auto move = uci::moveToUci(opening_move, board_.shogi960());
         board_.makeMove<true>(opening_move);
 
         return MoveData(move, "0.00", 0, 0, 0, 0, 0, true, true);
@@ -251,7 +251,7 @@ bool Match::playMove(Player& us, Player& them) {
 
     if (gameover.first != GameResultReason::NONE) {
         data_.termination = MatchTermination::NORMAL;
-        data_.reason      = convertChessReason((~board_.sideToMove()).longStr(), gameover.first);
+        data_.reason      = convertShogiReason((~board_.sideToMove()).longStr(), gameover.first);
         return false;
     }
 
@@ -369,7 +369,7 @@ bool Match::playMove(Player& us, Player& them) {
 
     // CuteChess uses plycount/2 for its movenumber, which is wrong for epd books as it doesnt take
     // into account the fullmove counter of the starting FEN, leading to different behavior between
-    // pgn and epd adjudication. fastchess fixes this by using the fullmove counter from the board
+    // pgn and epd adjudication. fastshogi fixes this by using the fullmove counter from the board
     // object directly
     auto score = us.engine.lastScore();
     auto type  = us.engine.lastScoreType();
@@ -404,7 +404,7 @@ bool Match::isLegal(Move move) const noexcept {
     return std::find(moves.begin(), moves.end(), move) != moves.end();
 }
 
-std::pair<chess::GameResultReason, chess::GameResult> Match::isGameOver() const {
+std::pair<shogi::GameResultReason, shogi::GameResult> Match::isGameOver() const {
     Movelist movelist;
     movegen::legalmoves(movelist, board_);
 
@@ -639,7 +639,7 @@ bool Match::adjudicate(Player& us, Player& them) noexcept {
     return false;
 }
 
-std::string Match::convertChessReason(const std::string& color, GameResultReason reason) noexcept {
+std::string Match::convertShogiReason(const std::string& color, GameResultReason reason) noexcept {
     if (reason == GameResultReason::CHECKMATE) {
         return color + Match::CHECKMATE_MSG;
     }
@@ -663,4 +663,4 @@ std::string Match::convertChessReason(const std::string& color, GameResultReason
     return "";
 }
 
-}  // namespace fastchess
+}  // namespace fastshogi

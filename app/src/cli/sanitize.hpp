@@ -3,10 +3,10 @@
 #include <types/engine_config.hpp>
 #include <types/tournament.hpp>
 
-namespace fastchess::cli {
+namespace fastshogi::cli {
 
 void sanitize(config::Tournament&);
 
 void sanitize(std::vector<EngineConfiguration>&);
 
-}  // namespace fastchess::cli
+}  // namespace fastshogi::cli

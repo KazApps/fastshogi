@@ -11,7 +11,7 @@
 #include <types/enums.hpp>
 #include <types/match_data.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 namespace engine {
 class UciEngine;
@@ -69,4 +69,4 @@ class IOutput {
     };
 };
 
-}  // namespace fastchess
+}  // namespace fastshogi

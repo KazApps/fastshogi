@@ -11,11 +11,11 @@
 #include <matchmaking/elo/elo_wdl.hpp>
 #include <matchmaking/output/output.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
-class Fastchess : public IOutput {
+class Fastshogi : public IOutput {
    public:
-    Fastchess(bool report_penta = true) : report_penta_(report_penta) {}
+    Fastshogi(bool report_penta = true) : report_penta_(report_penta) {}
 
     void printInterval(const SPRT& sprt, const Stats& stats, const std::string& first, const std::string& second,
                        const engines& engines, const std::string& book, ScoreBoard& scoreboard) override {
@@ -106,7 +106,7 @@ class Fastchess : public IOutput {
         }
     }
 
-    OutputType getType() const override { return OutputType::FASTCHESS; }
+    OutputType getType() const override { return OutputType::FASTSHOGI; }
 
    private:
     std::string printEloH2H(const Stats& stats, const std::string& first, const std::string& second,
@@ -248,4 +248,4 @@ class Fastchess : public IOutput {
     bool report_penta_;
 };
 
-}  // namespace fastchess
+}  // namespace fastshogi

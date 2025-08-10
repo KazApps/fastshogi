@@ -4,7 +4,7 @@
 #include <mutex>
 #include <vector>
 
-namespace fastchess::util {
+namespace fastshogi::util {
 
 template <typename T>
 class ThreadVector {
@@ -63,4 +63,4 @@ class ThreadVector {
     std::vector<T> vec_;
 };
 
-}  // namespace fastchess::util
+}  // namespace fastshogi::util

@@ -5,7 +5,7 @@
 #include <core/helper.hpp>
 #include <types/enums.hpp>
 
-namespace fastchess::config {
+namespace fastshogi::config {
 
 struct Opening {
     std::string file;
@@ -16,4 +16,4 @@ struct Opening {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Opening, file, format, order, plies, start)
 
-}  // namespace fastchess::config
+}  // namespace fastshogi::config

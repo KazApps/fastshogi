@@ -10,7 +10,7 @@
 
 #    include <core/logger/logger.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 namespace engine::process {
 
@@ -115,6 +115,6 @@ class Pipe {
 };
 
 }  // namespace engine::process
-}  // namespace fastchess
+}  // namespace fastshogi
 
 #endif

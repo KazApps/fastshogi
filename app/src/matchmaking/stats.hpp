@@ -3,7 +3,7 @@
 #include <core/helper.hpp>
 #include <types/match_data.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 class Stats {
    public:
@@ -18,9 +18,9 @@ class Stats {
         penta_WW = ww;
     }
     Stats(const MatchData &match_data) {
-        if (match_data.players.white.result == chess::GameResult::WIN) {
+        if (match_data.players.white.result == shogi::GameResult::WIN) {
             wins++;
-        } else if (match_data.players.white.result == chess::GameResult::LOSE) {
+        } else if (match_data.players.white.result == shogi::GameResult::LOSE) {
             losses++;
         } else {
             draws++;
@@ -96,4 +96,4 @@ class Stats {
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Stats, wins, losses, draws, penta_WW, penta_WD, penta_WL, penta_DD, penta_LD,
                                    penta_LL)
 
-}  // namespace fastchess
+}  // namespace fastshogi

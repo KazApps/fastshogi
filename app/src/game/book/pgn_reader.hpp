@@ -6,7 +6,7 @@
 #include <core/helper.hpp>
 #include <game/book/opening.hpp>
 
-namespace fastchess::book {
+namespace fastshogi::book {
 
 class PgnReader {
    public:
@@ -23,4 +23,4 @@ class PgnReader {
     int plies_limit_;
 };
 
-}  // namespace fastchess::book
+}  // namespace fastshogi::book

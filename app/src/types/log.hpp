@@ -4,7 +4,7 @@
 
 #include <core/logger/logger.hpp>
 
-namespace fastchess::config {
+namespace fastshogi::config {
 
 struct Log {
     std::string file;
@@ -15,4 +15,4 @@ struct Log {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Log, file, level, compress, realtime, engine_coms)
 
-}  // namespace fastchess::config
+}  // namespace fastshogi::config

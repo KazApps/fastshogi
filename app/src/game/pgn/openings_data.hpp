@@ -3,7 +3,7 @@
 #include <string_view>
 #include <unordered_map>
 
-namespace fastchess::pgn {
+namespace fastshogi::pgn {
 /*
  * Data source:
  *   https://github.com/lichess-org/chess-openings
@@ -24,4 +24,4 @@ struct Opening {
 };
 
 extern std::unordered_map<std::string_view, Opening> EPD_TO_OPENING;
-}  // namespace fastchess::pgn
+}  // namespace fastshogi::pgn

@@ -4,7 +4,7 @@
 
 #include <engine/uci_engine.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 class Player {
    public:
@@ -30,17 +30,17 @@ class Player {
 
     [[nodiscard]] const TimeControl &getTimeControl() const noexcept { return time_control_; }
 
-    void setLost() noexcept { result = chess::GameResult::LOSE; }
-    void setDraw() noexcept { result = chess::GameResult::DRAW; }
-    void setWon() noexcept { result = chess::GameResult::WIN; }
+    void setLost() noexcept { result = shogi::GameResult::LOSE; }
+    void setDraw() noexcept { result = shogi::GameResult::DRAW; }
+    void setWon() noexcept { result = shogi::GameResult::WIN; }
 
-    [[nodiscard]] chess::GameResult getResult() const noexcept { return result; }
+    [[nodiscard]] shogi::GameResult getResult() const noexcept { return result; }
 
     engine::UciEngine &engine;
 
    private:
-    chess::GameResult result = chess::GameResult::NONE;
+    shogi::GameResult result = shogi::GameResult::NONE;
     TimeControl time_control_;
 };
 
-}  // namespace fastchess
+}  // namespace fastshogi

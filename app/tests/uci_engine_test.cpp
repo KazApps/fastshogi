@@ -8,7 +8,7 @@
 
 #include <doctest/doctest.hpp>
 
-using namespace fastchess;
+using namespace fastshogi;
 
 namespace {
 
@@ -49,7 +49,7 @@ TEST_SUITE("Uci Engine Communication Tests") {
         CHECK(uci_engine.idName().value() == "Dummy Engine");
 
         CHECK(uci_engine.idAuthor().has_value());
-        CHECK(uci_engine.idAuthor().value() == "Fastchess");
+        CHECK(uci_engine.idAuthor().value() == "Fastshogi");
     }
 
     TEST_CASE("Test engine::UciEngine Args Complex") {
@@ -102,11 +102,11 @@ TEST_SUITE("Uci Engine Communication Tests") {
         CHECK(uci);
         CHECK(uciOutput.size() == 9);
         CHECK(uciOutput[0].line == "id name Dummy Engine");
-        CHECK(uciOutput[1].line == "id author Fastchess");
+        CHECK(uciOutput[1].line == "id author Fastshogi");
         CHECK(uciOutput[2].line == "option name Threads type spin default 1 min 1 max 1024");
         CHECK(uciOutput[3].line == "option name Hash type spin default 1 min 1 max 500000");
         CHECK(uciOutput[4].line == "option name MultiPV type spin default 1 min 1 max 256");
-        CHECK(uciOutput[5].line == "option name UCI_Chess960 type check default false");
+        CHECK(uciOutput[5].line == "option name UCI_Shogi960 type check default false");
         CHECK(uciOutput[6].line == "line0");
         CHECK(uciOutput[7].line == "line1");
         CHECK(uciOutput[8].line == "uciok");
@@ -137,11 +137,11 @@ TEST_SUITE("Uci Engine Communication Tests") {
         CHECK(res == engine::process::Status::OK);
         CHECK(uci_engine.output().size() == 9);
         CHECK(uci_engine.output()[0].line == "id name Dummy Engine");
-        CHECK(uci_engine.output()[1].line == "id author Fastchess");
+        CHECK(uci_engine.output()[1].line == "id author Fastshogi");
         CHECK(uci_engine.output()[2].line == "option name Threads type spin default 1 min 1 max 1024");
         CHECK(uci_engine.output()[3].line == "option name Hash type spin default 1 min 1 max 500000");
         CHECK(uci_engine.output()[4].line == "option name MultiPV type spin default 1 min 1 max 256");
-        CHECK(uci_engine.output()[5].line == "option name UCI_Chess960 type check default false");
+        CHECK(uci_engine.output()[5].line == "option name UCI_Shogi960 type check default false");
         CHECK(uci_engine.output()[6].line == "line0");
         CHECK(uci_engine.output()[7].line == "line1");
         CHECK(uci_engine.output()[8].line == "uciok");
@@ -179,11 +179,11 @@ TEST_SUITE("Uci Engine Communication Tests") {
         CHECK(res == engine::process::Status::OK);
         CHECK(uci_engine->output().size() == 9);
         CHECK(uci_engine->output()[0].line == "id name Dummy Engine");
-        CHECK(uci_engine->output()[1].line == "id author Fastchess");
+        CHECK(uci_engine->output()[1].line == "id author Fastshogi");
         CHECK(uci_engine->output()[2].line == "option name Threads type spin default 1 min 1 max 1024");
         CHECK(uci_engine->output()[3].line == "option name Hash type spin default 1 min 1 max 500000");
         CHECK(uci_engine->output()[4].line == "option name MultiPV type spin default 1 min 1 max 256");
-        CHECK(uci_engine->output()[5].line == "option name UCI_Chess960 type check default false");
+        CHECK(uci_engine->output()[5].line == "option name UCI_Shogi960 type check default false");
         CHECK(uci_engine->output()[6].line == "line0");
         CHECK(uci_engine->output()[7].line == "line1");
         CHECK(uci_engine->output()[8].line == "uciok");
@@ -198,11 +198,11 @@ TEST_SUITE("Uci Engine Communication Tests") {
         CHECK(res2 == engine::process::Status::OK);
         CHECK(uci_engine->output().size() == 9);
         CHECK(uci_engine->output()[0].line == "id name Dummy Engine");
-        CHECK(uci_engine->output()[1].line == "id author Fastchess");
+        CHECK(uci_engine->output()[1].line == "id author Fastshogi");
         CHECK(uci_engine->output()[2].line == "option name Threads type spin default 1 min 1 max 1024");
         CHECK(uci_engine->output()[3].line == "option name Hash type spin default 1 min 1 max 500000");
         CHECK(uci_engine->output()[4].line == "option name MultiPV type spin default 1 min 1 max 256");
-        CHECK(uci_engine->output()[5].line == "option name UCI_Chess960 type check default false");
+        CHECK(uci_engine->output()[5].line == "option name UCI_Shogi960 type check default false");
         CHECK(uci_engine->output()[6].line == "line0");
         CHECK(uci_engine->output()[7].line == "line1");
         CHECK(uci_engine->output()[8].line == "uciok");
@@ -222,11 +222,11 @@ TEST_SUITE("Uci Engine Communication Tests") {
         CHECK(res == engine::process::Status::OK);
         CHECK(uci_engine->output().size() == 9);
         CHECK(uci_engine->output()[0].line == "id name Dummy Engine");
-        CHECK(uci_engine->output()[1].line == "id author Fastchess");
+        CHECK(uci_engine->output()[1].line == "id author Fastshogi");
         CHECK(uci_engine->output()[2].line == "option name Threads type spin default 1 min 1 max 1024");
         CHECK(uci_engine->output()[3].line == "option name Hash type spin default 1 min 1 max 500000");
         CHECK(uci_engine->output()[4].line == "option name MultiPV type spin default 1 min 1 max 256");
-        CHECK(uci_engine->output()[5].line == "option name UCI_Chess960 type check default false");
+        CHECK(uci_engine->output()[5].line == "option name UCI_Shogi960 type check default false");
         CHECK(uci_engine->output()[6].line == "line0");
         CHECK(uci_engine->output()[7].line == "line1");
         CHECK(uci_engine->output()[8].line == "uciok");
@@ -241,11 +241,11 @@ TEST_SUITE("Uci Engine Communication Tests") {
         CHECK(res2 == engine::process::Status::OK);
         CHECK(uci_engine->output().size() == 9);
         CHECK(uci_engine->output()[0].line == "id name Dummy Engine");
-        CHECK(uci_engine->output()[1].line == "id author Fastchess");
+        CHECK(uci_engine->output()[1].line == "id author Fastshogi");
         CHECK(uci_engine->output()[2].line == "option name Threads type spin default 1 min 1 max 1024");
         CHECK(uci_engine->output()[3].line == "option name Hash type spin default 1 min 1 max 500000");
         CHECK(uci_engine->output()[4].line == "option name MultiPV type spin default 1 min 1 max 256");
-        CHECK(uci_engine->output()[5].line == "option name UCI_Chess960 type check default false");
+        CHECK(uci_engine->output()[5].line == "option name UCI_Shogi960 type check default false");
         CHECK(uci_engine->output()[6].line == "line0");
         CHECK(uci_engine->output()[7].line == "line1");
         CHECK(uci_engine->output()[8].line == "uciok");
@@ -257,7 +257,7 @@ TEST_SUITE("Uci Engine Communication Tests") {
         config.options = {
             {"Hash", "1600"},
             {"MultiPV", "3"},
-            {"UCI_Chess960", "true"},
+            {"UCI_Shogi960", "true"},
             {"Threads", "4"},
         };
 
@@ -266,13 +266,13 @@ TEST_SUITE("Uci Engine Communication Tests") {
         CHECK(uci_engine->start());
 
         CHECK(uci_engine->refreshUci());
-        const auto res = uci_engine->readEngine("option set: setoption name UCI_Chess960");
+        const auto res = uci_engine->readEngine("option set: setoption name UCI_Shogi960");
 
         CHECK(res == engine::process::Status::OK);
         CHECK(uci_engine->output().size() == 4);
         CHECK(uci_engine->output()[0].line == "option set: setoption name Threads value 4");
         CHECK(uci_engine->output()[1].line == "option set: setoption name Hash value 1600");
         CHECK(uci_engine->output()[2].line == "option set: setoption name MultiPV value 3");
-        CHECK(uci_engine->output()[3].line == "option set: setoption name UCI_Chess960 value true");
+        CHECK(uci_engine->output()[3].line == "option set: setoption name UCI_Shogi960 value true");
     }
 }

@@ -2,7 +2,7 @@
 
 #include <doctest/doctest.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 TEST_SUITE("ScoreBoard") {
     TEST_CASE("Update and Get") {
@@ -71,4 +71,4 @@ TEST_SUITE("ScoreBoard") {
     //     CHECK(result.getResults() == results);
     // }
 }
-}  // namespace fastchess
+}  // namespace fastshogi

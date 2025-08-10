@@ -8,7 +8,7 @@
 #include <core/crc32.hpp>
 #include <core/logger/logger.hpp>
 
-namespace fastchess::util {
+namespace fastshogi::util {
 
 // Writes to a file in a thread safe manner.
 class FileWriter {
@@ -64,4 +64,4 @@ class FileWriter {
     const bool calculate_crc_;
 };
 
-}  // namespace fastchess::util
+}  // namespace fastshogi::util

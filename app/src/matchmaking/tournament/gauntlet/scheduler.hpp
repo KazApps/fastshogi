@@ -4,7 +4,7 @@
 #include <game/book/opening_book.hpp>
 #include <matchmaking/tournament/schedule/base_scheduler.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 /**
  * Generate matches for a round-robin tournament.
@@ -28,4 +28,4 @@ class GauntletScheduler : public TournamentSchedulerBase {
    private:
     std::size_t n_seeds;
 };
-}  // namespace fastchess
+}  // namespace fastshogi

@@ -3,12 +3,12 @@
 
 #include <doctest/doctest.hpp>
 
-using namespace fastchess;
+using namespace fastshogi;
 
 TEST_SUITE("Option Parsing Tests") {
     TEST_CASE("Should throw tc and st not usable together") {
         const auto args = cli::Args{
-            "fastchess.exe",
+            "fastshogi.exe",
             "-engine",
             "dir=./",
             "cmd=app/tests/mock/engine/dummy_engine",
@@ -26,7 +26,7 @@ TEST_SUITE("Option Parsing Tests") {
 
     TEST_CASE("Should throw no timecontrol specified") {
         const auto args = cli::Args{
-            "fastchess.exe",
+            "fastshogi.exe",
             "-engine",
             "dir=./",
             "cmd=app/tests/mock/engine/dummy_engine",
@@ -42,7 +42,7 @@ TEST_SUITE("Option Parsing Tests") {
 
     TEST_CASE("Should throw error too much concurrency") {
         const auto args = cli::Args{
-            "fastchess.exe",
+            "fastshogi.exe",
             "-concurrency",
             "20000",
         };
@@ -54,7 +54,7 @@ TEST_SUITE("Option Parsing Tests") {
 
     TEST_CASE("Should throw too many games") {
         const auto args = cli::Args{
-            "fastchess.exe", "-games", "3", "-rounds", "25000",
+            "fastshogi.exe", "-games", "3", "-rounds", "25000",
         };
 
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error: Exceeded -game limit! Must be less than 2",
@@ -63,7 +63,7 @@ TEST_SUITE("Option Parsing Tests") {
 
     TEST_CASE("Should throw invalid sprt config") {
         const auto args = cli::Args{
-            "fastchess.exe", "-sprt", "alpha=0.05", "beta=0.05", "elo0=5", "elo1=-1.5", "model=bayesian",
+            "fastshogi.exe", "-sprt", "alpha=0.05", "beta=0.05", "elo0=5", "elo1=-1.5", "model=bayesian",
         };
 
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; SPRT: elo0 must be less than elo1!", std::runtime_error);
@@ -71,7 +71,7 @@ TEST_SUITE("Option Parsing Tests") {
 
     TEST_CASE("Should throw invalid sprt config 2") {
         const auto args = cli::Args{
-            "fastchess.exe", "-sprt", "alpha=0.55", "beta=0.55", "elo0=4", "elo1=5", "model=bayesian",
+            "fastshogi.exe", "-sprt", "alpha=0.55", "beta=0.55", "elo0=4", "elo1=5", "model=bayesian",
         };
 
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; SPRT: sum of alpha and beta must be less than 1!",
@@ -80,7 +80,7 @@ TEST_SUITE("Option Parsing Tests") {
 
     TEST_CASE("Should throw invalid sprt config 3") {
         const auto args = cli::Args{
-            "fastchess.exe", "-sprt", "alpha=0.05", "beta=0.05", "elo0=4", "elo1=5", "model=dsadsa",
+            "fastshogi.exe", "-sprt", "alpha=0.05", "beta=0.05", "elo0=4", "elo1=5", "model=dsadsa",
         };
 
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; SPRT: invalid SPRT model!", std::runtime_error);
@@ -88,7 +88,7 @@ TEST_SUITE("Option Parsing Tests") {
 
     TEST_CASE("Should throw invalid sprt config 4") {
         const auto args = cli::Args{
-            "fastchess.exe", "-sprt", "alpha=1.05", "beta=0.05", "elo0=4", "elo1=5", "model=logistic",
+            "fastshogi.exe", "-sprt", "alpha=1.05", "beta=0.05", "elo0=4", "elo1=5", "model=logistic",
         };
 
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; SPRT: alpha must be a decimal number between 0 and 1!",
@@ -97,27 +97,27 @@ TEST_SUITE("Option Parsing Tests") {
 
     TEST_CASE("Should throw invalid sprt config 5") {
         const auto args = cli::Args{
-            "fastchess.exe", "-sprt", "alpha=0.05", "beta=1.05", "elo0=4", "elo1=5", "model=logistic",
+            "fastshogi.exe", "-sprt", "alpha=0.05", "beta=1.05", "elo0=4", "elo1=5", "model=logistic",
         };
 
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; SPRT: beta must be a decimal number between 0 and 1!",
                              std::runtime_error);
     }
 
-    TEST_CASE("Should throw no chess960 opening book") {
+    TEST_CASE("Should throw no shogi960 opening book") {
         const auto args = cli::Args{
-            "fastchess.exe",
+            "fastshogi.exe",
             "-variant",
             "fischerandom",
         };
 
-        CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error: Please specify a Chess960 opening book",
+        CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error: Please specify a Shogi960 opening book",
                              std::runtime_error);
     }
 
     TEST_CASE("Should throw not enough engines") {
         const auto args = cli::Args{
-            "fastchess.exe", "-engine", "dir=./", "cmd=app/tests/mock/engine/dummy_engine", "depth=5",
+            "fastshogi.exe", "-engine", "dir=./", "cmd=app/tests/mock/engine/dummy_engine", "depth=5",
         };
 
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error: Need at least two engines to start!",
@@ -126,7 +126,7 @@ TEST_SUITE("Option Parsing Tests") {
 
     TEST_CASE("Should throw no engine name") {
         const auto args = cli::Args{
-            "fastchess.exe",    "-engine", "dir=./", "cmd=app/tests/mock/engine/dummy_engine",
+            "fastshogi.exe",    "-engine", "dir=./", "cmd=app/tests/mock/engine/dummy_engine",
             "depth=5",          "-engine", "dir=./", "cmd=app/tests/mock/engine/dummy_engine",
             "tc=40/1:9.65+0.1",
         };
@@ -137,7 +137,7 @@ TEST_SUITE("Option Parsing Tests") {
 
     TEST_CASE("Should throw invalid tc") {
         const auto args = cli::Args{
-            "fastchess.exe",
+            "fastshogi.exe",
             "-engine",
             "dir=./",
             "cmd=app/tests/mock/engine/dummy_engine",
@@ -154,7 +154,7 @@ TEST_SUITE("Option Parsing Tests") {
 
     TEST_CASE("Should throw engine with same name") {
         const auto args = cli::Args{
-            "fastchess.exe",
+            "fastshogi.exe",
             "-engine",
             "dir=./",
             "cmd=app/tests/mock/engine/dummy_engine",
@@ -174,7 +174,7 @@ TEST_SUITE("Option Parsing Tests") {
 
     TEST_CASE("Should throw engine with invalid restart") {
         const auto args = cli::Args{
-            "fastchess.exe",
+            "fastshogi.exe",
             "-engine",
             "dir=./",
             "cmd=app/tests/mock/engine/dummy_engine",
@@ -196,7 +196,7 @@ TEST_SUITE("Option Parsing Tests") {
 
     TEST_CASE("Should throw error empty TB paths") {
         const auto args = cli::Args{
-            "fastchess.exe",
+            "fastshogi.exe",
             "-tb",
         };
 
@@ -206,7 +206,7 @@ TEST_SUITE("Option Parsing Tests") {
     }
 
     TEST_CASE("General Config Parsing") {
-        const auto args = cli::Args{"fastchess.exe",
+        const auto args = cli::Args{"fastshogi.exe",
                                     "-engine",
                                     "dir=./",
                                     "cmd=app/tests/mock/engine/dummy_engine",
@@ -277,7 +277,7 @@ TEST_SUITE("Option Parsing Tests") {
     }
 
     TEST_CASE("General Config Parsing 2") {
-        const auto args = cli::Args{"fastchess.exe",
+        const auto args = cli::Args{"fastshogi.exe",
                                     "-engine",
                                     "dir=./",
                                     "cmd=app/tests/mock/engine/dummy_engine",

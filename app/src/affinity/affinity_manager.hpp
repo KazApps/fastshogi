@@ -18,7 +18,7 @@
 #include <core/logger/logger.hpp>
 #include <core/memory/scope_guard.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 namespace affinity {
 class AffinityManager {
@@ -130,4 +130,4 @@ class AffinityManager {
 };
 
 }  // namespace affinity
-}  // namespace fastchess
+}  // namespace fastshogi

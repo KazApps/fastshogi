@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace fastchess {
+namespace fastshogi {
 
 class UCIOption {
    public:
@@ -16,4 +16,4 @@ class UCIOption {
     virtual Type getType() const                         = 0;
 };
 
-}  // namespace fastchess
+}  // namespace fastshogi

@@ -109,7 +109,7 @@ with (
 
 #include <game/pgn/openings_data.hpp>
 
-namespace fastchess::pgn {
+namespace fastshogi::pgn {
 
 std::unordered_map<std::string_view, Opening> EPD_TO_OPENING = {
 """)
@@ -125,7 +125,7 @@ std::unordered_map<std::string_view, Opening> EPD_TO_OPENING = {
     out.write("""
 };
 
-}  // namespace fastchess::pgn
+}  // namespace fastshogi::pgn
 """)
 
 print(f"{HEADER_PATH} successfully written with {count} opening records.")

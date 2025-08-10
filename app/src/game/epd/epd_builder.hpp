@@ -3,18 +3,18 @@
 #include <sstream>
 #include <string>
 
-#include <chess.hpp>
+#include <shogi.hpp>
 
 #include <core/config/config.hpp>
 #include <matchmaking/match/match.hpp>
 #include <types/tournament.hpp>
 
-namespace fastchess::epd {
+namespace fastshogi::epd {
 
 class EpdBuilder {
    public:
     EpdBuilder(const VariantType &variant, const MatchData &match) {
-        chess::Board board = chess::Board();
+        shogi::Board board = shogi::Board();
         board.set960(variant == VariantType::FRC);
         board.setFen(match.fen);
 
@@ -23,7 +23,7 @@ class EpdBuilder {
 
             if (illegal) break;
 
-            board.makeMove<true>(chess::uci::uciToMove(board, move.move));
+            board.makeMove<true>(shogi::uci::uciToMove(board, move.move));
         }
 
         epd << board.getEpd() << "\n";
@@ -36,4 +36,4 @@ class EpdBuilder {
     std::stringstream epd;
 };
 
-}  // namespace fastchess::epd
+}  // namespace fastshogi::epd

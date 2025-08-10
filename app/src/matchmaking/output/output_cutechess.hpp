@@ -10,7 +10,7 @@
 #include <matchmaking/elo/elo_wdl.hpp>
 #include <matchmaking/output/output.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 class Cutechess : public IOutput {
    public:
@@ -114,4 +114,4 @@ class Cutechess : public IOutput {
     OutputType getType() const override { return OutputType::CUTECHESS; }
 };
 
-}  // namespace fastchess
+}  // namespace fastshogi

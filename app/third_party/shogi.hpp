@@ -28,8 +28,8 @@ Source: https://github.com/Disservin/chess-library
 VERSION: 0.8.2
 */
 
-#ifndef CHESS_HPP
-#define CHESS_HPP
+#ifndef SHOGI_HPP
+#define SHOGI_HPP
 
 
 #include <functional>
@@ -37,7 +37,7 @@ VERSION: 0.8.2
 
 
 #include <cstdint>
-#ifdef CHESS_USE_PEXT
+#ifdef SHOGI_USE_PEXT
 #    include <immintrin.h>
 #endif
 
@@ -62,7 +62,7 @@ VERSION: 0.8.2
 
 #include <ostream>
 
-namespace chess {
+namespace shogi {
 
 class Color {
    public:
@@ -128,11 +128,11 @@ constexpr Color::underlying operator~(Color::underlying color) {
                                                : Color::underlying::NONE;
 }
 
-}  // namespace chess
+}  // namespace shogi
 
 #include <vector>
 
-namespace chess {
+namespace shogi {
 namespace utils {
 
 // Split a string by a delimiter
@@ -157,11 +157,11 @@ constexpr char tolower(char c) { return (c >= 'A' && c <= 'Z') ? (c - 'A' + 'a')
 
 }  // namespace utils
 
-}  // namespace chess
+}  // namespace shogi
 
-namespace chess {
+namespace shogi {
 
-#define CHESS_DECLARE_RANK(N)                            \
+#define SHOGI_DECLARE_RANK(N)                            \
     static constexpr auto SQ_A##N = underlying::SQ_A##N; \
     static constexpr auto SQ_B##N = underlying::SQ_B##N; \
     static constexpr auto SQ_C##N = underlying::SQ_C##N; \
@@ -306,14 +306,14 @@ class Square {
     using enum underlying;
 #else
 
-    CHESS_DECLARE_RANK(1)
-    CHESS_DECLARE_RANK(2)
-    CHESS_DECLARE_RANK(3)
-    CHESS_DECLARE_RANK(4)
-    CHESS_DECLARE_RANK(5)
-    CHESS_DECLARE_RANK(6)
-    CHESS_DECLARE_RANK(7)
-    CHESS_DECLARE_RANK(8)
+    SHOGI_DECLARE_RANK(1)
+    SHOGI_DECLARE_RANK(2)
+    SHOGI_DECLARE_RANK(3)
+    SHOGI_DECLARE_RANK(4)
+    SHOGI_DECLARE_RANK(5)
+    SHOGI_DECLARE_RANK(6)
+    SHOGI_DECLARE_RANK(7)
+    SHOGI_DECLARE_RANK(8)
 
     static constexpr auto NO_SQ = underlying::NO_SQ;
 
@@ -563,11 +563,11 @@ constexpr Square operator+(Square sq, Direction dir) {
     return static_cast<Square>(sq.index() + static_cast<std::int8_t>(dir));
 }
 
-#undef CHESS_DECLARE_RANK
+#undef SHOGI_DECLARE_RANK
 
-}  // namespace chess
+}  // namespace shogi
 
-namespace chess {
+namespace shogi {
 
 class Bitboard {
    public:
@@ -752,15 +752,15 @@ inline std::ostream& operator<<(std::ostream& os, const Bitboard& bb) {
 
 constexpr Bitboard operator&(std::uint64_t lhs, const Bitboard& rhs) { return rhs & lhs; }
 constexpr Bitboard operator|(std::uint64_t lhs, const Bitboard& rhs) { return rhs | lhs; }
-}  // namespace chess
+}  // namespace shogi
 
-namespace chess {
+namespace shogi {
 class Board;
-}  // namespace chess
+}  // namespace shogi
 
 
 
-namespace chess {
+namespace shogi {
 
 class PieceType {
    public:
@@ -939,13 +939,13 @@ class Piece {
         }
     }
 };
-}  // namespace chess
+}  // namespace shogi
 
-namespace chess {
+namespace shogi {
 class attacks {
     using U64 = std::uint64_t;
 
-#ifdef CHESS_USE_PEXT
+#ifdef SHOGI_USE_PEXT
     struct Magic {
         U64 mask;
         Bitboard *attacks;
@@ -1192,7 +1192,7 @@ class attacks {
      */
     static inline void initAttacks();
 };
-}  // namespace chess
+}  // namespace shogi
 
 #include <array>
 #include <cctype>
@@ -1200,7 +1200,7 @@ class attacks {
 
 // check if charconv header is available
 #if __has_include(<charconv>)
-#    define CHESS_USE_CHARCONV
+#    define SHOGI_USE_CHARCONV
 #    include <charconv>
 #else
 #    include <sstream>
@@ -1208,16 +1208,16 @@ class attacks {
 
 
 
-namespace chess::constants {
+namespace shogi::constants {
 
 constexpr Bitboard DEFAULT_CHECKMASK = Bitboard(0xFFFFFFFFFFFFFFFFull);
 constexpr auto STARTPOS              = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 constexpr auto MAX_MOVES             = 256;
-}  // namespace chess::constants
+}  // namespace shogi::constants
 
 
 
-namespace chess {
+namespace shogi {
 
 class Move {
    public:
@@ -1293,7 +1293,7 @@ class Move {
     std::int16_t score_;
 };
 
-}  // namespace chess
+}  // namespace shogi
 
 
 
@@ -1302,7 +1302,7 @@ class Move {
 #include <stdexcept>
 
 
-namespace chess {
+namespace shogi {
 class Movelist {
    public:
     using value_type      = Move;
@@ -1322,7 +1322,7 @@ class Movelist {
     // Element access
 
     [[nodiscard]] constexpr reference at(size_type pos) {
-#ifndef CHESS_NO_EXCEPTIONS
+#ifndef SHOGI_NO_EXCEPTIONS
         if (pos >= size_) {
             throw std::out_of_range("Movelist::at: pos (which is " + std::to_string(pos) + ") >= size (which is " +
                                     std::to_string(size_) + ")");
@@ -1332,7 +1332,7 @@ class Movelist {
     }
 
     [[nodiscard]] constexpr const_reference at(size_type pos) const {
-#ifndef CHESS_NO_EXCEPTIONS
+#ifndef SHOGI_NO_EXCEPTIONS
         if (pos >= size_) {
             throw std::out_of_range("Movelist::at: pos (which is " + std::to_string(pos) + ") >= size (which is " +
                                     std::to_string(size_) + ")");
@@ -1418,9 +1418,9 @@ class Movelist {
     std::array<value_type, constants::MAX_MOVES> moves_;
     size_type size_ = 0;
 };
-}  // namespace chess
+}  // namespace shogi
 
-namespace chess {
+namespace shogi {
 enum PieceGenType {
     PAWN   = 1,
     KNIGHT = 2,
@@ -1501,11 +1501,11 @@ class movegen {
     friend class Board;
 };
 
-}  // namespace chess
+}  // namespace shogi
 
 
 
-namespace chess {
+namespace shogi {
 class Zobrist {
     using U64                              = std::uint64_t;
     static constexpr U64 RANDOM_ARRAY[781] = {
@@ -1718,9 +1718,9 @@ class Zobrist {
     friend class Board;
 };
 
-}  // namespace chess
+}  // namespace shogi
 
-namespace chess {
+namespace shogi {
 
 namespace detail {
 inline std::optional<int> parseStringViewToInt(std::string_view sv) {
@@ -1731,7 +1731,7 @@ inline std::optional<int> parseStringViewToInt(std::string_view sv) {
 
     if (parsed_sv.empty()) return std::nullopt;
 
-#ifdef CHESS_USE_CHARCONV
+#ifdef SHOGI_USE_CHARCONV
     int result;
     const char *begin = parsed_sv.data();
     const char *end   = begin + parsed_sv.size();
@@ -1844,9 +1844,9 @@ class Board {
     Board(PrivateCtor) {}
 
    public:
-    explicit Board(std::string_view fen = constants::STARTPOS, bool chess960 = false) {
+    explicit Board(std::string_view fen = constants::STARTPOS, bool shogi960 = false) {
         prev_states_.reserve(256);
-        chess960_ = chess960;
+        shogi960_ = shogi960;
         assert(setFenInternal<true>(constants::STARTPOS));
         setFenInternal<true>(fen);
     }
@@ -2362,15 +2362,15 @@ class Board {
     [[nodiscard]] std::uint32_t fullMoveNumber() const noexcept { return 1 + plies_ / 2; }
 
     void set960(bool is960) {
-        chess960_ = is960;
+        shogi960_ = is960;
         if (!original_fen_.empty()) setFen(original_fen_);
     }
 
     /**
-     * @brief Checks if the current position is a chess960, aka. FRC/DFRC position.
+     * @brief Checks if the current position is a shogi960, aka. FRC/DFRC position.
      * @return
      */
-    [[nodiscard]] bool chess960() const noexcept { return chess960_; }
+    [[nodiscard]] bool shogi960() const noexcept { return shogi960_; }
 
     /**
      * @brief Get the castling rights as a string
@@ -2382,7 +2382,7 @@ class Board {
             return c == Color::WHITE ? std::toupper(file[0]) : file[0];
         };
 
-        if (chess960_) {
+        if (shogi960_) {
             std::string ss;
 
             for (auto color : {Color::WHITE, Color::BLACK})
@@ -2404,7 +2404,7 @@ class Board {
 
     /**
      * @brief Checks if the current position is a repetition, set this to 1 if
-     * you are writing a chess engine.
+     * you are writing a shogi engine.
      * @param count
      * @return
      */
@@ -2426,7 +2426,7 @@ class Board {
 
     /**
      * @brief Checks if the current position is a draw by 50 move rule.
-     * Keep in mind that by the rules of chess, if the position has 50 half
+     * Keep in mind that by the rules of shogi, if the position has 50 half
      * moves it's not necessarily a draw, since checkmate has higher priority,
      * call getHalfMoveDrawType,
      * to determine whether the position is a draw or checkmate.
@@ -2489,7 +2489,7 @@ class Board {
     /**
      * @brief Checks if the game is over. Returns GameResultReason::NONE if the game is not over.
      * This function calculates all legal moves for the current position to check if the game is over.
-     * If you are writing a chess engine you should not use this function.
+     * If you are writing a shogi engine you should not use this function.
      * @return
      */
     [[nodiscard]] std::pair<GameResultReason, GameResult> isGameOver() const noexcept {
@@ -2589,17 +2589,17 @@ class Board {
          */
         static PackedBoard encode(const Board &board) { return encodeState(board); }
 
-        static PackedBoard encode(std::string_view fen, bool chess960 = false) { return encodeState(fen, chess960); }
+        static PackedBoard encode(std::string_view fen, bool shogi960 = false) { return encodeState(fen, shogi960); }
 
         /**
          * @brief Creates a Board object from a PackedBoard
          * @param compressed
-         * @param chess960 If the board is a chess960 position, set this to true
+         * @param shogi960 If the board is a shogi960 position, set this to true
          * @return
          */
-        static Board decode(const PackedBoard &compressed, bool chess960 = false) {
+        static Board decode(const PackedBoard &compressed, bool shogi960 = false) {
             Board board     = Board(PrivateCtor::CREATE);
-            board.chess960_ = chess960;
+            board.shogi960_ = shogi960;
             decode(board, compressed);
             return board;
         }
@@ -2610,7 +2610,7 @@ class Board {
          * we use 8 bytes (64bit) to store the occupancy bitboard,
          * and 16 bytes (128bit) to store the pieces (plus some special information).
          *
-         * Each of the 16 bytes can store 2 pieces, since chess only has 12 different pieces,
+         * Each of the 16 bytes can store 2 pieces, since shogi only has 12 different pieces,
          * we can represent the pieces from 0 to 11 in 4 bits (a nibble) and use the other 4 bit for
          * the next piece.
          * Since we need to store information about enpassant, castling rights and the side to move,
@@ -2655,9 +2655,9 @@ class Board {
             return packed;
         }
 
-        static PackedBoard encodeState(std::string_view fen, bool chess960 = false) {
+        static PackedBoard encodeState(std::string_view fen, bool shogi960 = false) {
             // fallback to slower method
-            if (chess960) {
+            if (shogi960) {
                 return encodeState(Board(fen, true));
             }
 
@@ -2881,7 +2881,7 @@ class Board {
     Square ep_sq_        = Square::NO_SQ;
     std::uint8_t hfm_    = 0;
 
-    bool chess960_ = false;
+    bool shogi960_ = false;
 
     std::array<std::array<Bitboard, 2>, 2> castling_path = {};
 
@@ -3010,7 +3010,7 @@ class Board {
             const auto king_side  = CastlingRights::Side::KING_SIDE;
             const auto queen_side = CastlingRights::Side::QUEEN_SIDE;
 
-            if (!chess960_) {
+            if (!shogi960_) {
                 if (i == 'K')
                     cr_.setCastlingRight(Color::WHITE, king_side, File::FILE_H);
                 else if (i == 'Q')
@@ -3025,7 +3025,7 @@ class Board {
                 continue;
             }
 
-            // chess960 castling detection
+            // shogi960 castling detection
             const auto color   = isupper(i) ? Color::WHITE : Color::BLACK;
             const auto king_sq = kingSq(color);
 
@@ -3236,9 +3236,9 @@ inline CheckType Board::givesCheck(const Move &m) const noexcept {
     return CheckType::NO_CHECK;  // Prevent a compiler warning
 }
 
-}  // namespace  chess
+}  // namespace  shogi
 
-namespace chess {
+namespace shogi {
 
 template <Direction direction>
 [[nodiscard]] inline constexpr Bitboard attacks::shift(const Bitboard b) {
@@ -3356,11 +3356,11 @@ inline void attacks::initSliders(Square sq, Magic table[], U64 magic,
 
     auto &table_sq = table[sq.index()];
 
-#ifndef CHESS_USE_PEXT
+#ifndef SHOGI_USE_PEXT
     table_sq.magic = magic;
 #endif
     table_sq.mask = (attacks(sq, occ) & ~edges).getBits();
-#ifndef CHESS_USE_PEXT
+#ifndef SHOGI_USE_PEXT
     table_sq.shift = 64 - Bitboard(table_sq.mask).count();
 #endif
 
@@ -3383,11 +3383,11 @@ inline void attacks::initAttacks() {
         initSliders(static_cast<Square>(i), RookTable, RookMagics[i], sliderAttacks<true>);
     }
 }
-}  // namespace chess
+}  // namespace shogi
 
 
 
-namespace chess {
+namespace shogi {
 
 inline auto movegen::init_squares_between() {
     std::array<std::array<Bitboard, 64>, 64> squares_between_bb{};
@@ -3484,7 +3484,7 @@ template <Color::underlying c>
     auto king_sq          = board.kingSq(~c);
     Bitboard map_king_atk = attacks::king(king_sq) & enemy_empty;
 
-    if (map_king_atk == Bitboard(0ull) && !board.chess960()) return 0ull;
+    if (map_king_atk == Bitboard(0ull) && !board.shogi960()) return 0ull;
 
     auto occ     = board.occ() ^ Bitboard::fromSquare(king_sq);
     auto queens  = board.pieces(PieceType::QUEEN, c);
@@ -3742,9 +3742,9 @@ template <Color::underlying c>
         const auto king_to = Square::castling_king_square(is_king_side, c);
         if (between(sq, king_to) & seen) continue;
 
-        // Chess960: Rook is pinned on the backrank.
+        // Shogi960: Rook is pinned on the backrank.
         const auto from_rook_bb = Bitboard::fromSquare(Square(rights.getRookFile(c, side), sq.rank()));
-        if (board.chess960() && (pin_hv & board.us(board.sideToMove()) & from_rook_bb)) continue;
+        if (board.shogi960() && (pin_hv & board.us(board.sideToMove()) & from_rook_bb)) continue;
 
         moves |= from_rook_bb;
     }
@@ -3900,11 +3900,11 @@ inline const std::array<std::array<Bitboard, 64>, 64> movegen::SQUARES_BETWEEN_B
     return movegen::init_squares_between();
 }();
 
-}  // namespace chess
+}  // namespace shogi
 
 #include <istream>
 
-namespace chess::pgn {
+namespace shogi::pgn {
 
 namespace detail {
 
@@ -4639,28 +4639,28 @@ class StreamParser {
 
     bool dont_advance_after_body = false;
 };
-}  // namespace chess::pgn
+}  // namespace shogi::pgn
 
 #include <sstream>
 
 
-namespace chess {
+namespace shogi {
 class uci {
    public:
     /**
      * @brief Converts an internal move to a UCI string
      * @param move
-     * @param chess960
+     * @param shogi960
      * @return
      */
-    [[nodiscard]] static std::string moveToUci(const Move &move, bool chess960 = false) noexcept(false) {
+    [[nodiscard]] static std::string moveToUci(const Move &move, bool shogi960 = false) noexcept(false) {
         // Get the from and to squares
         Square from_sq = move.from();
         Square to_sq   = move.to();
 
-        // If the move is not a chess960 castling move and is a king moving more than one square,
+        // If the move is not a shogi960 castling move and is a king moving more than one square,
         // update the to square to be the correct square for a regular castling move
-        if (!chess960 && move.typeOf() == Move::CASTLING) {
+        if (!shogi960 && move.typeOf() == Move::CASTLING) {
             to_sq = Square(to_sq > from_sq ? File::FILE_G : File::FILE_C, from_sq.rank());
         }
 
@@ -4697,15 +4697,15 @@ class uci {
 
         auto pt = board.at(source).type();
 
-        // castling in chess960
-        if (board.chess960() && pt == PieceType::KING && board.at(target).type() == PieceType::ROOK &&
+        // castling in shogi960
+        if (board.shogi960() && pt == PieceType::KING && board.at(target).type() == PieceType::ROOK &&
             board.at(target).color() == board.sideToMove()) {
             return Move::make<Move::CASTLING>(source, target);
         }
 
         // convert to king captures rook
-        // in chess960 the move should be sent as king captures rook already!
-        if (!board.chess960() && pt == PieceType::KING && Square::distance(target, source) == 2) {
+        // in shogi960 the move should be sent as king captures rook already!
+        if (!board.shogi960() && pt == PieceType::KING && Square::distance(target, source) == 2) {
             target = Square(target > source ? File::FILE_H : File::FILE_A, source.rank());
             return Move::make<Move::CASTLING>(source, target);
         }
@@ -4826,7 +4826,7 @@ class uci {
                 }
             }
 
-#ifndef CHESS_NO_EXCEPTIONS
+#ifndef SHOGI_NO_EXCEPTIONS
             throw SanParseError("Failed to parse san. At step 2: " + std::string(san) + " " + board.getFen());
 #endif
         }
@@ -4870,7 +4870,7 @@ class uci {
 
             // If we get here, the move matches our criteria
             if (foundMatch) {
-#ifndef CHESS_NO_EXCEPTIONS
+#ifndef SHOGI_NO_EXCEPTIONS
                 throw AmbiguousMoveError("Ambiguous san: " + std::string(san) + " in " + board.getFen());
 #endif
             }
@@ -4880,7 +4880,7 @@ class uci {
         }
 
         if (!foundMatch) {
-#ifndef CHESS_NO_EXCEPTIONS
+#ifndef SHOGI_NO_EXCEPTIONS
             throw SanParseError("Failed to parse san, illegal move: " + std::string(san) + " " + board.getFen());
 #endif
         }
@@ -4937,7 +4937,7 @@ class uci {
     };
 
     [[nodiscard]] static SanMoveInformation parseSanInfo(std::string_view san) noexcept(false) {
-#ifndef CHESS_NO_EXCEPTIONS
+#ifndef SHOGI_NO_EXCEPTIONS
         if (san.length() < 2) {
             throw SanParseError("Failed to parse san. At step 0: " + std::string(san));
         }
@@ -5042,7 +5042,7 @@ class uci {
             throw_error = true;
         }
 
-#ifndef CHESS_NO_EXCEPTIONS
+#ifndef SHOGI_NO_EXCEPTIONS
         if (throw_error) {
             throw SanParseError("Failed to parse san. At step 1: " + std::string(san));
         }
@@ -5190,6 +5190,6 @@ class uci {
         return true;
     }
 };
-}  // namespace chess
+}  // namespace shogi
 
 #endif

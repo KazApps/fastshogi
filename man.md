@@ -1,14 +1,14 @@
 # NAME
 
-fastchess - a command-line tool for managing chess games with engines
+fastshogi - a command-line tool for managing shogi games with engines
 
 # SYNOPSIS
 
-fastchess [OPTIONS]
+fastshogi [OPTIONS]
 
 # DESCRIPTION
 
-fastchess is a command-line tool designed to manage and orchestrate chess games between engines. It provides a range of options to configure game settings, engine parameters, concurrency, and output formats.
+fastshogi is a command-line tool designed to manage and orchestrate shogi games between engines. It provides a range of options to configure game settings, engine parameters, concurrency, and output formats.
 
 # OPTIONS
 
@@ -53,8 +53,8 @@ The following options are available:
 - -variant VARIANT  
     Choose between the following game variants:
 
-    - standard - play Standard Chess (default)
-    - fischerandom - play Fischer Random Chess
+    - standard - play Standard Shogi (default)
+    - fischerandom - play Fischer Random Shogi
 
 - -tournament TYPE
     Choose type of tournament:
@@ -123,7 +123,7 @@ The following options are available:
     - START - starting index of the opening book. Default is 1.
 
 - -output format=FORMAT  
-    Choose the output format for game results (cutechess or fastchess). Default is fastchess.
+    Choose the output format for game results (cutechess or fastshogi). Default is fastshogi.
 
 - -pgnout file=NAME notation=(san|lan|uci) [nodes=(true|false)] [seldepth=(true|false)] [nps=(true|false)] [hashfull=(true|false)] [tbhits=(true|false)] [timeleft=(true|false)] [latency=(true|false)] [min=(true|false)] [match_line=REGEX]
     Export games in PGN format with specified notations and optional tracking of nodes, seldepth, and others.
@@ -132,7 +132,7 @@ The following options are available:
 
         - san - Standard Algebraic Notation (default)
         - lan - Long Algebraic Notation
-        - uci - Universal Chess Interface
+        - uci - Universal Shogi Interface
 
     - nodes - Track node count. Default is false.
     - seldepth - Track seldepth. Default is false.
@@ -193,7 +193,7 @@ The following options are available:
     - CPUS - The cpus to use as a list of the form "3,5,7-11,13".
 
 - -report penta=(true|false)  
-    Reports pentanomial statistics (for fastchess output). Defaults to true.
+    Reports pentanomial statistics (for fastshogi output). Defaults to true.
 
 - -version  
     Print version number and exit.
@@ -225,18 +225,18 @@ The following options are available:
 To start a match between two engines using random openings from book.epd:
 
 ```sh
-$ fastchess -engine cmd=Engine1.exe name=Engine1 -engine cmd=Engine2.exe \
+$ fastshogi -engine cmd=Engine1.exe name=Engine1 -engine cmd=Engine2.exe \
   name=Engine2 -openings file=book.epd format=epd order=random \
   -each tc=60+0.6 option.Hash=64 -rounds 200 -repeat -concurrency 4
 ```
 
 # AUTHORS
 
-fastchess was written by Disservin, Szil, PGG106, and contributors.
+fastshogi was written by KazApps and contributors, based on fastchess by Disservin, Szil, PGG106, and contributors.
 
 # REPORTING BUGS
 
-Report any bugs to <https://github.com/Disservin/fastchess/issues>.
+Report any bugs to <https://github.com/KazApps/fastshogi/issues>.
 
 # COPYRIGHT
 

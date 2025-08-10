@@ -38,21 +38,21 @@
  * to define White as 0 and Black as 1.
  */
 
-#include <chess.hpp>
+#include <shogi.hpp>
 
 inline int poplsb(uint64_t* x) {
-    const int lsb = chess::Bitboard(*x).lsb();
+    const int lsb = shogi::Bitboard(*x).lsb();
     *x &= *x - 1;
     return lsb;
 }
 
-#define PYRRHIC_POPCOUNT(x) (chess::Bitboard(x).count())
-#define PYRRHIC_LSB(x) (chess::Bitboard(x).lsb())
+#define PYRRHIC_POPCOUNT(x) (shogi::Bitboard(x).count())
+#define PYRRHIC_LSB(x) (shogi::Bitboard(x).lsb())
 #define PYRRHIC_POPLSB(x) (poplsb(x))
 
-#define PYRRHIC_PAWN_ATTACKS(sq, c) (chess::attacks::pawn((chess::Color)!c, (chess::Square)(sq)).getBits())
-#define PYRRHIC_KNIGHT_ATTACKS(sq) (chess::attacks::knight((chess::Square)(sq)).getBits())
-#define PYRRHIC_BISHOP_ATTACKS(sq, occ) (chess::attacks::bishop((chess::Square)(sq), (chess::Bitboard)(occ)).getBits())
-#define PYRRHIC_ROOK_ATTACKS(sq, occ) (chess::attacks::rook((chess::Square)(sq), (chess::Bitboard)(occ)).getBits())
-#define PYRRHIC_QUEEN_ATTACKS(sq, occ) (chess::attacks::queen((chess::Square)(sq), (chess::Bitboard)(occ)).getBits())
-#define PYRRHIC_KING_ATTACKS(sq) (chess::attacks::king((chess::Square)(sq)).getBits())
+#define PYRRHIC_PAWN_ATTACKS(sq, c) (shogi::attacks::pawn((shogi::Color)!c, (shogi::Square)(sq)).getBits())
+#define PYRRHIC_KNIGHT_ATTACKS(sq) (shogi::attacks::knight((shogi::Square)(sq)).getBits())
+#define PYRRHIC_BISHOP_ATTACKS(sq, occ) (shogi::attacks::bishop((shogi::Square)(sq), (shogi::Bitboard)(occ)).getBits())
+#define PYRRHIC_ROOK_ATTACKS(sq, occ) (shogi::attacks::rook((shogi::Square)(sq), (shogi::Bitboard)(occ)).getBits())
+#define PYRRHIC_QUEEN_ATTACKS(sq, occ) (shogi::attacks::queen((shogi::Square)(sq), (shogi::Bitboard)(occ)).getBits())
+#define PYRRHIC_KING_ATTACKS(sq) (shogi::attacks::king((shogi::Square)(sq)).getBits())

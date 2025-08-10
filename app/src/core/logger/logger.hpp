@@ -26,7 +26,7 @@ class fcgzstream : public ogzstream {
 };
 #endif
 
-namespace fastchess {
+namespace fastshogi {
 
 class Logger {
    public:
@@ -129,9 +129,9 @@ class Logger {
 label, time, thread_id, message
 */
 #ifdef _WIN32
-        constexpr auto fmt = "[{:<6}] [{:>15}] <{:>3}> fastchess --- {}";
+        constexpr auto fmt = "[{:<6}] [{:>15}] <{:>3}> fastshogi --- {}";
 #else
-        constexpr auto fmt = "[{:<6}] [{:>15}] <{:>20}> fastchess --- {}";
+        constexpr auto fmt = "[{:<6}] [{:>15}] <{:>20}> fastshogi --- {}";
 #endif
 
         auto thread_id_str = thread ? fmt::format("{}", std::this_thread::get_id()) : "";
@@ -162,4 +162,4 @@ label, time, thread_id, message
 #define LOG_INFO_THREAD(...) Logger::info<true>(__VA_ARGS__)
 #define LOG_ERR_THREAD(...) Logger::err<true>(__VA_ARGS__)
 #define LOG_FATAL_THREAD(...) Logger::fatal<true>(__VA_ARGS__)
-}  // namespace fastchess
+}  // namespace fastshogi

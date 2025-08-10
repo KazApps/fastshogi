@@ -5,7 +5,7 @@
 #include <string>
 #include <string_view>
 
-#include <chess.hpp>
+#include <shogi.hpp>
 
 #include <matchmaking/match/match.hpp>
 
@@ -13,7 +13,7 @@
 
 #include <game/pgn/openings_data.hpp>
 
-namespace fastchess::pgn {
+namespace fastshogi::pgn {
 
 class PgnBuilder {
    public:
@@ -31,13 +31,13 @@ class PgnBuilder {
 
    private:
     // Converts a UCI move to either SAN, LAN or keeps it as UCI
-    [[nodiscard]] std::string moveNotation(chess::Board &board, const std::string &move) const noexcept;
+    [[nodiscard]] std::string moveNotation(shogi::Board &board, const std::string &move) const noexcept;
 
     // Adds a header to the pgn
     template <typename T>
     void addHeader(std::string_view name, const T &value) noexcept;
 
-    std::string addMove(chess::Board &board, const MoveData &move, std::size_t move_number, int dots, bool illegal,
+    std::string addMove(shogi::Board &board, const MoveData &move, std::size_t move_number, int dots, bool illegal,
                         bool last) noexcept;
 
     std::optional<Opening> getOpeningClassification(bool is_frc_variant) const;
@@ -67,4 +67,4 @@ class PgnBuilder {
     std::stringstream pgn_;
 };
 
-}  // namespace fastchess::pgn
+}  // namespace fastshogi::pgn

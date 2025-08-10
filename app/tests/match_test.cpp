@@ -2,7 +2,7 @@
 
 #include <doctest/doctest.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 TEST_SUITE("Match Test") {
     TEST_CASE("convertScoreToString") {
@@ -52,37 +52,37 @@ TEST_SUITE("Match Test") {
     TEST_CASE("ResignTracker") {
         SUBCASE("twosided resigns after move_count") {
             ResignTracker rt(100, 2, true);
-            rt.update(150, engine::ScoreType::CP, chess::Color::WHITE);
-            rt.update(-150, engine::ScoreType::CP, chess::Color::BLACK);
-            rt.update(150, engine::ScoreType::CP, chess::Color::WHITE);
-            rt.update(-150, engine::ScoreType::CP, chess::Color::BLACK);
+            rt.update(150, engine::ScoreType::CP, shogi::Color::WHITE);
+            rt.update(-150, engine::ScoreType::CP, shogi::Color::BLACK);
+            rt.update(150, engine::ScoreType::CP, shogi::Color::WHITE);
+            rt.update(-150, engine::ScoreType::CP, shogi::Color::BLACK);
             CHECK(rt.resignable());
         }
 
         SUBCASE("twosided resets on non-qualifying score") {
             ResignTracker rt(100, 2, true);
-            rt.update(150, engine::ScoreType::CP, chess::Color::WHITE);
-            rt.update(50, engine::ScoreType::CP, chess::Color::BLACK);
+            rt.update(150, engine::ScoreType::CP, shogi::Color::WHITE);
+            rt.update(50, engine::ScoreType::CP, shogi::Color::BLACK);
             CHECK_FALSE(rt.resignable());
         }
 
         SUBCASE("non-twosided white resigns") {
             ResignTracker rt(100, 2, false);
-            rt.update(-150, engine::ScoreType::CP, chess::Color::WHITE);
-            rt.update(-150, engine::ScoreType::CP, chess::Color::WHITE);
+            rt.update(-150, engine::ScoreType::CP, shogi::Color::WHITE);
+            rt.update(-150, engine::ScoreType::CP, shogi::Color::WHITE);
             CHECK(rt.resignable());
         }
 
         SUBCASE("non-twosided black resigns") {
             ResignTracker rt(100, 2, false);
-            rt.update(-150, engine::ScoreType::CP, chess::Color::BLACK);
-            rt.update(-150, engine::ScoreType::CP, chess::Color::BLACK);
+            rt.update(-150, engine::ScoreType::CP, shogi::Color::BLACK);
+            rt.update(-150, engine::ScoreType::CP, shogi::Color::BLACK);
             CHECK(rt.resignable());
         }
 
         SUBCASE("mate score triggers resign") {
             ResignTracker rt(0, 1, false);
-            rt.update(-1, engine::ScoreType::MATE, chess::Color::WHITE);
+            rt.update(-1, engine::ScoreType::MATE, shogi::Color::WHITE);
             CHECK(rt.resignable());
         }
     }
@@ -102,4 +102,4 @@ TEST_SUITE("Match Test") {
     }
 }
 
-}  // namespace fastchess
+}  // namespace fastshogi

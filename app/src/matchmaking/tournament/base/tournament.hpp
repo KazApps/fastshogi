@@ -21,7 +21,7 @@
 #include <matchmaking/tournament/schedule/scheduler.hpp>
 #include <types/tournament.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 class BaseTournament {
     using EngineCache = util::CachePool<engine::UciEngine, std::string>;
@@ -87,4 +87,4 @@ class BaseTournament {
     void restartEngine(std::unique_ptr<engine::UciEngine> &engine);
 };
 
-}  // namespace fastchess
+}  // namespace fastshogi

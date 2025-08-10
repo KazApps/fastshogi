@@ -14,7 +14,7 @@
 #    include <unistd.h>
 #endif
 
-namespace fastchess {
+namespace fastshogi {
 
 namespace affinity {
 
@@ -118,4 +118,4 @@ inline pid_t getThreadHandle() noexcept {
 #endif
 }  // namespace affinity
 
-}  // namespace fastchess
+}  // namespace fastshogi

@@ -19,7 +19,7 @@
 
 #include <matchmaking/tournament/base/tournament.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 class RoundRobin : public BaseTournament {
    public:
@@ -49,4 +49,4 @@ class RoundRobin : public BaseTournament {
     std::mutex output_mutex_;
     std::mutex game_gen_mutex_;
 };
-}  // namespace fastchess
+}  // namespace fastshogi

@@ -2,7 +2,7 @@
 
 #include <doctest/doctest.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 TEST_SUITE("File Descriptor Limit") {
     TEST_CASE("Static FD limit") {
@@ -27,4 +27,4 @@ TEST_SUITE("File Descriptor Limit") {
     }
 }
 
-}  // namespace fastchess
+}  // namespace fastshogi

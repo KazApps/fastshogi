@@ -4,7 +4,7 @@
 
 #include <game/pgn/openings_data.hpp>
 
-namespace fastchess::pgn {
+namespace fastshogi::pgn {
 
 std::unordered_map<std::string_view, Opening> EPD_TO_OPENING = {
     {"rnbqkbnr/pppppppp/8/8/8/7N/PPPPPPPP/RNBQKB1R b KQkq -", {"A00", "Amar Opening"}},
@@ -3546,4 +3546,4 @@ std::unordered_map<std::string_view, Opening> EPD_TO_OPENING = {
 
 };
               
-}  // namespace fastchess::pgn
+}  // namespace fastshogi::pgn

@@ -1,8 +1,8 @@
 #include <random>
 
-#include "../../../third_party/chess.hpp"
+#include "../../../third_party/shogi.hpp"
 
-using namespace chess;
+using namespace shogi;
 
 std::mt19937 gen;
 
@@ -65,7 +65,7 @@ void uci_line(Board &board, const std::string &line) {
         }
     } else if (tokens[0] == "uci") {
         std::cout << "id name random_move" << std::endl;
-        std::cout << "id author fastchess" << std::endl;
+        std::cout << "id author fastshogi" << std::endl;
         std::cout << "option name Hash type spin default 16 min 1 max 33554432" << std::endl;
         std::cout << "uciok" << std::endl;
     } else if (tokens[0] == "isready") {

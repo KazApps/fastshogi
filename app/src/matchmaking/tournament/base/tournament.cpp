@@ -24,7 +24,7 @@
 #include <matchmaking/tournament/schedule/scheduler.hpp>
 #include <types/tournament.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 BaseTournament::BaseTournament(const stats_map &results) {
     const auto &config = *config::TournamentConfig;
@@ -54,7 +54,7 @@ BaseTournament::~BaseTournament() {
 
     pool_.kill();
 
-    if (config::TournamentConfig->output == OutputType::FASTCHESS) {
+    if (config::TournamentConfig->output == OutputType::FASTSHOGI) {
         if (tracker_.begin() != tracker_.end()) {
             Logger::print<Logger::Level::INFO>("");
         }
@@ -143,7 +143,7 @@ void BaseTournament::playGame(const GamePair<EngineConfiguration, EngineConfigur
 
         Previously, CPU affinity was set on engine processes after they were already running.
         This approach failed because:
-        1. Chess engines typically spawn worker threads during initialization
+        1. Shogi engines typically spawn worker threads during initialization
         2. These worker threads were created before affinity was applied
         3. Child threads don't inherit affinity from parent processes retroactively
         4. This resulted in engines running on incorrect CPU cores
@@ -228,7 +228,7 @@ void BaseTournament::playGame(const GamePair<EngineConfiguration, EngineConfigur
     if (w_engine_ref.getConfig().restart) engine_cache_.deleteFromCache(white_engine);
     if (b_engine_ref.getConfig().restart) engine_cache_.deleteFromCache(black_engine);
 
-    const auto &loser = match_data.players.white.result == chess::GameResult::LOSE ? white_name : black_name;
+    const auto &loser = match_data.players.white.result == shogi::GameResult::LOSE ? white_name : black_name;
 
     switch (match_data.termination) {
         case MatchTermination::TIMEOUT:
@@ -288,4 +288,4 @@ std::size_t BaseTournament::setResults(const stats_map &results) {
     return total;
 }
 
-}  // namespace fastchess
+}  // namespace fastshogi

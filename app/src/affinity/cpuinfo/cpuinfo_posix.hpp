@@ -8,7 +8,7 @@
 #include <affinity/cpuinfo/cpu_info.hpp>
 #include <core/logger/logger.hpp>
 
-namespace fastchess::affinity::cpu_info {
+namespace fastshogi::affinity::cpu_info {
 
 inline CpuInfo getCpuInfo() {
     LOG_TRACE("Getting CPU info");
@@ -53,4 +53,4 @@ inline CpuInfo getCpuInfo() {
     return cpu_info;
 }
 
-}  // namespace fastchess::affinity::cpu_info
+}  // namespace fastshogi::affinity::cpu_info

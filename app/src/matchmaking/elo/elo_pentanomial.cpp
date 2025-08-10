@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <sstream>
 
-namespace fastchess::elo {
+namespace fastshogi::elo {
 
 EloPentanomial::EloPentanomial(const Stats& stats) {
     pairs_             = stats.totalPairs();
@@ -71,4 +71,4 @@ std::string EloPentanomial::los() const noexcept {
 
 double EloPentanomial::getScore() const noexcept { return score_; }
 
-}  // namespace fastchess::elo
+}  // namespace fastshogi::elo

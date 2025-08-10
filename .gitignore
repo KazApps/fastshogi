@@ -46,8 +46,8 @@ Testing
 .cmake
 
 #Executable files
-fast-chess*
-fastchess*
+fast-shogi*
+fastshogi*
 dummy_engine
 random_mover
 
@@ -64,7 +64,7 @@ random_mover
 # Scripts
 *.bat
 
-# Chess related
+# Shogi related
 *.pgn
 *.epd
 UHO*

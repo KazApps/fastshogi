@@ -2,9 +2,9 @@
 
 #include <string_view>
 
-#include <chess.hpp>
+#include <shogi.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 // Initialize the syzygy tablebases.
 // syzygyDirs should be a ;-separated list of directories containing the tablebases.
@@ -17,12 +17,12 @@ void tearDownSyzygy();
 // Check whether the board is in a state for which we can probe WDL tablebases.
 // Note that even if this function returns true, a probe for this position might still fail if the
 // tablebases are incomplete.
-[[nodiscard]] bool canProbeSyzgyWdl(const chess::Board& board);
+[[nodiscard]] bool canProbeSyzgyWdl(const shogi::Board& board);
 
 // Probe the WDL tablebases for the given board.
 // If the probe is successful, one of GameResult::WIN, GameResult::DRAW, GameResult::LOSE is
 // returned, representing the game result from the perspective of the side to move.
 // Otherwise, GameResult::NONE is returned.
-[[nodiscard]] chess::GameResult probeSyzygyWdl(const chess::Board& board, bool ignore50MoveRule);
+[[nodiscard]] shogi::GameResult probeSyzygyWdl(const shogi::Board& board, bool ignore50MoveRule);
 
-}  // namespace fastchess
+}  // namespace fastshogi

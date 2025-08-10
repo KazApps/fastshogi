@@ -15,7 +15,7 @@
 #include "spin_option.hpp"
 #include "string_option.hpp"
 
-namespace fastchess {
+namespace fastshogi {
 
 class UCIOptionFactory {
    public:
@@ -105,4 +105,4 @@ class UCIOptionFactory {
     }
 };
 
-}  // namespace fastchess
+}  // namespace fastshogi

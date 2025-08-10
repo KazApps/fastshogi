@@ -17,7 +17,7 @@
 #include <types/sprt.hpp>
 #include <types/tb_adjudication.hpp>
 
-namespace fastchess::config {
+namespace fastshogi::config {
 
 struct Tournament {
     Opening opening = {};
@@ -38,7 +38,7 @@ struct Tournament {
     int gauntlet_seeds  = 1;
 
 #ifdef USE_CUTE
-    // output format, fastchess or cutechess
+    // output format, fastshogi or cutechess
     OutputType output    = OutputType::CUTECHESS;
     int autosaveinterval = 0;
     int ratinginterval   = 0;
@@ -46,8 +46,8 @@ struct Tournament {
     int rounds           = 1;
     bool report_penta    = false;
 #else
-    // output format, fastchess or cutechess
-    OutputType output    = OutputType::FASTCHESS;
+    // output format, fastshogi or cutechess
+    OutputType output    = OutputType::FASTSHOGI;
     int autosaveinterval = 20;
     int ratinginterval   = 10;
     std::size_t games    = 2;
@@ -79,4 +79,4 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Tournament, resign, draw, maxmoves, tb_adjudi
                                    scoreinterval, wait, autosaveinterval, games, rounds, concurrency, force_concurrency,
                                    recover, noswap, reverse, report_penta, affinity, show_latency, log)
 
-}  // namespace fastchess::config
+}  // namespace fastshogi::config

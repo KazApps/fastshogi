@@ -8,7 +8,7 @@
 #include <matchmaking/stats.hpp>
 #include <types/engine_config.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 struct PlayerPairKey {
     std::string first;
@@ -187,4 +187,4 @@ class ScoreBoard {
     std::mutex game_pair_cache_mutex_;
 };
 
-}  // namespace fastchess
+}  // namespace fastshogi

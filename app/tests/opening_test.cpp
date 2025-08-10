@@ -3,7 +3,7 @@
 
 #include <doctest/doctest.hpp>
 
-using namespace fastchess;
+using namespace fastshogi;
 
 TEST_SUITE("Opening Book Test") {
     TEST_CASE("Test fewer openings than rounds") {
@@ -252,15 +252,15 @@ TEST_SUITE("Opening Book Test") {
 
         REQUIRE(id.has_value());
         CHECK(id.value() == 0);
-        CHECK(book[id].fen_epd == chess::constants::STARTPOS);
+        CHECK(book[id].fen_epd == shogi::constants::STARTPOS);
         CHECK(book[id].moves.size() == 16);
-        CHECK(book[id].moves[0] == chess::Move::make(chess::Square::SQ_E2, chess::Square::SQ_E4));
+        CHECK(book[id].moves[0] == shogi::Move::make(shogi::Square::SQ_E2, shogi::Square::SQ_E4));
 
         id = book.fetchId();
 
         REQUIRE(id.has_value());
         CHECK(id.value() == 1);
-        CHECK(book[id].fen_epd == chess::constants::STARTPOS);
+        CHECK(book[id].fen_epd == shogi::constants::STARTPOS);
         CHECK(book[id].moves.size() == 16);
     }
 }

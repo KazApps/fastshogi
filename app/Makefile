@@ -1,7 +1,7 @@
 #Compiler
 CXX              := g++
 
-TARGET           := fastchess
+TARGET           := fastshogi
 BINARY_PATH	  	 := .
 
 # Source, Includes
@@ -196,7 +196,7 @@ DEPENDS   := $(patsubst %.cpp,$(BUILDDIR)/%.d,$(SRC_FILES))
 all: $(TARGET)
 
 coverage: tests
-	cd .. && ./fastchess-tests
+	cd .. && ./fastshogi-tests
 	mkdir -p coverage && cd coverage &&  gcovr --html-details coverage.html --gcov-ignore-errors=no_working_dir_found --gcov-ignore-parse-errors -f "../src" -r ../. ..
 
 tests: $(TARGET) compile-random-mover

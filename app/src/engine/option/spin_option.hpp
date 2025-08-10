@@ -4,7 +4,7 @@
 #include <type_traits>
 #include "ucioption.hpp"
 
-namespace fastchess {
+namespace fastshogi {
 
 template <typename T>
 class SpinOption : public UCIOption {
@@ -59,4 +59,4 @@ class SpinOption : public UCIOption {
     }
 };
 
-}  // namespace fastchess
+}  // namespace fastshogi

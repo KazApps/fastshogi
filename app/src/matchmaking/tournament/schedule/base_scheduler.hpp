@@ -7,7 +7,7 @@
 #include <game/book/opening_book.hpp>
 #include <matchmaking/tournament/schedule/scheduler.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 // Base class containing common scheduling logic
 class TournamentSchedulerBase : public Scheduler {
@@ -93,4 +93,4 @@ class TournamentSchedulerBase : public Scheduler {
     std::size_t pair_counter;
 };
 
-}  // namespace fastchess
+}  // namespace fastshogi

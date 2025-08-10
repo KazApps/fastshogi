@@ -5,7 +5,7 @@
 #include <matchmaking/elo/elo.hpp>
 #include <matchmaking/stats.hpp>
 
-namespace fastchess::elo {
+namespace fastshogi::elo {
 
 class EloPentanomial : public EloBase {
    public:
@@ -24,4 +24,4 @@ class EloPentanomial : public EloBase {
     [[nodiscard]] double calcVariance(const Stats& stats) const noexcept;
 };
 
-}  // namespace fastchess::elo
+}  // namespace fastshogi::elo

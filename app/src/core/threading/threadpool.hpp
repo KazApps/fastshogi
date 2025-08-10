@@ -8,7 +8,7 @@
 #include <thread>
 #include <vector>
 
-namespace fastchess::util {
+namespace fastshogi::util {
 
 class ThreadPool {
    public:
@@ -100,4 +100,4 @@ class ThreadPool {
     std::atomic_bool stop_;
 };
 
-}  // namespace fastchess::util
+}  // namespace fastshogi::util

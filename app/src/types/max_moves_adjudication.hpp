@@ -5,7 +5,7 @@
 #include <core/helper.hpp>
 #include <types/enums.hpp>
 
-namespace fastchess::config {
+namespace fastshogi::config {
 
 struct MaxMovesAdjudication {
     int move_count = 1;
@@ -14,4 +14,4 @@ struct MaxMovesAdjudication {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MaxMovesAdjudication, move_count, enabled)
 
-}  // namespace fastchess::config
+}  // namespace fastshogi::config

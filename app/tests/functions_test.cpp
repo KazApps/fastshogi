@@ -2,7 +2,7 @@
 
 #include <doctest/doctest.hpp>
 
-using namespace fastchess;
+using namespace fastshogi;
 
 TEST_SUITE("Standalone Function Tests") {
     TEST_CASE("Testing the str_utils::startsWith function") {

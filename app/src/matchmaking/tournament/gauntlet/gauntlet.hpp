@@ -18,7 +18,7 @@
 #include <matchmaking/tournament/gauntlet/scheduler.hpp>
 #include <matchmaking/tournament/roundrobin/roundrobin.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 class Gauntlet : public RoundRobin {
    public:
@@ -31,4 +31,4 @@ class Gauntlet : public RoundRobin {
     }
 };
 
-}  // namespace fastchess
+}  // namespace fastshogi

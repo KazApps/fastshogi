@@ -11,7 +11,7 @@
 #include <core/logger/logger.hpp>
 #include <matchmaking/sprt/sprt.hpp>
 
-namespace fastchess::cli {
+namespace fastshogi::cli {
 
 void sanitize(config::Tournament& config) {
     if (config.games > 2) {
@@ -128,4 +128,4 @@ void sanitize(std::vector<EngineConfiguration>& configs) {
     }
 }
 
-}  // namespace fastchess::cli
+}  // namespace fastshogi::cli

@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-namespace fastchess::cli {
+namespace fastshogi::cli {
 
 class Args {
    private:
@@ -27,4 +27,4 @@ class Args {
     const std::string& operator[](int i) const { return args_[i]; }
 };
 
-}  // namespace fastchess::cli
+}  // namespace fastshogi::cli

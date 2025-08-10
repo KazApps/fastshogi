@@ -8,7 +8,7 @@
 #include <core/rand.hpp>
 #include <matchmaking/tournament/tournament_manager.hpp>
 
-using namespace fastchess;
+using namespace fastshogi;
 
 static std::string catch_output(std::function<void()> func) {
     std::ostringstream oss;
@@ -25,7 +25,7 @@ static std::string catch_output(std::function<void()> func) {
 TEST_SUITE("Start from config") {
     TEST_CASE("Config 1") {
         const auto args = cli::Args{
-            "fastchess",
+            "fastshogi",
             "-config",
             "stats=false",
             "file=./app/tests/configs/config.json",
@@ -89,6 +89,6 @@ TEST_SUITE("Start from config") {
     }
 
     TEST_CASE("Check version is included") {
-        CHECK(str_utils::startsWith(cli::OptionsParser::Version, "fastchess tests "));
+        CHECK(str_utils::startsWith(cli::OptionsParser::Version, "fastshogi tests "));
     }
 }

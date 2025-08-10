@@ -7,7 +7,7 @@
 #include <optional>
 #include <string>
 
-namespace fastchess::crc {
+namespace fastshogi::crc {
 
 constexpr std::array<std::uint32_t, 256> generate_crc_table() {
     std::array<std::uint32_t, 256> table{};
@@ -66,4 +66,4 @@ inline std::uint32_t incremental_crc32(std::uint32_t crc, const std::string& inp
 
 inline std::uint32_t finalize_crc32(std::uint32_t crc) { return ~crc; }
 
-}  // namespace fastchess::crc
+}  // namespace fastshogi::crc

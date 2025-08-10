@@ -13,7 +13,7 @@
 #include <core/logger/logger.hpp>
 #include <core/threading/thread_vector.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 namespace atomic {
 std::atomic_bool stop                 = false;
@@ -106,4 +106,4 @@ void setCtrlCHandler() {
 }
 #endif
 
-}  // namespace fastchess
+}  // namespace fastshogi

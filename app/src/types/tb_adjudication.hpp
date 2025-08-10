@@ -4,7 +4,7 @@
 
 #include <string>
 
-namespace fastchess::config {
+namespace fastshogi::config {
 
 struct TbAdjudication {
     enum ResultType { WIN_LOSS = 1, DRAW = 2, BOTH = WIN_LOSS | DRAW };
@@ -19,4 +19,4 @@ struct TbAdjudication {
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(TbAdjudication, syzygy_dirs, max_pieces, ignore_50_move_rule, enabled)
 
-}  // namespace fastchess::config
+}  // namespace fastshogi::config

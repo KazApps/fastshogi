@@ -3,11 +3,11 @@
 
 #include <doctest/doctest.hpp>
 
-using namespace fastchess;
+using namespace fastshogi;
 
 TEST_SUITE("Tournament Manager Tests") {
     TEST_CASE("Should throw failed to load TBs") {
-        const auto args = cli::Args{"fastchess.exe",
+        const auto args = cli::Args{"fastshogi.exe",
                                     "-engine",
                                     "cmd=app/tests/mock/engine/dummy_engine",
                                     "tc=40/40+1",

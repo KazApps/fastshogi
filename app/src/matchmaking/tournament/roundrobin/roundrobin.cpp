@@ -15,7 +15,7 @@
 #include <matchmaking/output/output_factory.hpp>
 #include <matchmaking/tournament/roundrobin/scheduler.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 RoundRobin::RoundRobin(const stats_map& results) : BaseTournament(results) {
     sprt_ = SPRT(config::TournamentConfig->sprt.alpha, config::TournamentConfig->sprt.beta,
@@ -178,4 +178,4 @@ bool RoundRobin::shouldPrintScoreInterval() const noexcept {
     return scoreinterval_index % cfg.scoreinterval == 0;
 }
 
-}  // namespace fastchess
+}  // namespace fastshogi

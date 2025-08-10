@@ -5,7 +5,7 @@
 #include <core/helper.hpp>
 #include <types/enums.hpp>
 
-namespace fastchess::config {
+namespace fastshogi::config {
 
 struct ResignAdjudication {
     int move_count = 1;
@@ -16,4 +16,4 @@ struct ResignAdjudication {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ResignAdjudication, move_count, score, twosided, enabled)
 
-}  // namespace fastchess::config
+}  // namespace fastshogi::config

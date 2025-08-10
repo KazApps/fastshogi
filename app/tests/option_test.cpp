@@ -2,7 +2,7 @@
 
 #include <doctest/doctest.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 TEST_SUITE("Uci Options") {
     TEST_CASE("Parse Spin Option Integer") {
@@ -173,4 +173,4 @@ TEST_SUITE("Uci Options") {
     }
 }
 
-}  // namespace fastchess
+}  // namespace fastshogi

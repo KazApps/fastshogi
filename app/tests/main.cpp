@@ -1,7 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 const char* version = "tests ";
 }
 

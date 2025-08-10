@@ -13,7 +13,7 @@
 #include <matchmaking/tournament/tournament_manager.hpp>
 #include <stdexcept>
 
-namespace fastchess {
+namespace fastshogi {
 
 TournamentManager::TournamentManager() {}
 
@@ -69,4 +69,4 @@ void TournamentManager::start(const cli::Args& args) {
     LOG_INFO("Starting tournament...");
     tournament->start();
 }
-}  // namespace fastchess
+}  // namespace fastshogi

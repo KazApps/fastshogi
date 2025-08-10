@@ -4,7 +4,7 @@
 #include <game/book/opening_book.hpp>
 #include <matchmaking/tournament/schedule/base_scheduler.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 /**
  * Generate matches for a round-robin tournament.
@@ -25,4 +25,4 @@ class RoundRobinScheduler : public TournamentSchedulerBase {
     std::size_t getPlayer1Limit() const override { return n_players - 1; }
 };
 
-}  // namespace fastchess
+}  // namespace fastshogi

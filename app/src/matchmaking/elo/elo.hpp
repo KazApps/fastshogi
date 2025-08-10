@@ -4,7 +4,7 @@
 
 #include <matchmaking/stats.hpp>
 
-namespace fastchess::elo {
+namespace fastshogi::elo {
 
 class EloBase {
    public:
@@ -43,4 +43,4 @@ class EloBase {
     double neloerror_;
 };
 
-}  // namespace fastchess::elo
+}  // namespace fastshogi::elo

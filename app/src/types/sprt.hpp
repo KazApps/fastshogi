@@ -5,7 +5,7 @@
 #include <core/helper.hpp>
 #include <types/enums.hpp>
 
-namespace fastchess::config {
+namespace fastshogi::config {
 
 struct Sprt {
     bool enabled = false;
@@ -19,4 +19,4 @@ struct Sprt {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Sprt, alpha, beta, elo0, elo1, model, enabled)
 
-}  // namespace fastchess::config
+}  // namespace fastshogi::config

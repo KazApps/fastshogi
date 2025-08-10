@@ -41,7 +41,7 @@ jobs:
               cutechess-testing/3-4-5-dtz/
            key: key-syzygy
 
-      # Note: unlike fastchess, cutechess requires both wdl and dtz tables for adjudication to work correctly.
+      # Note: unlike fastshogi, cutechess requires both wdl and dtz tables for adjudication to work correctly.
       - name: download syzygy 3-4-5 if needed
         working-directory: cutechess-testing
         if: steps.cache-syzygy.outputs.cache-hit != 'true'

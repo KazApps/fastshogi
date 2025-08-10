@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include <string>
 
-namespace fastchess::util {
+namespace fastshogi::util {
 
 class heap_string {
    public:
@@ -53,4 +53,4 @@ class heap_string {
     std::string_view view_;
 };
 
-}  // namespace fastchess::util
+}  // namespace fastshogi::util

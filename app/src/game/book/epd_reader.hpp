@@ -6,7 +6,7 @@
 #include <core/helper.hpp>
 #include <core/memory/heap_str.hpp>
 
-namespace fastchess::book {
+namespace fastshogi::book {
 
 class EpdReader {
    public:
@@ -20,4 +20,4 @@ class EpdReader {
     std::vector<util::heap_string> openings_;
     std::string epd_file_;
 };
-}  // namespace fastchess::book
+}  // namespace fastshogi::book

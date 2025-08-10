@@ -3,7 +3,7 @@
 #include <core/helper.hpp>
 #include <types/enums.hpp>
 
-namespace fastchess::config {
+namespace fastshogi::config {
 
 struct DrawAdjudication {
     uint32_t move_number = 0;
@@ -15,4 +15,4 @@ struct DrawAdjudication {
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DrawAdjudication, move_number, move_count, score, enabled)
 
-}  // namespace fastchess::config
+}  // namespace fastshogi::config

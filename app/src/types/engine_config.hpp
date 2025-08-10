@@ -11,7 +11,7 @@
 
 #include <json.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 struct Limit {
     TimeControl::Limits tc;
@@ -43,7 +43,7 @@ struct EngineConfiguration {
     // UCI options
     std::vector<std::pair<std::string, std::string>> options;
 
-    // Chess variant
+    // Shogi variant
     VariantType variant = VariantType::STANDARD;
 
     template <typename T, typename Predicate>
@@ -60,4 +60,4 @@ struct EngineConfiguration {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(EngineConfiguration, name, dir, cmd, args, restart, options, limit, variant)
 
-}  // namespace fastchess
+}  // namespace fastshogi

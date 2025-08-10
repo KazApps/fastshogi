@@ -3,14 +3,14 @@
 #include <string>
 #include <vector>
 
-#include <chess.hpp>
+#include <shogi.hpp>
 
-namespace fastchess::book {
+namespace fastshogi::book {
 struct Opening {
     Opening() = default;
-    Opening(const std::string& fen_epd, const std::vector<chess::Move>& moves) : fen_epd(fen_epd), moves(moves) {}
+    Opening(const std::string& fen_epd, const std::vector<shogi::Move>& moves) : fen_epd(fen_epd), moves(moves) {}
 
-    std::string fen_epd            = chess::constants::STARTPOS;
-    std::vector<chess::Move> moves = {};
+    std::string fen_epd            = shogi::constants::STARTPOS;
+    std::vector<shogi::Move> moves = {};
 };
-}  // namespace fastchess::book
+}  // namespace fastshogi::book

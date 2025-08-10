@@ -9,12 +9,12 @@
 #include <engine/compliance.hpp>
 #include <matchmaking/tournament/tournament_manager.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 const char* version = "alpha 1.4.0 ";
 }
 
 namespace ch = std::chrono;
-using namespace fastchess;
+using namespace fastshogi;
 
 int main(int argc, char const* argv[]) {
     setCtrlCHandler();
@@ -42,8 +42,8 @@ int main(int argc, char const* argv[]) {
         stopProcesses();
 
         Logger::print(
-            "PLEASE submit a bug report to https://github.com/Disservin/fastchess/issues/ and include command line "
-            "parameters and possibly the stdout/log of fastchess.");
+            "PLEASE submit a bug report to https://github.com/KazApps/fastshogi/issues/ and include command line "
+            "parameters and possibly the stdout/log of fastshogi.");
         Logger::print("{}", e.what());
 
         return EXIT_FAILURE;

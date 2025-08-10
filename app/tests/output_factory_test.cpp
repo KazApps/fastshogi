@@ -2,7 +2,7 @@
 
 #include <doctest/doctest.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 TEST_SUITE("Output Factory") {
     TEST_CASE("Return Cutechess Output") {
@@ -12,18 +12,18 @@ TEST_SUITE("Output Factory") {
         CHECK(output->getType() == OutputType::CUTECHESS);
     }
 
-    TEST_CASE("Return Fastchess Output") {
-        auto output = OutputFactory::create(OutputType::FASTCHESS, false);
+    TEST_CASE("Return Fastshogi Output") {
+        auto output = OutputFactory::create(OutputType::FASTSHOGI, false);
 
         CHECK(output != nullptr);
-        CHECK(output->getType() == OutputType::FASTCHESS);
+        CHECK(output->getType() == OutputType::FASTSHOGI);
     }
 
-    TEST_CASE("Return Fastchess Output by default") {
+    TEST_CASE("Return Fastshogi Output by default") {
         auto output = OutputFactory::create(OutputType::NONE, false);
 
         CHECK(output != nullptr);
-        CHECK(output->getType() == OutputType::FASTCHESS);
+        CHECK(output->getType() == OutputType::FASTSHOGI);
     }
 
     TEST_CASE("Get Cutechess Output Type") {
@@ -32,17 +32,17 @@ TEST_SUITE("Output Factory") {
         CHECK(type == OutputType::CUTECHESS);
     }
 
-    TEST_CASE("Get Fastchess Output Type") {
-        auto type = OutputFactory::getType("fastchess");
+    TEST_CASE("Get Fastshogi Output Type") {
+        auto type = OutputFactory::getType("fastshogi");
 
-        CHECK(type == OutputType::FASTCHESS);
+        CHECK(type == OutputType::FASTSHOGI);
     }
 
-    TEST_CASE("Get Fastchess Output Type by default") {
+    TEST_CASE("Get Fastshogi Output Type by default") {
         auto type = OutputFactory::getType("none");
 
-        CHECK(type == OutputType::FASTCHESS);
+        CHECK(type == OutputType::FASTSHOGI);
     }
 }
 
-}  // namespace fastchess
+}  // namespace fastshogi

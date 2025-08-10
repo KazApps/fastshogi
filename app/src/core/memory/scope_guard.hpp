@@ -3,7 +3,7 @@
 #include <atomic>
 #include <type_traits>
 
-namespace fastchess::util {
+namespace fastshogi::util {
 
 // Base class for entries which are managed by a ScopeGuard.
 // Needs to be inherited by the managed class.
@@ -46,4 +46,4 @@ class ScopeGuard {
     T *entry_;
 };
 
-}  // namespace fastchess::util
+}  // namespace fastshogi::util

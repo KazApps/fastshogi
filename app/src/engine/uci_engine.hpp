@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include <chess.hpp>
+#include <shogi.hpp>
 #include <expected.hpp>
 
 #ifdef _WIN64
@@ -17,7 +17,7 @@
 #include <engine/option/options.hpp>
 #include <types/engine_config.hpp>
 
-namespace fastchess::engine {
+namespace fastshogi::engine {
 
 enum class ScoreType { CP, MATE, ERR };
 
@@ -55,7 +55,7 @@ class UciEngine {
     // Sends "position" to the engine and waits for a response.
     [[nodiscard]] bool position(const std::vector<std::string> &moves, const std::string &fen);
 
-    [[nodiscard]] bool go(const TimeControl &our_tc, const TimeControl &enemy_tc, chess::Color stm);
+    [[nodiscard]] bool go(const TimeControl &our_tc, const TimeControl &enemy_tc, shogi::Color stm);
 
     void quit();
 
@@ -148,4 +148,4 @@ class UciEngine {
 
     const bool realtime_logging_;
 };
-}  // namespace fastchess::engine
+}  // namespace fastshogi::engine

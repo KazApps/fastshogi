@@ -2,13 +2,13 @@
 
 set -x
 
-# Compile fastchess
+# Compile fastshogi
 make clean
 make -j USE_CUTE=true
 
 # Create a directory for testing
 mkdir -p cutechess-testing
-cp fastchess cutechess-testing
+cp fastshogi cutechess-testing
 cd cutechess-testing
 
 tb_args=()
@@ -46,7 +46,7 @@ fi
 # Actual testing
 rm -f *-out.pgn
 
-for binary in ./cutechess-cli ./fastchess
+for binary in ./cutechess-cli ./fastshogi
 do
 
 (
@@ -64,15 +64,15 @@ $binary         -recover -repeat -games 2 -rounds 100\
 
 done
 
-diff ./cutechess-cli-out.finished ./fastchess-out.finished
+diff ./cutechess-cli-out.finished ./fastshogi-out.finished
 if [[ $? -ne 0 ]]; then
    echo "Finished games have different termination status"
    exit 1
 fi
 
 grep PlyCount cutechess-cli-out.pgn | grep -o "[0-9]*" | sort -n > cutechess-cli-out.plycount
-grep PlyCount fastchess-out.pgn | grep -o "[0-9]*" | sort -n > fastchess-out.plycount
-diff ./cutechess-cli-out.plycount ./fastchess-out.plycount
+grep PlyCount fastshogi-out.pgn | grep -o "[0-9]*" | sort -n > fastshogi-out.plycount
+diff ./cutechess-cli-out.plycount ./fastshogi-out.plycount
 if [[ $? -ne 0 ]]; then
    echo "Not all games have the same PlyCount, adjudication might differ"
    exit 1

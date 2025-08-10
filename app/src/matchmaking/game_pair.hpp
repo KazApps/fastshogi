@@ -2,7 +2,7 @@
 
 #include <utility>
 
-namespace fastchess {
+namespace fastshogi {
 
 template <typename T, typename U>
 struct GamePair {
@@ -38,4 +38,4 @@ struct GamePair {
     }
 };
 
-}  // namespace fastchess
+}  // namespace fastshogi

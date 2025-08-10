@@ -7,7 +7,7 @@
 #include <cassert>
 #include <stdexcept>
 
-namespace fastchess {
+namespace fastshogi {
 
 int initSyzygy(const std::string_view syzygyDirs) {
     const bool success = tb_init(syzygyDirs.data());
@@ -20,7 +20,7 @@ int initSyzygy(const std::string_view syzygyDirs) {
 
 void tearDownSyzygy() { tb_free(); }
 
-bool canProbeSyzgyWdl(const chess::Board& board) {
+bool canProbeSyzgyWdl(const shogi::Board& board) {
     if (board.halfMoveClock() != 0) {
         return false;
     }
@@ -34,43 +34,43 @@ bool canProbeSyzgyWdl(const chess::Board& board) {
     return true;
 }
 
-chess::GameResult probeSyzygyWdl(const chess::Board& board, const bool ignore50MoveRule) {
+shogi::GameResult probeSyzygyWdl(const shogi::Board& board, const bool ignore50MoveRule) {
     assert(canProbeSyzgyWdl(board));
     // We now assume that the half move clock is 0 and the castling rights are empty.
     // If these conditions are not fulfilled, the probe result may be incorrect.
 
     const unsigned probeResult =
-        tb_probe_wdl(board.us(chess::Color::WHITE).getBits(), board.us(chess::Color::BLACK).getBits(),
-                     board.pieces(chess::PieceType::KING).getBits(), board.pieces(chess::PieceType::QUEEN).getBits(),
-                     board.pieces(chess::PieceType::ROOK).getBits(), board.pieces(chess::PieceType::BISHOP).getBits(),
-                     board.pieces(chess::PieceType::KNIGHT).getBits(), board.pieces(chess::PieceType::PAWN).getBits(),
-                     board.enpassantSq().index(), board.sideToMove() == chess::Color::WHITE);
+        tb_probe_wdl(board.us(shogi::Color::WHITE).getBits(), board.us(shogi::Color::BLACK).getBits(),
+                     board.pieces(shogi::PieceType::KING).getBits(), board.pieces(shogi::PieceType::QUEEN).getBits(),
+                     board.pieces(shogi::PieceType::ROOK).getBits(), board.pieces(shogi::PieceType::BISHOP).getBits(),
+                     board.pieces(shogi::PieceType::KNIGHT).getBits(), board.pieces(shogi::PieceType::PAWN).getBits(),
+                     board.enpassantSq().index(), board.sideToMove() == shogi::Color::WHITE);
 
     if (probeResult == TB_RESULT_FAILED) {
-        return chess::GameResult::NONE;
+        return shogi::GameResult::NONE;
     }
 
     switch (probeResult) {
         case TB_WIN:
-            return chess::GameResult::WIN;
+            return shogi::GameResult::WIN;
 
         case TB_CURSED_WIN:
-            return ignore50MoveRule ? chess::GameResult::WIN : chess::GameResult::DRAW;
+            return ignore50MoveRule ? shogi::GameResult::WIN : shogi::GameResult::DRAW;
 
         case TB_DRAW:
-            return chess::GameResult::DRAW;
+            return shogi::GameResult::DRAW;
 
         case TB_BLESSED_LOSS:
-            return ignore50MoveRule ? chess::GameResult::LOSE : chess::GameResult::DRAW;
+            return ignore50MoveRule ? shogi::GameResult::LOSE : shogi::GameResult::DRAW;
 
         case TB_LOSS:
-            return chess::GameResult::LOSE;
+            return shogi::GameResult::LOSE;
     }
 
     // Should be unreachable.
     assert(false);
 
-    return chess::GameResult::NONE;
+    return shogi::GameResult::NONE;
 }
 
-}  // namespace fastchess
+}  // namespace fastshogi

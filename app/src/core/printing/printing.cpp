@@ -6,7 +6,7 @@
 #    include <windows.h>
 #endif
 
-namespace fastchess {
+namespace fastshogi {
 
 void setTerminalOutput() {
 #ifdef _WIN64
@@ -50,4 +50,4 @@ void setTerminalOutput() {
 #endif
 }
 
-}  // namespace fastchess
+}  // namespace fastshogi

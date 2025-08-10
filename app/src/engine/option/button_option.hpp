@@ -4,7 +4,7 @@
 
 #include "ucioption.hpp"
 
-namespace fastchess {
+namespace fastshogi {
 
 // idk
 class ButtonOption : public UCIOption {
@@ -30,4 +30,4 @@ class ButtonOption : public UCIOption {
     bool value = false;
 };
 
-}  // namespace fastchess
+}  // namespace fastshogi

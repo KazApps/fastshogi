@@ -8,7 +8,7 @@
 
 #include <engine/uci_engine.hpp>
 
-namespace fastchess::engine {
+namespace fastshogi::engine {
 
 bool isValidInfoLine(const std::string &infoLine) {
     std::istringstream iss(infoLine);
@@ -148,4 +148,4 @@ inline bool compliant(int argc, char const *argv[]) {
     return true;
 }
 
-}  // namespace fastchess::engine
+}  // namespace fastshogi::engine

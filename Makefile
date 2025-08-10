@@ -2,7 +2,7 @@ PREFIX ?= /usr/local
 BINDIR = $(PREFIX)/bin
 MANDIR = $(PREFIX)/share/man/man1
 MANPAGE_SOURCE = man.md  # Path to the markdown file for the man page
-MANPAGE_OUTPUT = fastchess.1
+MANPAGE_OUTPUT = fastshogi.1
 
 ifeq ($(shell uname), Linux)
 	LOWDOWN_INSTALLED := $(shell command -v lowdown >/dev/null 2>&1 && echo yes || echo no)
@@ -29,9 +29,9 @@ scan:
 	@echo "Done."
 
 install: ## Install the binary and man page
-	@echo "Installing fastchess binary to: $(DESTDIR)$(BINDIR)"
+	@echo "Installing fastshogi binary to: $(DESTDIR)$(BINDIR)"
 	@install -d $(DESTDIR)$(BINDIR)
-	@install fastchess $(DESTDIR)$(BINDIR)
+	@install fastshogi $(DESTDIR)$(BINDIR)
 	@if [ "$(shell uname)" = "Linux" ] && [ "$(LOWDOWN_INSTALLED)" = "no" ]; then \
 		printf "\033[33mWarning: 'lowdown' is not installed. Man page will not be generated.\033[0m\n"; \
 	else \
@@ -40,7 +40,7 @@ install: ## Install the binary and man page
 	@echo "Done."
 
 manpage: ## Generate the man page from Markdown using lowdown
-	@lowdown -s -Tman -o  $(MANPAGE_OUTPUT) $(MANPAGE_SOURCE) -mtitle="Fastchess"
+	@lowdown -s -Tman -o  $(MANPAGE_OUTPUT) $(MANPAGE_SOURCE) -mtitle="Fastshogi"
 
 install-manpage: manpage ## Install the man page to $(MANDIR)
 	@install -d $(DESTDIR)$(MANDIR)
@@ -48,15 +48,15 @@ install-manpage: manpage ## Install the man page to $(MANDIR)
 	@echo "Installed man page."
 
 update-man: ## Update man like page
-	lowdown -Tterm man.md > fastchess-tmp-man-page
-	xxd -i fastchess-tmp-man-page | sed 's/fastchess_tmp_man_page/man/g' | sed 's/fastchess_tmp_man_page_len/man_len/g' | sed 's/unsigned char/inline unsigned char/g' | sed 's/unsigned int/inline unsigned int/g' > temp.hpp
+	lowdown -Tterm man.md > fastshogi-tmp-man-page
+	xxd -i fastshogi-tmp-man-page | sed 's/fastshogi_tmp_man_page/man/g' | sed 's/fastshogi_tmp_man_page_len/man_len/g' | sed 's/unsigned char/inline unsigned char/g' | sed 's/unsigned int/inline unsigned int/g' > temp.hpp
 	printf '/* Generate with make update-man*/\n#pragma once\n' > ./app/src/cli/man.hpp
-	echo 'namespace fastchess::man {' >> ./app/src/cli/man.hpp
+	echo 'namespace fastshogi::man {' >> ./app/src/cli/man.hpp
 	cat temp.hpp >> ./app/src/cli/man.hpp
 	echo '}' >> ./app/src/cli/man.hpp
 	rm temp.hpp
 	clang-format -i ./app/src/cli/man.hpp
-	rm fastchess-tmp-man-page
+	rm fastshogi-tmp-man-page
 
 update-fmt: ## Fetch subtree fmt
 	@echo "Updating fmt.."

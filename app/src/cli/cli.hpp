@@ -19,11 +19,11 @@
 #define FMT_HEADER_ONLY
 #include <fmt/include/fmt/core.h>
 
-namespace fastchess {
+namespace fastshogi {
 extern const char *version;
 }
 
-namespace fastchess::cli {
+namespace fastshogi::cli {
 
 // Holds the data of the OptionParser
 struct ArgumentData {
@@ -61,7 +61,7 @@ class OptionsParser {
         std::string month, day, year;
         std::stringstream ss, date(__DATE__);  // {month} {date} {year}
 
-        ss << "fastchess " << version;
+        ss << "fastshogi " << version;
 
 #ifdef COMPILE_MSG
         ss << COMPILE_MSG << " ";
@@ -168,4 +168,4 @@ class OptionsParser {
     std::map<std::string, parseFunc> options_;
 };
 
-}  // namespace fastchess::cli
+}  // namespace fastshogi::cli

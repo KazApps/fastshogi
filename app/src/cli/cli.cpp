@@ -108,7 +108,7 @@ bool containsEqualSign(const std::vector<std::string> &params) {
 }
 }  // namespace
 
-namespace fastchess::cli {
+namespace fastshogi::cli {
 using json = nlohmann::json;
 
 namespace engine {
@@ -521,7 +521,7 @@ void parseReport(const std::vector<std::string> &params, ArgumentData &argument_
 
 void parseOutput(const std::vector<std::string> &params, ArgumentData &argument_data) {
     parseDashOptions(params, [&](const std::string &key, const std::string &value) {
-        if (key == "format" && (value == "cutechess" || value == "fastchess")) {
+        if (key == "format" && (value == "cutechess" || value == "fastshogi")) {
             argument_data.tournament_config.output = OutputFactory::getType(value);
         } else {
             OptionsParser::throwMissing("output", key, value);
@@ -698,7 +698,7 @@ void parseLatency(const std::vector<std::string> &, ArgumentData &argument_data)
 void parseDebug(const std::vector<std::string> &, ArgumentData &) {
     // throw error
     std::string error_message =
-        "The 'debug' option does not exist in fastchess."
+        "The 'debug' option does not exist in fastshogi."
         " Use the 'log' option instead to write all engine input"
         " and output into a text file.";
     throw std::runtime_error(error_message);
@@ -775,4 +775,4 @@ OptionsParser::OptionsParser(const cli::Args &args) {
     cli::sanitize(argument_data_.configs);
 }
 
-}  // namespace fastchess::cli
+}  // namespace fastshogi::cli

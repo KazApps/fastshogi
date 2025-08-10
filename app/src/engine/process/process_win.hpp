@@ -18,7 +18,7 @@
 #    include <core/threading/thread_vector.hpp>
 #    include <engine/process/anon_pipe.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 extern util::ThreadVector<ProcessInformation> process_list;
 
@@ -316,6 +316,6 @@ class Process : public IProcess {
 };
 
 }  // namespace engine::process
-}  // namespace fastchess
+}  // namespace fastshogi
 
 #endif

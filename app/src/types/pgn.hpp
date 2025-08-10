@@ -5,11 +5,11 @@
 #include <core/helper.hpp>
 #include <types/enums.hpp>
 
-namespace fastchess::config {
+namespace fastshogi::config {
 
 struct Pgn {
     std::vector<std::string> additional_lines_rgx;
-    std::string event_name = "Fastchess Tournament";
+    std::string event_name = "Fastshogi Tournament";
     std::string site       = "?";
 
     std::string file;
@@ -28,4 +28,4 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Pgn, additional_lines_rgx, event_name, site, 
                                    track_seldepth, track_nps, track_hashfull, track_tbhits, track_timeleft,
                                    track_latency, min, crc)
 
-}  // namespace fastchess::config
+}  // namespace fastshogi::config

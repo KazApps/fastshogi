@@ -2,10 +2,10 @@
 
 #include <memory>
 
-#include <chess.hpp>
+#include <shogi.hpp>
 #include <doctest/doctest.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 TEST_SUITE("PGN Reader") {
     TEST_CASE("Read PGN file") {
         book::PgnReader reader("app/tests/data/test.pgn");
@@ -13,9 +13,9 @@ TEST_SUITE("PGN Reader") {
 
         CHECK(games.size() == 6);
 
-        CHECK(games[0].fen_epd == chess::constants::STARTPOS);
-        CHECK(games[1].fen_epd == chess::constants::STARTPOS);
-        CHECK(games[2].fen_epd == chess::constants::STARTPOS);
+        CHECK(games[0].fen_epd == shogi::constants::STARTPOS);
+        CHECK(games[1].fen_epd == shogi::constants::STARTPOS);
+        CHECK(games[2].fen_epd == shogi::constants::STARTPOS);
         CHECK(games[3].fen_epd == "5k2/3r1p2/1p3pp1/p2n3p/P6P/1PPR1PP1/3KN3/6b1 w - - 0 34");
         CHECK(games[4].fen_epd == "5k2/5p2/4B2p/r5pn/4P3/5PPP/2NR2K1/8 b - - 0 59");
         CHECK(games[5].fen_epd == "8/p3kp1p/1p4p1/2r2b2/2BR3P/1P3P2/P4PK1/8 b - - 0 28");
@@ -28,12 +28,12 @@ TEST_SUITE("PGN Reader") {
         CHECK(games[5].moves.size() == 0);
 
         auto convert = [](const std::vector<std::string>& moves) {
-            chess::Board board;
+            shogi::Board board;
             std::vector<std::string> uci_moves;
             for (const auto& move : moves) {
-                chess::Move i_move = chess::uci::parseSan(board, move);
+                shogi::Move i_move = shogi::uci::parseSan(board, move);
 
-                uci_moves.push_back(chess::uci::moveToUci(i_move, board.chess960()));
+                uci_moves.push_back(shogi::uci::moveToUci(i_move, board.shogi960()));
                 board.makeMove(i_move);
             }
             return uci_moves;
@@ -41,7 +41,7 @@ TEST_SUITE("PGN Reader") {
 
         // First game
         {
-            chess::Board board = chess::Board();
+            shogi::Board board = shogi::Board();
 
             const std::vector<std::string> moves = {"e4",   "e5",  "Nf3", "Nc6",  "Bc4",  "Nf6", "Ng5", "d5",
                                                     "exd5", "Na5", "d3",  "Nxc4", "dxc4", "h6",  "Nf3", "e4"};
@@ -52,19 +52,19 @@ TEST_SUITE("PGN Reader") {
                                                       "e4d5", "c6a5", "d2d3", "a5c4", "d3c4", "h7h6", "g5f3", "e5e4"};
 
             for (size_t i = 0; i < moves.size(); i++) {
-                const auto move = chess::uci::parseSan(board, moves[i]);
+                const auto move = shogi::uci::parseSan(board, moves[i]);
                 CHECK(games[0].moves[i] == move);
                 board.makeMove(move);
             }
 
             for (size_t i = 0; i < correct.size(); i++) {
-                CHECK(chess::uci::moveToUci(games[0].moves[i], false) == correct[i]);
+                CHECK(shogi::uci::moveToUci(games[0].moves[i], false) == correct[i]);
             }
         }
 
         // Second game
         {
-            chess::Board board = chess::Board();
+            shogi::Board board = shogi::Board();
 
             const std::vector<std::string> moves = {"c4",   "c5", "Nf3", "Nc6", "d4",  "cxd4", "Nxd4", "Nxd4",
                                                     "Qxd4", "d6", "Nc3", "e5",  "Qd3", "Be7",  "g3",   "h6"};
@@ -77,19 +77,19 @@ TEST_SUITE("PGN Reader") {
             std::cout << "fen: " << board.getFen() << "\n";
 
             for (size_t i = 0; i < moves.size(); i++) {
-                const auto move = chess::uci::parseSan(board, moves[i]);
+                const auto move = shogi::uci::parseSan(board, moves[i]);
                 CHECK(games[1].moves[i] == move);
                 board.makeMove(move);
             }
 
             for (size_t i = 0; i < correct.size(); i++) {
-                CHECK(chess::uci::moveToUci(games[1].moves[i], false) == correct[i]);
+                CHECK(shogi::uci::moveToUci(games[1].moves[i], false) == correct[i]);
             }
         }
 
         // Third game
         {
-            chess::Board board = chess::Board();
+            shogi::Board board = shogi::Board();
 
             const std::vector<std::string> moves = {"e4", "e6",   "d4", "d5", "Nc3", "Nf6", "Bg5",  "Be7",
                                                     "e5", "Nfd7", "h4", "f6", "Bd3", "c5",  "Qh5+", "Kf8"};
@@ -100,13 +100,13 @@ TEST_SUITE("PGN Reader") {
                                                       "e4e5", "f6d7", "h2h4", "f7f6", "f1d3", "c7c5", "d1h5", "e8f8"};
 
             for (size_t i = 0; i < moves.size(); i++) {
-                const auto move = chess::uci::parseSan(board, moves[i]);
+                const auto move = shogi::uci::parseSan(board, moves[i]);
                 CHECK(games[2].moves[i] == move);
                 board.makeMove(move);
             }
 
             for (size_t i = 0; i < correct.size(); i++) {
-                CHECK(chess::uci::moveToUci(games[2].moves[i], false) == correct[i]);
+                CHECK(shogi::uci::moveToUci(games[2].moves[i], false) == correct[i]);
             }
         }
     }
@@ -117,9 +117,9 @@ TEST_SUITE("PGN Reader") {
 
         CHECK(games.size() == 6);
 
-        CHECK(games[0].fen_epd == chess::constants::STARTPOS);
-        CHECK(games[1].fen_epd == chess::constants::STARTPOS);
-        CHECK(games[2].fen_epd == chess::constants::STARTPOS);
+        CHECK(games[0].fen_epd == shogi::constants::STARTPOS);
+        CHECK(games[1].fen_epd == shogi::constants::STARTPOS);
+        CHECK(games[2].fen_epd == shogi::constants::STARTPOS);
         CHECK(games[3].fen_epd == "5k2/3r1p2/1p3pp1/p2n3p/P6P/1PPR1PP1/3KN3/6b1 w - - 0 34");
         CHECK(games[4].fen_epd == "5k2/5p2/4B2p/r5pn/4P3/5PPP/2NR2K1/8 b - - 0 59");
         CHECK(games[5].fen_epd == "8/p3kp1p/1p4p1/2r2b2/2BR3P/1P3P2/P4PK1/8 b - - 0 28");
@@ -138,13 +138,13 @@ TEST_SUITE("PGN Reader") {
 
         CHECK(games.size() == 2);
 
-        CHECK(games[0].fen_epd == chess::constants::STARTPOS);
+        CHECK(games[0].fen_epd == shogi::constants::STARTPOS);
         CHECK(games[0].moves.size() == 6);
 
-        CHECK(games[1].fen_epd == chess::constants::STARTPOS);
+        CHECK(games[1].fen_epd == shogi::constants::STARTPOS);
         CHECK(games[1].moves.size() == 13);
         CHECK(games[1].moves[12] ==
-              chess::Move::make(chess::Square::SQ_G1, chess::Square::SQ_F3, chess::PieceType::KNIGHT));
+              shogi::Move::make(shogi::Square::SQ_G1, shogi::Square::SQ_F3, shogi::PieceType::KNIGHT));
     }
 
     TEST_CASE("Read PGN file with invalid file") {
@@ -154,4 +154,4 @@ TEST_SUITE("PGN Reader") {
                              "Failed to open file: app/tests/data/das.pgn", std::runtime_error);
     }
 }
-}  // namespace fastchess
+}  // namespace fastshogi

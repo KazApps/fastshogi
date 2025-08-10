@@ -7,7 +7,7 @@
 
 #include <core/filesystem/file_system.hpp>
 
-namespace fastchess::engine::process {
+namespace fastshogi::engine::process {
 
 enum class Standard { INPUT, OUTPUT, ERR };
 enum class Status { OK, ERR, TIMEOUT, NONE };
@@ -65,4 +65,4 @@ class IProcess {
     bool realtime_logging_ = true;
 };
 
-}  // namespace fastchess::engine::process
+}  // namespace fastshogi::engine::process

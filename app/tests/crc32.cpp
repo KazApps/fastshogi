@@ -2,7 +2,7 @@
 
 #include <doctest/doctest.hpp>
 
-using namespace fastchess;
+using namespace fastshogi;
 
 TEST_SUITE("CRC32") {
     TEST_CASE("Hello world") {

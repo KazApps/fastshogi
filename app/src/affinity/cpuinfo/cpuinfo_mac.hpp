@@ -7,7 +7,7 @@
 #include <affinity/cpuinfo/cpu_info.hpp>
 #include <core/logger/logger.hpp>
 
-namespace fastchess::affinity::cpu_info {
+namespace fastshogi::affinity::cpu_info {
 
 // Some dumb code for macOS, setting the affinity is not really supported.
 inline CpuInfo getCpuInfo() noexcept {
@@ -24,4 +24,4 @@ inline CpuInfo getCpuInfo() noexcept {
     return cpu_info;
 }
 
-}  // namespace fastchess::affinity::cpu_info
+}  // namespace fastshogi::affinity::cpu_info

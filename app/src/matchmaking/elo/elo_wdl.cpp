@@ -8,7 +8,7 @@
 #include <fmt/include/fmt/core.h>
 #include "fmt/include/fmt/std.h"
 
-namespace fastchess::elo {
+namespace fastshogi::elo {
 
 std::string EloBase::getElo() const noexcept {
     std::stringstream ss;
@@ -75,4 +75,4 @@ std::string EloWDL::los() const noexcept {
 }
 
 double EloWDL::getScore() const noexcept { return score_; }
-}  // namespace fastchess::elo
+}  // namespace fastshogi::elo

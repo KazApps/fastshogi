@@ -4,7 +4,7 @@
 
 #include <doctest/doctest.hpp>
 
-namespace fastchess {
+namespace fastshogi {
 
 TEST_SUITE("EPD Reader") {
     TEST_CASE("Read EPD file") {
@@ -27,4 +27,4 @@ TEST_SUITE("EPD Reader") {
     }
 }
 
-}  // namespace fastchess
+}  // namespace fastshogi

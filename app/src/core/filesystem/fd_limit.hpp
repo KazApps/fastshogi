@@ -7,7 +7,7 @@
 #    include <windows.h>
 #endif
 
-namespace fastchess::fd_limit {
+namespace fastshogi::fd_limit {
 
 #ifndef _WIN64
 [[nodiscard]] inline int maxSystemFileDescriptorCount() {
@@ -44,4 +44,4 @@ namespace fastchess::fd_limit {
 
 [[nodiscard]] inline int maxConcurrency(int availableFDs) noexcept { return (availableFDs - 26) / 12 + 1; }
 
-}  // namespace fastchess::fd_limit
+}  // namespace fastshogi::fd_limit

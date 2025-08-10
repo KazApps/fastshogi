@@ -2,8 +2,8 @@
 
 #include <doctest/doctest.hpp>
 
-using namespace fastchess;
-using namespace chess;
+using namespace fastshogi;
+using namespace shogi;
 
 namespace {
 const std::string syzygy3MenPath = "./app/tests/data/syzygy_wdl3";

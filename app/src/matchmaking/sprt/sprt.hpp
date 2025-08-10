@@ -3,7 +3,7 @@
 #include <array>
 #include <string>
 
-namespace fastchess {
+namespace fastshogi {
 
 class Stats;
 
@@ -58,4 +58,4 @@ class SPRT {
     std::string model_ = "normalized";
 };
 
-}  // namespace fastchess
+}  // namespace fastshogi

@@ -10,7 +10,7 @@
 #include <fmt/include/fmt/core.h>
 #include "fmt/include/fmt/std.h"
 
-namespace fastchess::time {
+namespace fastshogi::time {
 
 namespace sc = std::chrono;
 
@@ -102,4 +102,4 @@ std::string datetime_precise() {
     return ss.str();
 }
 
-}  // namespace fastchess::time
+}  // namespace fastshogi::time

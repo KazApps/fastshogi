@@ -63,7 +63,7 @@ static inline int portable_spawn_file_actions_addchdir(posix_spawn_file_actions_
 #    endif
 }
 
-namespace fastchess {
+namespace fastshogi {
 extern util::ThreadVector<ProcessInformation> process_list;
 
 namespace engine::process {
@@ -547,6 +547,6 @@ class Process : public IProcess {
     std::optional<int> exit_code_;
 };
 }  // namespace engine::process
-}  // namespace fastchess
+}  // namespace fastshogi
 
 #endif

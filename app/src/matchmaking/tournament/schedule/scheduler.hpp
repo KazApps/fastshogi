@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <optional>
 
-namespace fastchess {
+namespace fastshogi {
 
 class Scheduler {
    public:
@@ -23,4 +23,4 @@ class Scheduler {
     virtual std::size_t total() const = 0;
 };
 
-}  // namespace fastchess
+}  // namespace fastshogi
