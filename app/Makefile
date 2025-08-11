@@ -32,7 +32,6 @@ SRC_FILES        := \
 	$(SRCDIR)/game/pgn/openings_data.cpp \
 	$(SRCDIR)/game/timecontrol/timecontrol.cpp \
 	$(SRCDIR)/main.cpp \
-	$(SRCDIR)/matchmaking/syzygy.cpp \
 	$(SRCDIR)/matchmaking/elo/elo_pentanomial.cpp \
 	$(SRCDIR)/matchmaking/elo/elo_wdl.cpp \
 	$(SRCDIR)/matchmaking/match/match.cpp \
@@ -40,7 +39,6 @@ SRC_FILES        := \
 	$(SRCDIR)/matchmaking/tournament/base/tournament.cpp \
 	$(SRCDIR)/matchmaking/tournament/roundrobin/roundrobin.cpp \
 	$(SRCDIR)/matchmaking/tournament/tournament_manager.cpp \
-	$(THIRDPARTYDIR)/pyrrhic/tbprobe.cpp
 
 SRC_FILES_TEST   := \
 	$(TESTDIR)/cli_test.cpp \
@@ -54,15 +52,12 @@ SRC_FILES_TEST   := \
 	$(TESTDIR)/match_test.cpp \
 	$(TESTDIR)/opening_test.cpp \
 	$(TESTDIR)/option_test.cpp \
-	$(TESTDIR)/output_factory_test.cpp \
 	$(TESTDIR)/pgn_builder_test.cpp \
 	$(TESTDIR)/pgn_reader_test.cpp \
 	$(TESTDIR)/player.cpp \
 	$(TESTDIR)/scoreboard_test.cpp \
 	$(TESTDIR)/sprt_test.cpp \
-	$(TESTDIR)/syzygy_test.cpp \
 	$(TESTDIR)/timecontrol_test.cpp \
-	$(TESTDIR)/tournament_manager_test.cpp \
 	$(TESTDIR)/uci_engine_test.cpp \
 	$(TESTDIR)/crc32.cpp
 

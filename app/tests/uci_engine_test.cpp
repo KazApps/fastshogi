@@ -46,10 +46,10 @@ TEST_SUITE("Uci Engine Communication Tests") {
         CHECK(uci_engine.output()[2].line == "argv[3]: arg3");
 
         CHECK(uci_engine.idName().has_value());
-        CHECK(uci_engine.idName().value() == "Dummy Engine");
+        CHECK(uci_engine.idName().value() == "dummy_engine");
 
         CHECK(uci_engine.idAuthor().has_value());
-        CHECK(uci_engine.idAuthor().value() == "Fastshogi");
+        CHECK(uci_engine.idAuthor().value() == "fastshogi");
     }
 
     TEST_CASE("Test engine::UciEngine Args Complex") {
@@ -101,8 +101,8 @@ TEST_SUITE("Uci Engine Communication Tests") {
 
         CHECK(uci);
         CHECK(uciOutput.size() == 9);
-        CHECK(uciOutput[0].line == "id name Dummy Engine");
-        CHECK(uciOutput[1].line == "id author Fastshogi");
+        CHECK(uciOutput[0].line == "id name dummy_engine");
+        CHECK(uciOutput[1].line == "id author fastshogi");
         CHECK(uciOutput[2].line == "option name Threads type spin default 1 min 1 max 1024");
         CHECK(uciOutput[3].line == "option name Hash type spin default 1 min 1 max 500000");
         CHECK(uciOutput[4].line == "option name MultiPV type spin default 1 min 1 max 256");
@@ -136,8 +136,8 @@ TEST_SUITE("Uci Engine Communication Tests") {
 
         CHECK(res == engine::process::Status::OK);
         CHECK(uci_engine.output().size() == 9);
-        CHECK(uci_engine.output()[0].line == "id name Dummy Engine");
-        CHECK(uci_engine.output()[1].line == "id author Fastshogi");
+        CHECK(uci_engine.output()[0].line == "id name dummy_engine");
+        CHECK(uci_engine.output()[1].line == "id author fastshogi");
         CHECK(uci_engine.output()[2].line == "option name Threads type spin default 1 min 1 max 1024");
         CHECK(uci_engine.output()[3].line == "option name Hash type spin default 1 min 1 max 500000");
         CHECK(uci_engine.output()[4].line == "option name MultiPV type spin default 1 min 1 max 256");
@@ -178,8 +178,8 @@ TEST_SUITE("Uci Engine Communication Tests") {
 
         CHECK(res == engine::process::Status::OK);
         CHECK(uci_engine->output().size() == 9);
-        CHECK(uci_engine->output()[0].line == "id name Dummy Engine");
-        CHECK(uci_engine->output()[1].line == "id author Fastshogi");
+        CHECK(uci_engine->output()[0].line == "id name dummy_engine");
+        CHECK(uci_engine->output()[1].line == "id author fastshogi");
         CHECK(uci_engine->output()[2].line == "option name Threads type spin default 1 min 1 max 1024");
         CHECK(uci_engine->output()[3].line == "option name Hash type spin default 1 min 1 max 500000");
         CHECK(uci_engine->output()[4].line == "option name MultiPV type spin default 1 min 1 max 256");
@@ -197,8 +197,8 @@ TEST_SUITE("Uci Engine Communication Tests") {
 
         CHECK(res2 == engine::process::Status::OK);
         CHECK(uci_engine->output().size() == 9);
-        CHECK(uci_engine->output()[0].line == "id name Dummy Engine");
-        CHECK(uci_engine->output()[1].line == "id author Fastshogi");
+        CHECK(uci_engine->output()[0].line == "id name dummy_engine");
+        CHECK(uci_engine->output()[1].line == "id author fastshogi");
         CHECK(uci_engine->output()[2].line == "option name Threads type spin default 1 min 1 max 1024");
         CHECK(uci_engine->output()[3].line == "option name Hash type spin default 1 min 1 max 500000");
         CHECK(uci_engine->output()[4].line == "option name MultiPV type spin default 1 min 1 max 256");
@@ -221,8 +221,8 @@ TEST_SUITE("Uci Engine Communication Tests") {
 
         CHECK(res == engine::process::Status::OK);
         CHECK(uci_engine->output().size() == 9);
-        CHECK(uci_engine->output()[0].line == "id name Dummy Engine");
-        CHECK(uci_engine->output()[1].line == "id author Fastshogi");
+        CHECK(uci_engine->output()[0].line == "id name dummy_engine");
+        CHECK(uci_engine->output()[1].line == "id author fastshogi");
         CHECK(uci_engine->output()[2].line == "option name Threads type spin default 1 min 1 max 1024");
         CHECK(uci_engine->output()[3].line == "option name Hash type spin default 1 min 1 max 500000");
         CHECK(uci_engine->output()[4].line == "option name MultiPV type spin default 1 min 1 max 256");
@@ -240,8 +240,8 @@ TEST_SUITE("Uci Engine Communication Tests") {
 
         CHECK(res2 == engine::process::Status::OK);
         CHECK(uci_engine->output().size() == 9);
-        CHECK(uci_engine->output()[0].line == "id name Dummy Engine");
-        CHECK(uci_engine->output()[1].line == "id author Fastshogi");
+        CHECK(uci_engine->output()[0].line == "id name dummy_engine");
+        CHECK(uci_engine->output()[1].line == "id author fastshogi");
         CHECK(uci_engine->output()[2].line == "option name Threads type spin default 1 min 1 max 1024");
         CHECK(uci_engine->output()[3].line == "option name Hash type spin default 1 min 1 max 500000");
         CHECK(uci_engine->output()[4].line == "option name MultiPV type spin default 1 min 1 max 256");

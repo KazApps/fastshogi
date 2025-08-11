@@ -194,17 +194,6 @@ TEST_SUITE("Option Parsing Tests") {
                              std::runtime_error);
     }
 
-    TEST_CASE("Should throw error empty TB paths") {
-        const auto args = cli::Args{
-            "fastshogi.exe",
-            "-tb",
-        };
-
-        CHECK_THROWS_WITH_AS(cli::OptionsParser{args},
-                             "Error: Must provide a ;-separated list of Syzygy tablebase directories.",
-                             std::runtime_error);
-    }
-
     TEST_CASE("General Config Parsing") {
         const auto args = cli::Args{"fastshogi.exe",
                                     "-engine",
@@ -340,7 +329,6 @@ TEST_SUITE("Option Parsing Tests") {
                                     "nps=true",
                                     "seldepth=true",
                                     "hashfull=true",
-                                    "tbhits=true",
                                     "min=true"};
 
         cli::OptionsParser options = cli::OptionsParser(args);
@@ -380,7 +368,6 @@ TEST_SUITE("Option Parsing Tests") {
         CHECK(gameOptions.pgn.track_seldepth);
         CHECK(gameOptions.pgn.track_nps);
         CHECK(gameOptions.pgn.track_hashfull);
-        CHECK(gameOptions.pgn.track_tbhits);
         CHECK(gameOptions.pgn.min);
         CHECK(gameOptions.epd.file == "EPDs/Alexandria-EA649FED_vs_Alexandria-27E42728");
         // Test opening settings parsing

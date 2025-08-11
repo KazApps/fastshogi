@@ -6,7 +6,6 @@
 #include <core/rand.hpp>
 
 #include <types/draw_adjudication.hpp>
-#include <types/engine_config.hpp>
 #include <types/enums.hpp>
 #include <types/epd.hpp>
 #include <types/log.hpp>
@@ -15,7 +14,6 @@
 #include <types/pgn.hpp>
 #include <types/resign_adjudication.hpp>
 #include <types/sprt.hpp>
-#include <types/tb_adjudication.hpp>
 
 namespace fastshogi::config {
 
@@ -31,7 +29,6 @@ struct Tournament {
     DrawAdjudication draw          = {};
     ResignAdjudication resign      = {};
     MaxMovesAdjudication maxmoves  = {};
-    TbAdjudication tb_adjudication = {};
 
     VariantType variant = VariantType::STANDARD;
     TournamentType type = TournamentType::ROUNDROBIN;
@@ -62,7 +59,7 @@ struct Tournament {
 
     Log log = {};
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Tournament, resign, draw, maxmoves, tb_adjudication, opening, pgn, epd, sprt,
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Tournament, resign, draw, maxmoves, opening, pgn, epd, sprt,
                                    config_name, seed, variant, type, gauntlet_seeds, ratinginterval,
                                    scoreinterval, wait, autosaveinterval, games, rounds, concurrency, force_concurrency,
                                    recover, noswap, reverse, report_penta, affinity, show_latency, log)

@@ -188,7 +188,6 @@ std::string PgnBuilder::addMove(shogi::Board &board, const MoveData &move, std::
                 pgn_config_.track_seldepth ? "sd=" + std::to_string(move.seldepth) : "",        //
                 pgn_config_.track_nps ? "nps=" + std::to_string(move.nps) : "",                 //
                 pgn_config_.track_hashfull ? "hashfull=" + std::to_string(move.hashfull) : "",  //
-                pgn_config_.track_tbhits ? "tbhits=" + std::to_string(move.tbhits) : "",        //
                 info_lines.empty() ? "" : info_lines,                                           //
                 last ? match_.reason : ""                                                       //
             );

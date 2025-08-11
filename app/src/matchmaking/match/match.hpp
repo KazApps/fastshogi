@@ -3,10 +3,8 @@
 #include <shogi.hpp>
 
 #include <cli/cli.hpp>
-#include <core/config/config.hpp>
 #include <game/book/opening_book.hpp>
 #include <matchmaking/player.hpp>
-#include <matchmaking/syzygy.hpp>
 #include <types/match_data.hpp>
 
 namespace fastshogi {
@@ -106,30 +104,6 @@ class MaxMovesTracker {
     int move_count_;
 };
 
-class TbAdjudicationTracker {
-   public:
-    TbAdjudicationTracker(const int max_pieces, const bool ignore_50_move_rule)
-        : max_pieces_(max_pieces), ignore_50_move_rule_(ignore_50_move_rule) {}
-
-    TbAdjudicationTracker(config::TbAdjudication tb_adjudication)
-        : TbAdjudicationTracker(tb_adjudication.max_pieces, tb_adjudication.ignore_50_move_rule) {}
-
-    [[nodiscard]] bool adjudicatable(const shogi::Board& board) const noexcept {
-        if (max_pieces_ != 0 && board.occ().count() > max_pieces_) {
-            return false;
-        }
-        return canProbeSyzgyWdl(board);
-    }
-
-    [[nodiscard]] shogi::GameResult adjudicate(const shogi::Board& board) const noexcept {
-        return probeSyzygyWdl(board, ignore_50_move_rule_);
-    }
-
-   private:
-    int max_pieces_;
-    bool ignore_50_move_rule_;
-};
-
 class Match {
    public:
     Match(const book::Opening& opening);
@@ -182,7 +156,6 @@ class Match {
     DrawTracker draw_tracker_;
     ResignTracker resign_tracker_;
     MaxMovesTracker maxmoves_tracker_;
-    TbAdjudicationTracker tb_adjudication_tracker_;
 
     std::vector<std::string> uci_moves_;
 

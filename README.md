@@ -24,7 +24,7 @@ short time controls (0.2+0.002s), it exhibits minimal timeout issues, with only
   To use this feature, simply run the following command:
   `./fastshogi --compliance ENGINE_PATH [ENGINE_ARGS]`
 - **Extended PGN Data**: You can now track nodes, seldepth, nps (nodes per
-  second), hashfull, tbhits, and time left in the PGN output. Refer to the `-pgnout`
+  second), hashfull, and time left in the PGN output. Refer to the `-pgnout`
   option for detailed information.
 - **Quick Match Option**: We've introduced a `-quick` option for running quick
   matches between two engines with a specified book. Specify

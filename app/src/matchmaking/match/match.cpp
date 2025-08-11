@@ -58,8 +58,7 @@ Match::Match(const book::Opening& opening)
     : opening_(opening),
       draw_tracker_(config::TournamentConfig->draw),
       resign_tracker_(config::TournamentConfig->resign),
-      maxmoves_tracker_(config::TournamentConfig->maxmoves),
-      tb_adjudication_tracker_(config::TournamentConfig->tb_adjudication) {
+      maxmoves_tracker_(config::TournamentConfig->maxmoves) {
     board_.set960(config::TournamentConfig->variant == VariantType::FRC);
 
     const auto success = isFen(opening_.fen_epd) ? board_.setFen(opening_.fen_epd) : board_.setEpd(opening_.fen_epd);
@@ -118,7 +117,6 @@ void Match::addMoveData(const Player& player, int64_t measured_time_ms, int64_t 
 
     move_data.nps      = str_utils::findElement<uint64_t>(info, "nps").value_or(0);
     move_data.hashfull = str_utils::findElement<int>(info, "hashfull").value_or(0);
-    move_data.tbhits   = str_utils::findElement<uint64_t>(info, "tbhits").value_or(0);
     move_data.depth    = str_utils::findElement<int>(info, "depth").value_or(0);
     move_data.seldepth = str_utils::findElement<int>(info, "seldepth").value_or(0);
     move_data.nodes    = str_utils::findElement<uint64_t>(info, "nodes").value_or(0);
@@ -565,45 +563,6 @@ void Match::verifyPvLines(const Player& us) {
 }
 
 bool Match::adjudicate(Player& us, Player& them) noexcept {
-    // Start with TB adjudication, if applicable, since this provides a sort of 'exact' result, whereas the other
-    // adjudication methods are more heuristic.
-    if (config::TournamentConfig->tb_adjudication.enabled && tb_adjudication_tracker_.adjudicatable(board_)) {
-        const GameResult result = tb_adjudication_tracker_.adjudicate(board_);
-        const auto desired_adju = config::TournamentConfig->tb_adjudication.result_type;
-
-        if ((result == GameResult::WIN || result == GameResult::LOSE) &&
-            desired_adju & config::TbAdjudication::ResultType::WIN_LOSS) {
-            Color c = Color::NONE;
-
-            if (result == GameResult::WIN) {
-                us.setLost();
-                them.setWon();
-
-                c = board_.sideToMove();
-            } else {
-                us.setWon();
-                them.setLost();
-
-                c = (~board_.sideToMove());
-            }
-
-            data_.reason      = c.longStr() + Match::ADJUDICATION_TB_WIN_MSG;
-            data_.termination = MatchTermination::ADJUDICATION;
-
-            return true;
-        }
-
-        if (result == GameResult::DRAW && desired_adju & config::TbAdjudication::ResultType::DRAW) {
-            us.setDraw();
-            them.setDraw();
-
-            data_.reason      = Match::ADJUDICATION_TB_DRAW_MSG;
-            data_.termination = MatchTermination::ADJUDICATION;
-
-            return true;
-        }
-    }
-
     if (config::TournamentConfig->resign.enabled && resign_tracker_.resignable() && us.engine.lastScore() < 0) {
         us.setLost();
         them.setWon();

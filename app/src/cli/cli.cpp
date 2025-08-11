@@ -222,8 +222,6 @@ void parsePgnOut(const std::vector<std::string> &params, ArgumentData &argument_
                 argument_data.tournament_config.pgn.track_nps = value == "true";
             } else if (key == "hashfull" && is_bool(value)) {
                 argument_data.tournament_config.pgn.track_hashfull = value == "true";
-            } else if (key == "tbhits" && is_bool(value)) {
-                argument_data.tournament_config.pgn.track_tbhits = value == "true";
             } else if (key == "timeleft" && is_bool(value)) {
                 argument_data.tournament_config.pgn.track_timeleft = value == "true";
             } else if (key == "latency" && is_bool(value)) {
@@ -384,34 +382,6 @@ void parseResign(const std::vector<std::string> &params, ArgumentData &argument_
 void parseMaxMoves(const std::vector<std::string> &params, ArgumentData &argument_data) {
     parseValue(params, argument_data.tournament_config.maxmoves.move_count);
     argument_data.tournament_config.maxmoves.enabled = true;
-}
-
-void parseTbAdjudication(const std::vector<std::string> &params, ArgumentData &argument_data) {
-    parseValue(params, argument_data.tournament_config.tb_adjudication.syzygy_dirs);
-    argument_data.tournament_config.tb_adjudication.enabled = true;
-}
-
-void parseTbMaxPieces(const std::vector<std::string> &params, ArgumentData &argument_data) {
-    parseValue(params, argument_data.tournament_config.tb_adjudication.max_pieces);
-}
-
-void parseTbIgnore50(const std::vector<std::string> & /*params*/, ArgumentData &argument_data) {
-    argument_data.tournament_config.tb_adjudication.ignore_50_move_rule = true;
-}
-
-void parseTbAdjudicate(const std::vector<std::string> &params, ArgumentData &argument_data) {
-    std::string type;
-    parseValue(params, type);
-
-    if (type == "WIN_LOSS") {
-        argument_data.tournament_config.tb_adjudication.result_type = config::TbAdjudication::ResultType::WIN_LOSS;
-    } else if (type == "DRAW") {
-        argument_data.tournament_config.tb_adjudication.result_type = config::TbAdjudication::ResultType::DRAW;
-    } else if (type == "BOTH") {
-        argument_data.tournament_config.tb_adjudication.result_type = config::TbAdjudication::ResultType::BOTH;
-    } else {
-        throw std::runtime_error("Invalid tb adjudication type: " + type);
-    }
 }
 
 void parseAutoSaveInterval(const std::vector<std::string> &params, ArgumentData &argument_data) {
@@ -711,10 +681,6 @@ OptionsParser::OptionsParser(const cli::Args &args) {
     addOption("draw", parseDraw);
     addOption("resign", parseResign);
     addOption("maxmoves", parseMaxMoves);
-    addOption("tb", parseTbAdjudication);
-    addOption("tbpieces", parseTbMaxPieces);
-    addOption("tbignore50", parseTbIgnore50);
-    addOption("tbadjudicate", parseTbAdjudicate);
     addOption("autosaveinterval", parseAutoSaveInterval);
     addOption("log", parseLog);
     addOption("config", json_config::parseConfig);

@@ -64,7 +64,7 @@ void sanitize(config::Tournament& config) {
 #endif
 
     if (config.variant == VariantType::FRC && config.opening.file.empty()) {
-        throw std::runtime_error("Error: Please specify a Chess960 opening book");
+        throw std::runtime_error("Error: Please specify a Shogi960 opening book");
     }
 
     if (config.opening.file.empty()) {
@@ -82,12 +82,6 @@ void sanitize(config::Tournament& config) {
     if (config.ratinginterval == 0) config.ratinginterval = std::numeric_limits<int>::max();
 
     if (config.scoreinterval == 0) config.scoreinterval = std::numeric_limits<int>::max();
-
-    if (config.tb_adjudication.enabled) {
-        if (config.tb_adjudication.syzygy_dirs.empty()) {
-            throw std::runtime_error("Error: Must provide a ;-separated list of Syzygy tablebase directories.");
-        }
-    }
 }
 
 void sanitize(std::vector<EngineConfiguration>& configs) {
