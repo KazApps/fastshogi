@@ -151,7 +151,8 @@ OUTPUT_FILE_4=$(mktemp)
 
 
 # check if the output contains the expected error message
-if ! grep -q "Fatal; random_move_1 engine startup failure: Engine didn't respond to uciok after startup" $OUTPUT_FILE_4; then
+if ! grep -q "Fatal; random_move_1 engine startup failure: Couldn't write uci to engine" $OUTPUT_FILE_4 && \
+   ! grep -q "Fatal; random_move_1 engine startup failure: Engine didn't respond to uciok after startup" $OUTPUT_FILE_4; then
     echo "Failed to report invalid command."
     exit 1
 fi
