@@ -4,11 +4,11 @@
 
 namespace fastshogi {
 
-class UCIOption {
+class USIOption {
    public:
     enum class Type { Button, Check, Combo, Spin, String };
 
-    virtual ~UCIOption()                                 = default;
+    virtual ~USIOption()                                 = default;
     virtual std::string getName() const                  = 0;
     virtual void setValue(const std::string& value)      = 0;
     virtual std::string getValue() const                 = 0;

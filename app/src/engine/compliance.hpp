@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-#include <engine/uci_engine.hpp>
+#include <engine/usi_engine.hpp>
 
 namespace fastshogi::engine {
 
@@ -58,84 +58,84 @@ inline bool compliant(int argc, char const *argv[]) {
         return true;
     };
 
-    UciEngine uci_engine(config, false);
+    UsiEngine usi_engine(config, false);
 
     std::vector<std::pair<std::string, std::function<bool()>>> steps = {
-        {"Start the engine", [&uci_engine] { return uci_engine.start().has_value(); }},
-        {"Check if engine is ready", [&uci_engine] { return uci_engine.isready() == process::Status::OK; }},
-        {"Check id name", [&uci_engine] { return uci_engine.idName().has_value(); }},
-        {"Check id author", [&uci_engine] { return uci_engine.idAuthor().has_value(); }},
-        {"Send ucinewgame", [&uci_engine] { return uci_engine.ucinewgame(); }},
-        {"Set position to startpos", [&uci_engine] { return uci_engine.writeEngine("position startpos"); }},
+        {"Start the engine", [&usi_engine] { return usi_engine.start().has_value(); }},
+        {"Check if engine is ready", [&usi_engine] { return usi_engine.isready() == process::Status::OK; }},
+        {"Check id name", [&usi_engine] { return usi_engine.idName().has_value(); }},
+        {"Check id author", [&usi_engine] { return usi_engine.idAuthor().has_value(); }},
+        {"Send usinewgame", [&usi_engine] { return usi_engine.usinewgame(); }},
+        {"Set position to startpos", [&usi_engine] { return usi_engine.writeEngine("position startpos"); }},
         {"Check if engine is ready after startpos",
-         [&uci_engine] { return uci_engine.isready() == process::Status::OK; }},
+         [&usi_engine] { return usi_engine.isready() == process::Status::OK; }},
         {"Set position to fen",
-         [&uci_engine] {
-             return uci_engine.writeEngine(
+         [&usi_engine] {
+             return usi_engine.writeEngine(
                  "position fen 3r2k1/p5n1/1pq1p2p/2p3p1/2P1P1n1/1P1P2pP/PN1Q2K1/5R2 w - - 0 27");
          }},
 
-        {"Check if engine is ready after fen", [&uci_engine] { return uci_engine.isready() == process::Status::OK; }},
-        {"Send go wtime 100", [&uci_engine] { return uci_engine.writeEngine("go wtime 100"); }},
-        {"Read bestmove", [&uci_engine] { return uci_engine.readEngine("bestmove") == process::Status::OK; }},
-        {"Check if engine prints an info line", [&uci_engine] { return !uci_engine.lastInfoLine().empty(); }},
-        {"Verify info line format is valid", [&uci_engine] { return isValidInfoLine(uci_engine.lastInfoLine()); }},
+        {"Check if engine is ready after fen", [&usi_engine] { return usi_engine.isready() == process::Status::OK; }},
+        {"Send go wtime 100", [&usi_engine] { return usi_engine.writeEngine("go wtime 100"); }},
+        {"Read bestmove", [&usi_engine] { return usi_engine.readEngine("bestmove") == process::Status::OK; }},
+        {"Check if engine prints an info line", [&usi_engine] { return !usi_engine.lastInfoLine().empty(); }},
+        {"Verify info line format is valid", [&usi_engine] { return isValidInfoLine(usi_engine.lastInfoLine()); }},
         {"Verify info line contains score",
-         [&uci_engine] { return str_utils::contains(uci_engine.lastInfoLine(), "score"); }},
+         [&usi_engine] { return str_utils::contains(usi_engine.lastInfoLine(), "score"); }},
         {"Set position to black to move",
-         [&uci_engine] {
-             return uci_engine.writeEngine("position fen rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1");
+         [&usi_engine] {
+             return usi_engine.writeEngine("position fen rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1");
          }},
-        {"Send go btime 100", [&uci_engine] { return uci_engine.writeEngine("go btime 100"); }},
+        {"Send go btime 100", [&usi_engine] { return usi_engine.writeEngine("go btime 100"); }},
         {"Read bestmove after go btime 100",
-         [&uci_engine] { return uci_engine.readEngine("bestmove") == process::Status::OK; }},
+         [&usi_engine] { return usi_engine.readEngine("bestmove") == process::Status::OK; }},
         {"Check if engine prints an info line after go btime 100",
-         [&uci_engine] { return !uci_engine.lastInfoLine().empty(); }},
+         [&usi_engine] { return !usi_engine.lastInfoLine().empty(); }},
         {"Verify info line format is valid after go btime 100",
-         [&uci_engine] { return isValidInfoLine(uci_engine.lastInfoLine()); }},
+         [&usi_engine] { return isValidInfoLine(usi_engine.lastInfoLine()); }},
         {"Check if engine prints an info line with the score after go btime 100",
-         [&uci_engine] { return str_utils::contains(uci_engine.lastInfoLine(), "score"); }},
+         [&usi_engine] { return str_utils::contains(usi_engine.lastInfoLine(), "score"); }},
         {"Send go wtime 100 winc 100 btime 100 binc 100",
-         [&uci_engine] { return uci_engine.writeEngine("go wtime 100 winc 100 btime 100 binc 100"); }},
+         [&usi_engine] { return usi_engine.writeEngine("go wtime 100 winc 100 btime 100 binc 100"); }},
         {"Read bestmove after go wtime 100 winc 100 btime 100 binc 100",
-         [&uci_engine] { return uci_engine.readEngine("bestmove") == process::Status::OK; }},
+         [&usi_engine] { return usi_engine.readEngine("bestmove") == process::Status::OK; }},
         {"Check if engine prints an info line after go wtime 100 winc 100",
-         [&uci_engine] { return !uci_engine.lastInfoLine().empty(); }},
+         [&usi_engine] { return !usi_engine.lastInfoLine().empty(); }},
         {"Verify info line format is valid after go wtime 100 winc 100",
-         [&uci_engine] { return isValidInfoLine(uci_engine.lastInfoLine()); }},
+         [&usi_engine] { return isValidInfoLine(usi_engine.lastInfoLine()); }},
         {"Check if engine prints an info line with the score after go wtime 100 winc 100",
-         [&uci_engine] { return str_utils::contains(uci_engine.lastInfoLine(), "score"); }},
+         [&usi_engine] { return str_utils::contains(usi_engine.lastInfoLine(), "score"); }},
         {"Send go btime 100 binc 100 wtime 100 winc 100",
-         [&uci_engine] { return uci_engine.writeEngine("go btime 100 binc 100 wtime 100 winc 100"); }},
+         [&usi_engine] { return usi_engine.writeEngine("go btime 100 binc 100 wtime 100 winc 100"); }},
         {"Read bestmove after go btime 100 binc 100 wtime 100 winc 100",
-         [&uci_engine] { return uci_engine.readEngine("bestmove") == process::Status::OK; }},
+         [&usi_engine] { return usi_engine.readEngine("bestmove") == process::Status::OK; }},
         {"Check if engine prints an info line after go btime 100 binc 100",
-         [&uci_engine] { return !uci_engine.lastInfoLine().empty(); }},
+         [&usi_engine] { return !usi_engine.lastInfoLine().empty(); }},
         {"Verify info line format is valid after go btime 100 binc 100",
-         [&uci_engine] { return isValidInfoLine(uci_engine.lastInfoLine()); }},
+         [&usi_engine] { return isValidInfoLine(usi_engine.lastInfoLine()); }},
         {"Check if engine prints an info line with the score after go btime 100 binc 100",
-         [&uci_engine] { return str_utils::contains(uci_engine.lastInfoLine(), "score"); }},
+         [&usi_engine] { return str_utils::contains(usi_engine.lastInfoLine(), "score"); }},
         {"Check if engine prints an info line after go btime 100 binc 100",
-         [&uci_engine] { return str_utils::contains(uci_engine.lastInfoLine(), "score"); }},
+         [&usi_engine] { return str_utils::contains(usi_engine.lastInfoLine(), "score"); }},
         // Simulate a game
-        {"Send ucinewgame", [&uci_engine] { return uci_engine.ucinewgame(); }},
-        {"Set position to startpos", [&uci_engine] { return uci_engine.writeEngine("position startpos"); }},
-        {"Send go wtime 100", [&uci_engine] { return uci_engine.writeEngine("go wtime 100 btime 100"); }},
+        {"Send usinewgame", [&usi_engine] { return usi_engine.usinewgame(); }},
+        {"Set position to startpos", [&usi_engine] { return usi_engine.writeEngine("position startpos"); }},
+        {"Send go wtime 100", [&usi_engine] { return usi_engine.writeEngine("go wtime 100 btime 100"); }},
         {"Read bestmove after go wtime 100 btime 100",
-         [&uci_engine] {
-             return uci_engine.readEngine("bestmove") == process::Status::OK && uci_engine.bestmove() != std::nullopt;
+         [&usi_engine] {
+             return usi_engine.readEngine("bestmove") == process::Status::OK && usi_engine.bestmove() != std::nullopt;
          }},
         {"Verify info line format is valid after go wtime 100 btime 100",
-         [&uci_engine] { return isValidInfoLine(uci_engine.lastInfoLine()); }},
+         [&usi_engine] { return isValidInfoLine(usi_engine.lastInfoLine()); }},
         {"Set position to startpos moves e2e4 e7e5",
-         [&uci_engine] { return uci_engine.writeEngine("position startpos moves e2e4 e7e5"); }},
-        {"Send go wtime 100 btime 100", [&uci_engine] { return uci_engine.writeEngine("go wtime 100 btime 100"); }},
+         [&usi_engine] { return usi_engine.writeEngine("position startpos moves e2e4 e7e5"); }},
+        {"Send go wtime 100 btime 100", [&usi_engine] { return usi_engine.writeEngine("go wtime 100 btime 100"); }},
         {"Read bestmove after position startpos moves e2e4 e7e5",
-         [&uci_engine] {
-             return uci_engine.readEngine("bestmove") == process::Status::OK && uci_engine.bestmove() != std::nullopt;
+         [&usi_engine] {
+             return usi_engine.readEngine("bestmove") == process::Status::OK && usi_engine.bestmove() != std::nullopt;
          }},
         {"Verify info line format is valid after position startpos moves e2e4 e7e5",
-         [&uci_engine] { return isValidInfoLine(uci_engine.lastInfoLine()); }}};
+         [&usi_engine] { return isValidInfoLine(usi_engine.lastInfoLine()); }}};
 
     for (const auto &[description, action] : steps) {
         if (!executeStep(description, action)) {

@@ -4,11 +4,11 @@
 #include <string>
 #include <vector>
 
-#include "ucioption.hpp"
+#include "usioption.hpp"
 
 namespace fastshogi {
 
-class ComboOption : public UCIOption {
+class ComboOption : public USIOption {
    public:
     ComboOption(const std::string& name, const std::vector<std::string>& options, const std::string& defaultValue)
         : name(name), options(options), value(defaultValue) {}

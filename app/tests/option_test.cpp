@@ -4,14 +4,14 @@
 
 namespace fastshogi {
 
-TEST_SUITE("Uci Options") {
+TEST_SUITE("Usi Options") {
     TEST_CASE("Parse Spin Option Integer") {
         std::string line = "name Hash type spin default 16 min 1 max 16384";
-        auto option      = UCIOptionFactory::parseUCIOptionLine(line);
+        auto option      = USIOptionFactory::parseUSIOptionLine(line);
 
         CHECK(option->getName() == "Hash");
 
-        CHECK(option->getType() == UCIOption::Type::Spin);
+        CHECK(option->getType() == USIOption::Type::Spin);
 
         CHECK(option->getValue() == "16");
 
@@ -28,11 +28,11 @@ TEST_SUITE("Uci Options") {
 
     TEST_CASE("Parse Spin Option Double") {
         std::string line = "name x1 type spin default 321.12321 min 0 max 321321.3213";
-        auto option      = UCIOptionFactory::parseUCIOptionLine(line);
+        auto option      = USIOptionFactory::parseUSIOptionLine(line);
 
         CHECK(option->getName() == "x1");
 
-        CHECK(option->getType() == UCIOption::Type::Spin);
+        CHECK(option->getType() == USIOption::Type::Spin);
 
         CHECK(option->getValue() == "321.123210");
 
@@ -50,45 +50,45 @@ TEST_SUITE("Uci Options") {
     TEST_CASE("Parse Spin Option Default String") {
         std::string line = "name x1 type spin default dsad min 0 max 321321.3213";
 
-        CHECK_THROWS_WITH_AS(UCIOptionFactory::parseUCIOptionLine(line), "The spin values are not numeric.",
+        CHECK_THROWS_WITH_AS(USIOptionFactory::parseUSIOptionLine(line), "The spin values are not numeric.",
                              std::invalid_argument);
     }
 
     TEST_CASE("Parse Spin Option Min String") {
         std::string line = "name x1 type spin default 3213.21 min foobar max 321321.3213";
 
-        CHECK_THROWS_WITH_AS(UCIOptionFactory::parseUCIOptionLine(line), "The spin values are not numeric.",
+        CHECK_THROWS_WITH_AS(USIOptionFactory::parseUSIOptionLine(line), "The spin values are not numeric.",
                              std::invalid_argument);
     }
 
     TEST_CASE("Parse Spin Option Max String") {
         std::string line = "name x1 type spin default 3213.21 min 321.321 max foobar";
 
-        CHECK_THROWS_WITH_AS(UCIOptionFactory::parseUCIOptionLine(line), "The spin values are not numeric.",
+        CHECK_THROWS_WITH_AS(USIOptionFactory::parseUSIOptionLine(line), "The spin values are not numeric.",
                              std::invalid_argument);
     }
 
     TEST_CASE("Parse Spin Option Min Larger Than Max") {
         std::string line = "name x1 type spin default 3213.21 min 10 max 0";
 
-        CHECK_THROWS_WITH_AS(UCIOptionFactory::parseUCIOptionLine(line), "Min value cannot be greater than max value.",
+        CHECK_THROWS_WITH_AS(USIOptionFactory::parseUSIOptionLine(line), "Min value cannot be greater than max value.",
                              std::invalid_argument);
     }
 
     TEST_CASE("Parse Spin Option Default Not In Range") {
         std::string line = "name x1 type spin default 3213 min 0 max 10";
 
-        CHECK_THROWS_WITH_AS(UCIOptionFactory::parseUCIOptionLine(line), "Value is out of the allowed range.",
+        CHECK_THROWS_WITH_AS(USIOptionFactory::parseUSIOptionLine(line), "Value is out of the allowed range.",
                              std::out_of_range);
     }
 
     TEST_CASE("Parse Combo Option") {
         std::string line = "name Style type combo default Normal var Solid var Normal var Risky";
-        auto option      = UCIOptionFactory::parseUCIOptionLine(line);
+        auto option      = USIOptionFactory::parseUSIOptionLine(line);
 
         CHECK(option->getName() == "Style");
 
-        CHECK(option->getType() == UCIOption::Type::Combo);
+        CHECK(option->getType() == USIOption::Type::Combo);
 
         CHECK(option->getValue() == "Normal");
 
@@ -106,11 +106,11 @@ TEST_SUITE("Uci Options") {
 
     TEST_CASE("Parse Button Option") {
         std::string line = "name Clear Hash type button";
-        auto option      = UCIOptionFactory::parseUCIOptionLine(line);
+        auto option      = USIOptionFactory::parseUSIOptionLine(line);
 
         CHECK(option->getName() == "Clear Hash");
 
-        CHECK(option->getType() == UCIOption::Type::Button);
+        CHECK(option->getType() == USIOption::Type::Button);
 
         CHECK(option->getValue() == "false");
 
@@ -123,11 +123,11 @@ TEST_SUITE("Uci Options") {
 
     TEST_CASE("Parse Check Option") {
         std::string line = "name OwnBook type check default false";
-        auto option      = UCIOptionFactory::parseUCIOptionLine(line);
+        auto option      = USIOptionFactory::parseUSIOptionLine(line);
 
         CHECK(option->getName() == "OwnBook");
 
-        CHECK(option->getType() == UCIOption::Type::Check);
+        CHECK(option->getType() == USIOption::Type::Check);
 
         CHECK(option->getValue() == "false");
 
@@ -140,11 +140,11 @@ TEST_SUITE("Uci Options") {
 
     TEST_CASE("Parse String Option") {
         std::string line = "name NalimovPath type string default <empty>";
-        auto option      = UCIOptionFactory::parseUCIOptionLine(line);
+        auto option      = USIOptionFactory::parseUSIOptionLine(line);
 
         CHECK(option->getName() == "NalimovPath");
 
-        CHECK(option->getType() == UCIOption::Type::String);
+        CHECK(option->getType() == USIOption::Type::String);
 
         CHECK(option->getValue() == "<empty>");
 
@@ -157,11 +157,11 @@ TEST_SUITE("Uci Options") {
 
     TEST_CASE("Parse String Option Default Foo") {
         std::string line = "name NalimovPath type string default Foo";
-        auto option      = UCIOptionFactory::parseUCIOptionLine(line);
+        auto option      = USIOptionFactory::parseUSIOptionLine(line);
 
         CHECK(option->getName() == "NalimovPath");
 
-        CHECK(option->getType() == UCIOption::Type::String);
+        CHECK(option->getType() == USIOption::Type::String);
 
         CHECK(option->getValue() == "Foo");
 

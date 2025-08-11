@@ -19,8 +19,8 @@ short time controls (0.2+0.002s), it exhibits minimal timeout issues, with only
   You can enable this feature by adding `engine=true` to
   the log option.
 
-- **UCI Compliance Checker**: Fastshogi now offers a built-in UCI compliance checker,  
-  allowing you to verify that engines adhere to the UCI protocol.  
+- **USI Compliance Checker**: Fastshogi now offers a built-in USI compliance checker,  
+  allowing you to verify that engines adhere to the USI protocol.  
   To use this feature, simply run the following command:
   `./fastshogi --compliance ENGINE_PATH [ENGINE_ARGS]`
 - **Extended PGN Data**: You can now track nodes, seldepth, nps (nodes per

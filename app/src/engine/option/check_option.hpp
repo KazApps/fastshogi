@@ -1,10 +1,10 @@
 #pragma once
 
-#include "ucioption.hpp"
+#include "usioption.hpp"
 
 namespace fastshogi {
 
-class CheckOption : public UCIOption {
+class CheckOption : public USIOption {
    public:
     CheckOption(const std::string& name) : name(name) {}
 

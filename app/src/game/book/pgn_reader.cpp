@@ -44,8 +44,8 @@ class PGNVisitor : public shogi::pgn::Visitor {
         shogi::Move move_i;
 
         try {
-            move_i = shogi::uci::parseSan(board_, move);
-        } catch (const shogi::uci::SanParseError& e) {
+            move_i = shogi::usi::parseSan(board_, move);
+        } catch (const shogi::usi::SanParseError& e) {
             LOG_ERR("Failed to parse move: {}", e.what());
             early_stop_ = true;
             return;

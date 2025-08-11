@@ -4645,15 +4645,15 @@ class StreamParser {
 
 
 namespace shogi {
-class uci {
+class usi {
    public:
     /**
-     * @brief Converts an internal move to a UCI string
+     * @brief Converts an internal move to a USI string
      * @param move
      * @param shogi960
      * @return
      */
-    [[nodiscard]] static std::string moveToUci(const Move &move, bool shogi960 = false) noexcept(false) {
+    [[nodiscard]] static std::string moveToUsi(const Move &move, bool shogi960 = false) noexcept(false) {
         // Get the from and to squares
         Square from_sq = move.from();
         Square to_sq   = move.to();
@@ -4678,18 +4678,18 @@ class uci {
     }
 
     /**
-     * @brief Converts a UCI string to an internal move.
+     * @brief Converts a USI string to an internal move.
      * @param board
-     * @param uci
+     * @param usi
      * @return
      */
-    [[nodiscard]] static Move uciToMove(const Board &board, const std::string &uci) noexcept(false) {
-        if (uci.length() < 4) {
+    [[nodiscard]] static Move usiToMove(const Board &board, const std::string &usi) noexcept(false) {
+        if (usi.length() < 4) {
             return Move::NO_MOVE;
         }
 
-        Square source = Square(uci.substr(0, 2));
-        Square target = Square(uci.substr(2, 2));
+        Square source = Square(usi.substr(0, 2));
+        Square target = Square(usi.substr(2, 2));
 
         if (!source.is_valid() || !target.is_valid()) {
             return Move::NO_MOVE;
@@ -4716,17 +4716,17 @@ class uci {
         }
 
         // promotion
-        if (pt == PieceType::PAWN && uci.length() == 5 && Square::back_rank(target, ~board.sideToMove())) {
-            auto promotion = PieceType(uci.substr(4, 1));
+        if (pt == PieceType::PAWN && usi.length() == 5 && Square::back_rank(target, ~board.sideToMove())) {
+            auto promotion = PieceType(usi.substr(4, 1));
 
             if (promotion == PieceType::NONE || promotion == PieceType::KING || promotion == PieceType::PAWN) {
                 return Move::NO_MOVE;
             }
 
-            return Move::make<Move::PROMOTION>(source, target, PieceType(uci.substr(4, 1)));
+            return Move::make<Move::PROMOTION>(source, target, PieceType(usi.substr(4, 1)));
         }
 
-        return (uci.length() == 4) ? Move::make<Move::NORMAL>(source, target) : Move::NO_MOVE;
+        return (usi.length() == 4) ? Move::make<Move::NORMAL>(source, target) : Move::NO_MOVE;
     }
 
     /**
@@ -4889,31 +4889,31 @@ class uci {
     }
 
     /**
-     * @brief Check if a string is a valid UCI move. Must also have the correct length.
+     * @brief Check if a string is a valid USI move. Must also have the correct length.
      * @param move
      * @return
      */
-    static bool isUciMove(const std::string &move) noexcept {
-        bool is_uci = false;
+    static bool isUsiMove(const std::string &move) noexcept {
+        bool is_usi = false;
 
         static constexpr auto is_digit     = [](char c) { return c >= '1' && c <= '8'; };
         static constexpr auto is_file      = [](char c) { return c >= 'a' && c <= 'h'; };
         static constexpr auto is_promotion = [](char c) { return c == 'n' || c == 'b' || c == 'r' || c == 'q'; };
 
-        // assert that the move is in uci format, [abcdefgh][1-8][abcdefgh][1-8][nbrq]
+        // assert that the move is in usi format, [abcdefgh][1-8][abcdefgh][1-8][nbrq]
         if (move.size() >= 4) {
-            is_uci = is_file(move[0]) && is_digit(move[1]) && is_file(move[2]) && is_digit(move[3]);
+            is_usi = is_file(move[0]) && is_digit(move[1]) && is_file(move[2]) && is_digit(move[3]);
         }
 
         if (move.size() == 5) {
-            is_uci = is_uci && is_promotion(move[4]);
+            is_usi = is_usi && is_promotion(move[4]);
         }
 
         if (move.size() > 5) {
             return false;
         }
 
-        return is_uci;
+        return is_usi;
     }
 
    private:

@@ -5,15 +5,15 @@
 #include <string>
 #include <vector>
 
-#include "ucioption.hpp"
+#include "usioption.hpp"
 
 namespace fastshogi {
 
-class UCIOptions {
+class USIOptions {
    public:
-    void addOption(std::unique_ptr<UCIOption> option) { options.push_back(std::move(option)); }
+    void addOption(std::unique_ptr<USIOption> option) { options.push_back(std::move(option)); }
 
-    std::optional<UCIOption*> getOption(const std::string& name) {
+    std::optional<USIOption*> getOption(const std::string& name) {
         for (auto& option : options) {
             if (option->getName() == name) {
                 return option.get();
@@ -23,7 +23,7 @@ class UCIOptions {
         return std::nullopt;
     }
 
-    std::optional<UCIOption*> getOption(const std::string& name) const {
+    std::optional<USIOption*> getOption(const std::string& name) const {
         for (const auto& option : options) {
             if (option->getName() == name) {
                 return option.get();
@@ -33,10 +33,10 @@ class UCIOptions {
         return std::nullopt;
     }
 
-    const std::vector<std::unique_ptr<UCIOption>>& getOptions() { return options; }
+    const std::vector<std::unique_ptr<USIOption>>& getOptions() { return options; }
 
    private:
-    std::vector<std::unique_ptr<UCIOption>> options;
+    std::vector<std::unique_ptr<USIOption>> options;
 };
 
 }  // namespace fastshogi

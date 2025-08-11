@@ -183,7 +183,7 @@ void parseEngineKeyValues(EngineConfiguration &engineConfig, const std::string &
         const std::string strippedKey = key.substr(pos + 1);
         engineConfig.options.emplace_back(strippedKey, value);
     } else if (key == "proto") {
-        if (value != "uci") {
+        if (value != "usi") {
             throw std::runtime_error("Unsupported protocol.");
         }
     } else
@@ -232,8 +232,8 @@ void parsePgnOut(const std::vector<std::string> &params, ArgumentData &argument_
                     argument_data.tournament_config.pgn.notation = NotationType::SAN;
                 } else if (value == "lan") {
                     argument_data.tournament_config.pgn.notation = NotationType::LAN;
-                } else if (value == "uci") {
-                    argument_data.tournament_config.pgn.notation = NotationType::UCI;
+                } else if (value == "usi") {
+                    argument_data.tournament_config.pgn.notation = NotationType::USI;
                 } else {
                     OptionsParser::throwMissing("pgnout notation", key, value);
                 }

@@ -15,9 +15,9 @@ TEST_SUITE("Player Test") {
 #endif
         config.args = "arg1 arg2 arg3";
 
-        engine::UciEngine uci_engine = engine::UciEngine(config, false);
+        engine::UsiEngine usi_engine = engine::UsiEngine(config, false);
 
-        Player player = Player(uci_engine);
+        Player player = Player(usi_engine);
 
         CHECK(player.engine.getConfig().cmd == config.cmd);
         CHECK(player.engine.getConfig().args == config.args);
@@ -40,9 +40,9 @@ TEST_SUITE("Player Test") {
         config.limit.tc.moves      = 0;
         config.limit.tc.timemargin = 0;
 
-        engine::UciEngine uci_engine = engine::UciEngine(config, false);
+        engine::UsiEngine usi_engine = engine::UsiEngine(config, false);
 
-        Player player = Player(uci_engine);
+        Player player = Player(usi_engine);
 
         CHECK(player.getTimeControl().isFixedTime() == true);
         CHECK(player.getTimeControl().getTimeoutThreshold() == std::chrono::milliseconds(1000 + TimeControl::MARGIN));
@@ -71,9 +71,9 @@ TEST_SUITE("Player Test") {
         config.limit.tc.moves      = 0;
         config.limit.tc.timemargin = 0;
 
-        engine::UciEngine uci_engine = engine::UciEngine(config, false);
+        engine::UsiEngine usi_engine = engine::UsiEngine(config, false);
 
-        Player player = Player(uci_engine);
+        Player player = Player(usi_engine);
 
         CHECK(player.getTimeControl().isFixedTime() == false);
         CHECK(player.getTimeControl().getTimeoutThreshold() == std::chrono::milliseconds(1000 + TimeControl::MARGIN));

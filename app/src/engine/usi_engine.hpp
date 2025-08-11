@@ -21,33 +21,33 @@ namespace fastshogi::engine {
 
 enum class ScoreType { CP, MATE, ERR };
 
-class UciEngine {
+class UsiEngine {
    public:
-    explicit UciEngine(const EngineConfiguration &config, bool realtime_logging);
+    explicit UsiEngine(const EngineConfiguration &config, bool realtime_logging);
 
-    UciEngine(const UciEngine &)            = delete;
-    UciEngine(UciEngine &&)                 = delete;
-    UciEngine &operator=(const UciEngine &) = delete;
-    UciEngine &operator=(UciEngine &&)      = delete;
+    UsiEngine(const UsiEngine &)            = delete;
+    UsiEngine(UsiEngine &&)                 = delete;
+    UsiEngine &operator=(const UsiEngine &) = delete;
+    UsiEngine &operator=(UsiEngine &&)      = delete;
 
-    ~UciEngine() { quit(); }
+    ~UsiEngine() { quit(); }
 
     // Starts the engine, does nothing after the first call.
     // Returns false if the engine is not alive.
     [[nodiscard]] tl::expected<bool, std::string> start();
 
     // Restarts the engine, if necessary and reapplies the options.
-    bool refreshUci();
+    bool refreshUsi();
 
     [[nodiscard]] std::optional<std::string> idName();
     [[nodiscard]] std::optional<std::string> idAuthor();
 
     // Returns false in case of failure.
-    [[nodiscard]] bool uci();
+    [[nodiscard]] bool usi();
     // Returns false in case of failure.
-    [[nodiscard]] bool uciok(std::chrono::milliseconds threshold = ping_time_);
+    [[nodiscard]] bool usiok(std::chrono::milliseconds threshold = ping_time_);
     // Returns false in case of failure.
-    [[nodiscard]] bool ucinewgame();
+    [[nodiscard]] bool usinewgame();
 
     // Sends "isready" to the engine
     [[nodiscard]] process::Status isready(std::chrono::milliseconds threshold = ping_time_);
@@ -125,11 +125,11 @@ class UciEngine {
 
     // @TODO: expose this to the user?
     static constexpr std::chrono::milliseconds startup_time_    = std::chrono::seconds(10);
-    static constexpr std::chrono::milliseconds ucinewgame_time_ = std::chrono::seconds(60);
+    static constexpr std::chrono::milliseconds usinewgame_time_ = std::chrono::seconds(60);
     static constexpr std::chrono::milliseconds ping_time_       = std::chrono::seconds(60);
 
-    [[nodiscard]] const UCIOptions &uciOptions() const noexcept { return uci_options_; }
-    UCIOptions &uciOptions() noexcept { return uci_options_; }
+    [[nodiscard]] const USIOptions &usiOptions() const noexcept { return usi_options_; }
+    USIOptions &usiOptions() noexcept { return usi_options_; }
 
     [[nodiscard]] bool isRealtimeLogging() const noexcept { return realtime_logging_; }
 
@@ -138,7 +138,7 @@ class UciEngine {
     void sendSetoption(const std::string &name, const std::string &value);
 
     process::Process process_ = {};
-    UCIOptions uci_options_   = {};
+    USIOptions usi_options_   = {};
     EngineConfiguration config_;
 
     std::vector<process::Line> output_;

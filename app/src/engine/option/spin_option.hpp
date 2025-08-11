@@ -2,12 +2,12 @@
 
 #include <stdexcept>
 #include <type_traits>
-#include "ucioption.hpp"
+#include "usioption.hpp"
 
 namespace fastshogi {
 
 template <typename T>
-class SpinOption : public UCIOption {
+class SpinOption : public USIOption {
     static_assert(std::is_arithmetic<T>::value, "SpinOption only supports numeric types.");
 
    public:

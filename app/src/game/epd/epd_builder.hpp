@@ -21,7 +21,7 @@ class EpdBuilder {
 
             if (illegal) break;
 
-            board.makeMove<true>(shogi::uci::uciToMove(board, move.move));
+            board.makeMove<true>(shogi::usi::usiToMove(board, move.move));
         }
 
         epd << board.getEpd() << "\n";

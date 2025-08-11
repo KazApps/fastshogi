@@ -2,12 +2,12 @@
 
 #include <string>
 
-#include "ucioption.hpp"
+#include "usioption.hpp"
 
 namespace fastshogi {
 
 // idk
-class ButtonOption : public UCIOption {
+class ButtonOption : public USIOption {
    public:
     ButtonOption(const std::string& name) : name(name) {}
 

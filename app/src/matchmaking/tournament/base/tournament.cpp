@@ -13,7 +13,7 @@
 #include <core/logger/logger.hpp>
 #include <core/memory/cache.hpp>
 #include <core/threading/threadpool.hpp>
-#include <engine/uci_engine.hpp>
+#include <engine/usi_engine.hpp>
 #include <game/book/opening_book.hpp>
 #include <game/epd/epd_builder.hpp>
 #include <game/pgn/pgn_builder.hpp>
@@ -262,11 +262,11 @@ int BaseTournament::getMaxAffinity(const std::vector<EngineConfiguration> &confi
     return first_threads;
 }
 
-void BaseTournament::restartEngine(std::unique_ptr<engine::UciEngine> &engine) {
+void BaseTournament::restartEngine(std::unique_ptr<engine::UsiEngine> &engine) {
     LOG_TRACE_THREAD("Restarting engine {}", engine->getConfig().name);
     auto config = engine->getConfig();
     auto rl     = engine->isRealtimeLogging();
-    engine      = std::make_unique<engine::UciEngine>(config, rl);
+    engine      = std::make_unique<engine::UsiEngine>(config, rl);
 }
 
 std::size_t BaseTournament::setResults(const stats_map &results) {

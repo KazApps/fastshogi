@@ -86,7 +86,7 @@ if grep -q "loses on time" $OUTPUT_FILE_2; then
 fi
 
 
-# Invalid UciOptions Test
+# Invalid UsiOptions Test
 
 OUTPUT_FILE_3=$(mktemp)
 ./fastshogi -engine cmd=app/tests/mock/engine/random_mover name=random_move_1 \
@@ -135,11 +135,11 @@ if grep -q "loses on time" $OUTPUT_FILE_3; then
 fi
 
 
-# Non UCI responding engine
+# Non USI responding engine
 # Only continue if linux or mac
 
 if [[ "$OSTYPE" != "linux-gnu" && "$OSTYPE" != "darwin"* ]]; then
-    echo "Skipping non-uci responding engine test on non-linux/macOS systems."
+    echo "Skipping non-usi responding engine test on non-linux/macOS systems."
     exit 0
 fi
 
@@ -151,8 +151,8 @@ OUTPUT_FILE_4=$(mktemp)
 
 
 # check if the output contains the expected error message
-if ! grep -q "Fatal; random_move_1 engine startup failure: Couldn't write uci to engine" $OUTPUT_FILE_4 && \
-   ! grep -q "Fatal; random_move_1 engine startup failure: Engine didn't respond to uciok after startup" $OUTPUT_FILE_4; then
+if ! grep -q "Fatal; random_move_1 engine startup failure: Couldn't write usi to engine" $OUTPUT_FILE_4 && \
+   ! grep -q "Fatal; random_move_1 engine startup failure: Engine didn't respond to usiok after startup" $OUTPUT_FILE_4; then
     echo "Failed to report invalid command."
     exit 1
 fi

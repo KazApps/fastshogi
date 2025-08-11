@@ -24,7 +24,7 @@ SRC_FILES        := \
 	$(SRCDIR)/core/logger/logger.cpp \
 	$(SRCDIR)/core/printing/printing.cpp \
 	$(SRCDIR)/core/time/time.cpp \
-	$(SRCDIR)/engine/uci_engine.cpp \
+	$(SRCDIR)/engine/usi_engine.cpp \
 	$(SRCDIR)/game/book/epd_reader.cpp \
 	$(SRCDIR)/game/book/opening_book.cpp \
 	$(SRCDIR)/game/book/pgn_reader.cpp \
@@ -58,7 +58,7 @@ SRC_FILES_TEST   := \
 	$(TESTDIR)/scoreboard_test.cpp \
 	$(TESTDIR)/sprt_test.cpp \
 	$(TESTDIR)/timecontrol_test.cpp \
-	$(TESTDIR)/uci_engine_test.cpp \
+	$(TESTDIR)/usi_engine_test.cpp \
 	$(TESTDIR)/crc32.cpp
 
 # Only used for formatting

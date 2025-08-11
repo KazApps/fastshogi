@@ -2,14 +2,14 @@
 
 #include <chrono>
 
-#include <engine/uci_engine.hpp>
+#include <engine/usi_engine.hpp>
 
 namespace fastshogi {
 
 class Player {
    public:
-    explicit Player(engine::UciEngine &uci_enigne)
-        : engine(uci_enigne), time_control_(uci_enigne.getConfig().limit.tc) {}
+    explicit Player(engine::UsiEngine &usi_enigne)
+        : engine(usi_enigne), time_control_(usi_enigne.getConfig().limit.tc) {}
 
     // The timeout threshold for the read engine command.
     // This has nothing to do with the time control itself.
@@ -36,7 +36,7 @@ class Player {
 
     [[nodiscard]] shogi::GameResult getResult() const noexcept { return result; }
 
-    engine::UciEngine &engine;
+    engine::UsiEngine &engine;
 
    private:
     shogi::GameResult result = shogi::GameResult::NONE;

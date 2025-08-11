@@ -76,10 +76,10 @@ Match::Match(const book::Opening& opening)
     const auto fen = board_.getFen();
 
     data_           = MatchData(fen);
-    start_position_ = fen == shogi::constants::STARTPOS ? "startpos" : fen;
+    start_position_ = fen == constants::STARTPOS ? "startpos" : fen;
 
     const auto insert_move = [&](const auto& opening_move) {
-        const auto move = uci::moveToUci(opening_move, board_.shogi960());
+        const auto move = usi::moveToUsi(opening_move, board_.shogi960());
         board_.makeMove<true>(opening_move);
 
         return MoveData(move, "0.00", 0, 0, 0, 0, 0, true, true);
@@ -107,7 +107,7 @@ void Match::addMoveData(const Player& player, int64_t measured_time_ms, int64_t 
 
     if (player.engine.output().size() <= 1) {
         data_.moves.push_back(move_data);
-        uci_moves_.push_back(move);
+        usi_moves_.push_back(move);
         return;
     }
 
@@ -143,11 +143,11 @@ void Match::addMoveData(const Player& player, int64_t measured_time_ms, int64_t 
     verifyPvLines(player);
 
     data_.moves.push_back(move_data);
-    uci_moves_.push_back(move);
+    usi_moves_.push_back(move);
 }
 
-void Match::start(engine::UciEngine& white, engine::UciEngine& black) {
-    std::transform(data_.moves.begin(), data_.moves.end(), std::back_inserter(uci_moves_),
+void Match::start(engine::UsiEngine& white, engine::UsiEngine& black) {
+    std::transform(data_.moves.begin(), data_.moves.end(), std::back_inserter(usi_moves_),
                    [](const MoveData& data) { return data.move; });
 
     Player white_player = Player(white);
@@ -180,11 +180,11 @@ void Match::start(engine::UciEngine& white, engine::UciEngine& black) {
         return;
     }
 
-    if (!white_player.engine.refreshUci()) {
+    if (!white_player.engine.refreshUsi()) {
         setEngineCrashStatus(white_player, black_player);
     }
 
-    if (!black_player.engine.refreshUci()) {
+    if (!black_player.engine.refreshUsi()) {
         setEngineCrashStatus(black_player, white_player);
     }
 
@@ -261,8 +261,8 @@ bool Match::playMove(Player& us, Player& them) {
     // make sure the engine is not in an invalid state
     if (!validConnection(us, them)) return false;
 
-    // write new uci position
-    if (!us.engine.position(uci_moves_, start_position_)) {
+    // write new usi position
+    if (!us.engine.position(usi_moves_, start_position_)) {
         setEngineCrashStatus(us, them);
         return false;
     }
@@ -321,14 +321,14 @@ bool Match::playMove(Player& us, Player& them) {
     }
 
     const auto best_move = us.engine.bestmove();
-    const auto move      = best_move ? uci::uciToMove(board_, *best_move) : Move::NO_MOVE;
+    const auto move      = best_move ? usi::usiToMove(board_, *best_move) : Move::NO_MOVE;
     const auto legal     = isLegal(move);
 
     const auto timeout  = !us.updateTime(elapsed_ms);
     const auto timeleft = us.getTimeControl().getTimeLeft();
 
     if (best_move) {
-        addMoveData(us, elapsed_ms, latency, timeleft, legal && uci::isUciMove(best_move.value()));
+        addMoveData(us, elapsed_ms, latency, timeleft, legal && usi::isUsiMove(best_move.value()));
     }
 
     // there are two reasons why best_move could be empty
@@ -347,7 +347,7 @@ bool Match::playMove(Player& us, Player& them) {
         return false;
     }
 
-    if (best_move && !uci::isUciMove(best_move.value())) {
+    if (best_move && !usi::isUsiMove(best_move.value())) {
         setEngineIllegalMoveStatus(us, them, best_move, true);
         return false;
     }
@@ -491,21 +491,21 @@ void Match::setEngineIllegalMoveStatus(Player& loser, Player& winner, const std:
 
     if (invalid_format) {
         Logger::print<Logger::Level::WARN>(
-            "Warning; Move does not match uci move format, lowercase and 4/5 chars. Move {} played by {}", mv, name);
+            "Warning; Move does not match usi move format, lowercase and 4/5 chars. Move {} played by {}", mv, name);
     }
 
     Logger::print<Logger::Level::WARN>("Warning; Illegal move {} played by {}", mv, name);
 }
 
 void Match::verifyPvLines(const Player& us) {
-    const static auto verifyPv = [](Board board, const std::string& startpos, const std::vector<std::string>& uci_moves,
+    const static auto verifyPv = [](Board board, const std::string& startpos, const std::vector<std::string>& usi_moves,
                                     const std::string& info, std::string_view name) {
         // skip lines without pv
         const auto tokens = str_utils::splitString(info, ' ');
         if (!str_utils::contains(tokens, "pv")) return;
 
         auto it_start = std::find(tokens.begin(), tokens.end(), "pv") + 1;
-        auto it_end   = std::find_if(it_start, tokens.end(), [](const auto& token) { return !uci::isUciMove(token); });
+        auto it_end   = std::find_if(it_start, tokens.end(), [](const auto& token) { return !usi::isUsiMove(token); });
 
         Movelist moves;
 
@@ -521,7 +521,7 @@ void Match::verifyPvLines(const Player& us) {
             }
 
             const auto illegal_move =
-                std::find(moves.begin(), moves.end(), uci::uciToMove(board, *it_start)) == moves.end();
+                std::find(moves.begin(), moves.end(), usi::usiToMove(board, *it_start)) == moves.end();
 
             if (gameover || illegal_move) {
                 std::string warning;
@@ -540,25 +540,25 @@ void Match::verifyPvLines(const Player& us) {
                 assert(!warning.empty());
 
                 auto out      = fmt::format(fmt::runtime(warning), *it_start, name);
-                auto uci_info = fmt::format("Info; {}", info);
+                auto usi_info = fmt::format("Info; {}", info);
                 auto position = fmt::format("Position; {}", startpos == "startpos" ? "startpos" : ("fen " + startpos));
-                auto moves    = fmt::format("Moves; {}", str_utils::join(uci_moves, " "));
+                auto moves    = fmt::format("Moves; {}", str_utils::join(usi_moves, " "));
 
                 auto separator = config::TournamentConfig->test_env ? " :: " : "\n";
 
-                Logger::print<Logger::Level::WARN>("{1}{0}{2}{0}{3}{0}{4}", separator, out, uci_info, position, moves);
+                Logger::print<Logger::Level::WARN>("{1}{0}{2}{0}{3}{0}{4}", separator, out, usi_info, position, moves);
 
                 break;
             }
 
-            board.makeMove<true>(uci::uciToMove(board, *it_start));
+            board.makeMove<true>(usi::usiToMove(board, *it_start));
 
             it_start++;
         }
     };
 
     for (const auto& info : us.engine.output()) {
-        verifyPv(board_, start_position_, uci_moves_, info.line, us.engine.getConfig().name);
+        verifyPv(board_, start_position_, usi_moves_, info.line, us.engine.getConfig().name);
     }
 }
 

@@ -36,7 +36,7 @@ The following options are available:
     Play N games concurrently, limited by the number of hardware threads. Default value is 1.
 
 - --compliance ENGINE [ARGS]  
-    Check the UCI compliance of an engine by running it with the specified arguments.
+    Check the USI compliance of an engine by running it with the specified arguments.
 
 - -crc32 pgn=true
     Calculate the CRC32 checksum for the PGN file.
@@ -105,14 +105,14 @@ The following options are available:
     - PLIES - number of plies for pgn. Defaults to max available plies.
     - START - starting index of the opening book. Default is 1.
 
-- -pgnout file=NAME notation=(san|lan|uci) [nodes=(true|false)] [seldepth=(true|false)] [nps=(true|false)] [hashfull=(true|false)] [timeleft=(true|false)] [latency=(true|false)] [min=(true|false)] [match_line=REGEX]
+- -pgnout file=NAME notation=(san|lan|usi) [nodes=(true|false)] [seldepth=(true|false)] [nps=(true|false)] [hashfull=(true|false)] [timeleft=(true|false)] [latency=(true|false)] [min=(true|false)] [match_line=REGEX]
     Export games in PGN format with specified notations and optional tracking of nodes, seldepth, and others.
 
     - notation:
 
         - san - Standard Algebraic Notation (default)
         - lan - Long Algebraic Notation
-        - uci - Universal Shogi Interface
+        - usi - Universal Shogi Interface
 
     - nodes - Track node count. Default is false.
     - seldepth - Track seldepth. Default is false.
@@ -195,7 +195,7 @@ The following options are available:
     - nodes=NODES - Max number of nodes to search.
     - restart=(on|off) - Enable or disable engine restarts between games, default is off.
     - plies=PLIES - Max number of plies (depth) to search.
-    - proto=PROTOCOL - Specify the protocol (only supports uci).
+    - proto=PROTOCOL - Specify the protocol (only supports usi).
     - dir=DIRECTORY - Working directory for the engine.
     - option.name=VALUE - Set engine-specific options. The value for a button option should be "true" or "false".
 

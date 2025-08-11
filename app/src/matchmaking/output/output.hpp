@@ -5,7 +5,7 @@
 #include <utility>
 
 #include <cli/cli.hpp>
-#include <engine/uci_engine.hpp>
+#include <engine/usi_engine.hpp>
 #include <matchmaking/elo/elo_pentanomial.hpp>
 #include <matchmaking/elo/elo_wdl.hpp>
 #include <matchmaking/sprt/sprt.hpp>
@@ -16,10 +16,10 @@
 namespace fastshogi {
 
 namespace engine {
-class UciEngine;
+class UsiEngine;
 }
 
-using engines = std::pair<const engine::UciEngine&, const engine::UciEngine&>;
+using engines = std::pair<const engine::UsiEngine&, const engine::UsiEngine&>;
 
 class Output {
    public:
@@ -123,8 +123,8 @@ class Output {
         const auto& second_engine = engines.first.getConfig().name == second ? engines.first : engines.second;
 
         const auto tc       = formatTimeControl(first_engine.getConfig(), second_engine.getConfig());
-        const auto threads  = formatThreads(first_engine.uciOptions(), second_engine.uciOptions());
-        const auto hash     = formatHash(first_engine.uciOptions(), second_engine.uciOptions());
+        const auto threads  = formatThreads(first_engine.usiOptions(), second_engine.usiOptions());
+        const auto hash     = formatHash(first_engine.usiOptions(), second_engine.usiOptions());
         const auto bookname = getShortName(book);
 
         auto result = fmt::format("{}\n{}\n{}\n{}", formatMatchup(first, second, tc, threads, hash, bookname),
@@ -160,8 +160,8 @@ class Output {
         return "";
     }
 
-    std::string getThreads(const UCIOptions& uci_options) const {
-        const auto option = uci_options.getOption("Threads");
+    std::string getThreads(const USIOptions& usi_options) const {
+        const auto option = usi_options.getOption("Threads");
 
         if (option.has_value()) {
             auto value = option.value()->getValue();
@@ -171,8 +171,8 @@ class Output {
         return fmt::format("NULL");
     }
 
-    std::string getHash(const UCIOptions& uci_options) const {
-        const auto option = uci_options.getOption("Hash");
+    std::string getHash(const USIOptions& usi_options) const {
+        const auto option = usi_options.getOption("Hash");
 
         if (option.has_value()) {
             auto value = option.value()->getValue();
@@ -240,16 +240,16 @@ class Output {
         return timeFirst == timeSecond ? fmt::format("{}", timeFirst) : fmt::format("{} - {}", timeFirst, timeSecond);
     }
 
-    std::string formatThreads(const UCIOptions& first_uci_options, const UCIOptions& second_uci_options) const {
-        const auto threadsFirst  = getThreads(first_uci_options);
-        const auto threadsSecond = getThreads(second_uci_options);
+    std::string formatThreads(const USIOptions& first_usi_options, const USIOptions& second_usi_options) const {
+        const auto threadsFirst  = getThreads(first_usi_options);
+        const auto threadsSecond = getThreads(second_usi_options);
         return threadsFirst == threadsSecond ? fmt::format("{}", threadsFirst)
                                              : fmt::format("{} - {}", threadsFirst, threadsSecond);
     }
 
-    std::string formatHash(const UCIOptions& first_uci_options, const UCIOptions& second_uci_options) const {
-        const auto hashFirst  = getHash(first_uci_options);
-        const auto hashSecond = getHash(second_uci_options);
+    std::string formatHash(const USIOptions& first_usi_options, const USIOptions& second_usi_options) const {
+        const auto hashFirst  = getHash(first_usi_options);
+        const auto hashSecond = getHash(second_usi_options);
         return hashFirst == hashSecond ? fmt::format("{}", hashFirst) : fmt::format("{} - {}", hashFirst, hashSecond);
     }
 

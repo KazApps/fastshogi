@@ -30,7 +30,7 @@ class PgnBuilder {
                                                         const MatchData::PlayerInfo &black) noexcept;
 
    private:
-    // Converts a UCI move to either SAN, LAN or keeps it as UCI
+    // Converts a USI move to either SAN, LAN or keeps it as USI
     [[nodiscard]] std::string moveNotation(shogi::Board &board, const std::string &move) const noexcept;
 
     // Adds a header to the pgn

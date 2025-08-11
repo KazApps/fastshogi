@@ -109,7 +109,7 @@ class Match {
     Match(const book::Opening& opening);
 
     // starts the match
-    void start(engine::UciEngine& white, engine::UciEngine& black);
+    void start(engine::UsiEngine& white, engine::UsiEngine& black);
 
     // returns the match data, only valid after the match has finished
     [[nodiscard]] const MatchData& get() const { return data_; }
@@ -157,9 +157,9 @@ class Match {
     ResignTracker resign_tracker_;
     MaxMovesTracker maxmoves_tracker_;
 
-    std::vector<std::string> uci_moves_;
+    std::vector<std::string> usi_moves_;
 
-    // start position, required for the uci position command
+    // start position, required for the usi position command
     // is either startpos or the fen of the opening
     std::string start_position_;
 

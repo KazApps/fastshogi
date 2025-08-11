@@ -39,7 +39,7 @@ struct EngineConfiguration {
     // Should process be restarted after every game
     bool restart = false;
 
-    // UCI options
+    // USI options
     std::vector<std::pair<std::string, std::string>> options;
 
     // Shogi variant

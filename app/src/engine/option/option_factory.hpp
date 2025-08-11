@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "ucioption.hpp"
+#include "usioption.hpp"
 
 #include "button_option.hpp"
 #include "check_option.hpp"
@@ -17,9 +17,9 @@
 
 namespace fastshogi {
 
-class UCIOptionFactory {
+class USIOptionFactory {
    public:
-    static std::unique_ptr<UCIOption> parseUCIOptionLine(const std::string& line) {
+    static std::unique_ptr<USIOption> parseUSIOptionLine(const std::string& line) {
         std::istringstream ss(line);
         std::string token, name, type;
         std::unordered_map<std::string, std::string> params;

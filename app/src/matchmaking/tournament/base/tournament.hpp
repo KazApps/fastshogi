@@ -10,7 +10,7 @@
 #include <core/filesystem/file_writer.hpp>
 #include <core/memory/cache.hpp>
 #include <core/threading/threadpool.hpp>
-#include <engine/uci_engine.hpp>
+#include <engine/usi_engine.hpp>
 #include <game/book/opening_book.hpp>
 #include <matchmaking/game_pair.hpp>
 #include <matchmaking/output/output.hpp>
@@ -22,7 +22,7 @@
 namespace fastshogi {
 
 class BaseTournament {
-    using EngineCache = util::CachePool<engine::UciEngine, std::string>;
+    using EngineCache = util::CachePool<engine::UsiEngine, std::string>;
 
    public:
     BaseTournament(const stats_map &results);
@@ -82,7 +82,7 @@ class BaseTournament {
 
     [[nodiscard]] int getMaxAffinity(const std::vector<EngineConfiguration> &configs) const noexcept;
 
-    void restartEngine(std::unique_ptr<engine::UciEngine> &engine);
+    void restartEngine(std::unique_ptr<engine::UsiEngine> &engine);
 };
 
 }  // namespace fastshogi

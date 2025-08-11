@@ -31,7 +31,7 @@ Move random_move(const Board &board) {
     return moves[random_number(0, moves.size() - 1)];
 }
 
-void uci_line(Board &board, const std::string &line) {
+void usi_line(Board &board, const std::string &line) {
     auto tokens = utils::splitString(line, ' ');
 
     if (tokens.empty())
@@ -42,7 +42,7 @@ void uci_line(Board &board, const std::string &line) {
             board = Board();
             if (tokens.size() > 2 && tokens[2] == "moves") {
                 for (int i = 3; i < tokens.size(); i++) {
-                    board.makeMove(uci::uciToMove(board, std::string(tokens[i])));
+                    board.makeMove(usi::usiToMove(board, std::string(tokens[i])));
                 }
             }
         } else if (tokens[1] == "fen") {
@@ -60,26 +60,26 @@ void uci_line(Board &board, const std::string &line) {
             board.setFen(fen);
 
             for (; i < tokens.size(); i++) {
-                board.makeMove(uci::uciToMove(board, std::string(tokens[i])));
+                board.makeMove(usi::usiToMove(board, std::string(tokens[i])));
             }
         }
-    } else if (tokens[0] == "uci") {
+    } else if (tokens[0] == "usi") {
         std::cout << "id name random_move" << std::endl;
         std::cout << "id author fastshogi" << std::endl;
         std::cout << "option name Hash type spin default 16 min 1 max 33554432" << std::endl;
-        std::cout << "uciok" << std::endl;
+        std::cout << "usiok" << std::endl;
     } else if (tokens[0] == "isready") {
         std::cout << "readyok" << std::endl;
-    } else if (tokens[0] == "ucinewgame") {
+    } else if (tokens[0] == "usinewgame") {
         board = Board();
     } else if (tokens[0] == "go") {
         const auto move = random_move(board);
-        std::cout << "info depth 1 pv " << uci::moveToUci(move) << " score cp 0 " << std::endl;
-        std::cout << "bestmove " << uci::moveToUci(move) << std::endl;
+        std::cout << "info depth 1 pv " << usi::moveToUsi(move) << " score cp 0 " << std::endl;
+        std::cout << "bestmove " << usi::moveToUsi(move) << std::endl;
     }
 }
 
-void uci_loop() {
+void usi_loop() {
     std::string input;
     std::cin >> std::ws;
 
@@ -93,12 +93,12 @@ void uci_loop() {
         if (input == "quit") {
             return;
         } else {
-            uci_line(board, input);
+            usi_line(board, input);
         }
     }
 }
 
 int main(int argc, char *argv[]) {
     initialize_rng(argc, argv);
-    uci_loop();
+    usi_loop();
 }

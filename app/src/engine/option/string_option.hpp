@@ -2,11 +2,11 @@
 
 #include <string>
 
-#include "ucioption.hpp"
+#include "usioption.hpp"
 
 namespace fastshogi {
 
-class StringOption : public UCIOption {
+class StringOption : public USIOption {
    public:
     StringOption(const std::string& name, const std::string& defaultValue) : name(name), value(defaultValue) {}
 

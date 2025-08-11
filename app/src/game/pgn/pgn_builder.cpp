@@ -85,7 +85,7 @@ PgnBuilder::PgnBuilder(const config::Pgn &pgn_config, const MatchData &match, st
         const auto last     = std::next(it) == match_.moves.end();
         const auto move_str = addMove(board, *it, move_number, n_dots, illegal, last);
 
-        board.makeMove<true>(shogi::uci::uciToMove(board, it->move));
+        board.makeMove<true>(shogi::usi::usiToMove(board, it->move));
 
         move_number++;
 
@@ -139,7 +139,7 @@ std::optional<Opening> PgnBuilder::getOpeningClassification(bool is_frc_variant)
     for (const auto &move : match_.moves) {
         if (!move.legal) break;
 
-        opening_board.makeMove<true>(shogi::uci::uciToMove(opening_board, move.move));
+        opening_board.makeMove<true>(shogi::usi::usiToMove(opening_board, move.move));
 
         if (auto opening = find_opening(opening_board.getFen(false))) {
             current_opening = opening;
@@ -151,9 +151,9 @@ std::optional<Opening> PgnBuilder::getOpeningClassification(bool is_frc_variant)
 
 std::string PgnBuilder::moveNotation(shogi::Board &board, const std::string &move) const noexcept {
     if (pgn_config_.notation == NotationType::SAN) {
-        return shogi::uci::moveToSan(board, shogi::uci::uciToMove(board, move));
+        return shogi::usi::moveToSan(board, shogi::usi::usiToMove(board, move));
     } else if (pgn_config_.notation == NotationType::LAN) {
-        return shogi::uci::moveToLan(board, shogi::uci::uciToMove(board, move));
+        return shogi::usi::moveToLan(board, shogi::usi::usiToMove(board, move));
     } else {
         return move;
     }
