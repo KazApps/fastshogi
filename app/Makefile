@@ -211,6 +211,6 @@ build_directories:
 	@$(shell mkdir -p $(dir $(OBJECTS)))
 
 clean:
-	rm -rf $(BUILDDIR) $(TARGET) $(TARGET)-tests $(TARGET)-tests.exe $(TARGET).exe ../random_mover ./tests/mock/engine/random_mover
+	rm -rf $(BUILDDIR) $(TARGET) $(TARGET)-tests $(TARGET)-tests.exe $(TARGET).exe ./tests/mock/engine/random_mover ./tests/mock/engine/random_mover.exe ./tests/mock/engine/dummy_engine ./tests/mock/engine/dummy_engine.exe
 
 -include $(DEPENDS)
