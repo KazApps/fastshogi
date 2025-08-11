@@ -3,7 +3,7 @@
 set -x
 
 # Compile the random_mover
-g++ -O3 -std=c++17 app/tests/mock/engine/random_mover.cpp -o random_mover
+g++ -O3 -std=c++17 app/tests/mock/engine/random_mover.cpp -o app/tests/mock/engine/random_mover
 
 # Compile fastshogi
 make -j build=debug $1
@@ -11,7 +11,8 @@ make -j build=debug $1
 # EPD Book Test
 
 OUTPUT_FILE=$(mktemp)
-./fastshogi -engine cmd=./random_mover name=random_move_1 -engine cmd=./random_mover name=random_move_2 \
+./fastshogi -engine cmd=app/tests/mock/engine/random_mover name=random_move_1 \
+    -engine cmd=app/tests/mock/engine/random_mover name=random_move_2 \
     -each tc=2+0.02s -rounds 5 -repeat -concurrency 2 \
     -openings file=./app/tests/data/openings.epd format=epd order=random -log file=log.txt level=info 2>&1 | tee $OUTPUT_FILE
 
@@ -47,9 +48,10 @@ fi
 # PGN Book Test
 
 OUTPUT_FILE_2=$(mktemp)
-./fastshogi -engine cmd=./random_mover name=random_move_1 -engine cmd=./random_mover name=random_move_2 \
+./fastshogi -engine cmd=app/tests/mock/engine/random_mover name=random_move_1 \
+    -engine cmd=app/tests/mock/engine/random_mover name=random_move_2 \
     -each tc=2+0.02s -rounds 5 -repeat -concurrency 2 \
-    -openings file=app/tests/data/openings.pgn format=pgn order=random -log file=log.txt level=info  2>&1 | tee $OUTPUT_FILE_2
+    -openings file=app/tests/data/openings.pgn format=pgn order=random -log file=log.txt level=info 2>&1 | tee $OUTPUT_FILE_2
 
 if grep -q "WARNING: ThreadSanitizer:" $OUTPUT_FILE_2; then
     echo "Data races detected."
@@ -84,9 +86,10 @@ fi
 # Invalid UciOptions Test
 
 OUTPUT_FILE_3=$(mktemp)
-./fastshogi -engine cmd=./random_mover name=random_move_1 -engine cmd=./random_mover name=random_move_2 \
+./fastshogi -engine cmd=app/tests/mock/engine/random_mover name=random_move_1 \
+    -engine cmd=app/tests/mock/engine/random_mover name=random_move_2 \
     -each tc=2+0.02s option.Hash=-16 option.Threads=2 -rounds 5 -repeat -concurrency 2 \
-    -openings file=app/tests/data/openings.pgn format=pgn order=random -log file=log.txt level=info  2>&1 | tee $OUTPUT_FILE_3
+    -openings file=app/tests/data/openings.pgn format=pgn order=random -log file=log.txt level=info 2>&1 | tee $OUTPUT_FILE_3
 
 if ! grep -q "Warning; random_move_1 doesn't have option Threads" $OUTPUT_FILE_3; then
     echo "Failed to report missing option Threads."
@@ -138,9 +141,10 @@ if [[ "$OSTYPE" != "linux-gnu" && "$OSTYPE" != "darwin"* ]]; then
 fi
 
 OUTPUT_FILE_4=$(mktemp)
-./fastshogi -engine cmd=app/tests/mock/engine/missing_engine.sh name=random_move_1 -engine cmd=./random_mover name=random_move_2 \
+./fastshogi -engine cmd=app/tests/mock/engine/missing_engine.sh name=random_move_1 \
+    -engine cmd=app/tests/mock/engine/random_mover name=random_move_2 \
     -each tc=2+0.02s option.Hash=-16 option.Threads=2 -rounds 5 -repeat -concurrency 2 \
-    -openings file=app/tests/data/openings.pgn format=pgn order=random -log file=log.txt level=warn  2>&1 | tee $OUTPUT_FILE_4
+    -openings file=app/tests/data/openings.pgn format=pgn order=random -log file=log.txt level=warn 2>&1 | tee $OUTPUT_FILE_4
 
 
 # check if the output contains the expected error message
