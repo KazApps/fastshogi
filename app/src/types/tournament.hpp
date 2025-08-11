@@ -26,9 +26,9 @@ struct Tournament {
 
     std::string config_name = "config.json";
 
-    DrawAdjudication draw          = {};
-    ResignAdjudication resign      = {};
-    MaxMovesAdjudication maxmoves  = {};
+    DrawAdjudication draw         = {};
+    ResignAdjudication resign     = {};
+    MaxMovesAdjudication maxmoves = {};
 
     VariantType variant = VariantType::STANDARD;
     TournamentType type = TournamentType::ROUNDROBIN;
@@ -59,9 +59,9 @@ struct Tournament {
 
     Log log = {};
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Tournament, resign, draw, maxmoves, opening, pgn, epd, sprt,
-                                   config_name, seed, variant, type, gauntlet_seeds, ratinginterval,
-                                   scoreinterval, wait, autosaveinterval, games, rounds, concurrency, force_concurrency,
-                                   recover, noswap, reverse, report_penta, affinity, show_latency, log)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Tournament, resign, draw, maxmoves, opening, pgn, epd, sprt, config_name, seed,
+                                   variant, type, gauntlet_seeds, ratinginterval, scoreinterval, wait, autosaveinterval,
+                                   games, rounds, concurrency, force_concurrency, recover, noswap, reverse,
+                                   report_penta, affinity, show_latency, log)
 
 }  // namespace fastshogi::config

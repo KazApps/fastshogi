@@ -5,6 +5,7 @@
 #include <regex>
 
 #include <shogi.hpp>
+
 #include <core/globals/globals.hpp>
 #include <core/helper.hpp>
 #include <core/logger/logger.hpp>

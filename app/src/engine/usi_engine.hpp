@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 
-#include <shogi.hpp>
 #include <expected.hpp>
+#include <shogi.hpp>
 
 #ifdef _WIN64
 #    include <engine/process/process_win.hpp>
