@@ -1,0 +1,16 @@
+name: Fastshogi
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  Artifacts:
+    if: github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/artifacts.yml
+  E2E-Tests:
+    uses: ./.github/workflows/e2e_tests.yml
+  Unit-Tests:
+    uses: ./.github/workflows/unit_tests.yml

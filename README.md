@@ -1,6 +1,6 @@
 # Fastshogi
 
-[![Fastshogi](https://github.com/KazApps/fastshogi/actions/workflows/fastshogi.yml/badge.svg?branch=master)](https://github.com/KazApps/fastshogi/actions/workflows/fastshogi.yml)
+[![Fastshogi](https://github.com/KazApps/fastshogi/actions/workflows/fastshogi.yml/badge.svg?branch=main)](https://github.com/KazApps/fastshogi/actions/workflows/fastshogi.yml)
 
 Fastshogi is a versatile command-line tool designed for running shogi engine
 tournaments.  
@@ -63,7 +63,7 @@ Prefer a pre-compiled version?
 
 Download the latest release from our [release page](https://github.com/KazApps/fastshogi/releases).
 
-Current dev versions are available as artifacts from the [CI](https://github.com/KazApps/fastshogi/actions?query=is%3Asuccess+event%3Apush+branch%3Amaster).
+Current dev versions are available as artifacts from the [CI](https://github.com/KazApps/fastshogi/actions?query=is%3Asuccess+event%3Apush+branch%3Amain).
 
 ### Example usage
 
