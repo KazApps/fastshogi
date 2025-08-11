@@ -3,12 +3,11 @@
 #include <optional>
 #include <string>
 
-#include <shogi.hpp>
-
 #include <core/config/config.hpp>
 #include <core/logger/logger.hpp>
 #include <game/book/epd_reader.hpp>
 #include <game/book/pgn_reader.hpp>
+#include <shogi/shogi.hpp>
 
 namespace fastshogi::book {
 

@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include <shogi.hpp>
+#include <shogi/shogi.hpp>
 
 namespace fastshogi::book {
 struct Opening {

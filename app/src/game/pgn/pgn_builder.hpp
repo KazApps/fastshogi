@@ -5,13 +5,10 @@
 #include <string>
 #include <string_view>
 
-#include <shogi.hpp>
-
-#include <matchmaking/match/match.hpp>
-
-#include <types/tournament.hpp>
-
 #include <game/pgn/openings_data.hpp>
+#include <matchmaking/match/match.hpp>
+#include <shogi/shogi.hpp>
+#include <types/tournament.hpp>
 
 namespace fastshogi::pgn {
 

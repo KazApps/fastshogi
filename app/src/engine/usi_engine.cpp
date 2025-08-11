@@ -6,11 +6,11 @@
 #include <string>
 #include <vector>
 
-#include <shogi.hpp>
-
 #include <core/config/config.hpp>
 #include <core/helper.hpp>
 #include <core/logger/logger.hpp>
+#include <engine/option/option_factory.hpp>
+#include <shogi/shogi.hpp>
 
 namespace fastshogi::engine {
 

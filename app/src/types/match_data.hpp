@@ -6,10 +6,9 @@
 #include <utility>
 #include <vector>
 
-#include <shogi.hpp>
-
 #include <core/time/time.hpp>
 #include <matchmaking/game_pair.hpp>
+#include <shogi/shogi.hpp>
 #include <types/engine_config.hpp>
 
 namespace fastshogi {

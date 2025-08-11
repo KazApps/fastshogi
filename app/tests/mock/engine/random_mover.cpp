@@ -1,6 +1,6 @@
 #include <random>
 
-#include "../../../third_party/shogi.hpp"
+#include "../../../src/shogi/shogi.hpp"
 
 using namespace shogi;
 

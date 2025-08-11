@@ -31,16 +31,13 @@ VERSION: 0.8.2
 #ifndef SHOGI_HPP
 #define SHOGI_HPP
 
-
 #include <functional>
 #include <utility>
-
 
 #include <cstdint>
 #ifdef SHOGI_USE_PEXT
 #    include <immintrin.h>
 #endif
-
 
 #if __cpp_lib_bitops >= 201907L
 #    include <bit>
@@ -56,9 +53,7 @@ VERSION: 0.8.2
 #    include <nmmintrin.h>
 #endif
 
-
 #include <string_view>
-
 
 #include <ostream>
 
@@ -97,8 +92,8 @@ class Color {
         return Color(static_cast<underlying>(static_cast<int>(color) ^ 1));
     }
 
-    constexpr bool operator==(const Color& rhs) const noexcept { return color == rhs.color; }
-    constexpr bool operator!=(const Color& rhs) const noexcept { return color != rhs.color; }
+    constexpr bool operator==(const Color &rhs) const noexcept { return color == rhs.color; }
+    constexpr bool operator!=(const Color &rhs) const noexcept { return color != rhs.color; }
 
     constexpr operator int() const noexcept { return static_cast<int>(color); }
 
@@ -108,7 +103,7 @@ class Color {
 
     [[nodiscard]] constexpr underlying internal() const noexcept { return color; }
 
-    friend std::ostream& operator<<(std::ostream& os, const Color& color) {
+    friend std::ostream &operator<<(std::ostream &os, const Color &color) {
         return os << static_cast<std::string>(color);
     }
 
@@ -183,28 +178,28 @@ class File {
 
     [[nodiscard]] constexpr underlying internal() const noexcept { return file; }
 
-    constexpr bool operator==(const File& rhs) const noexcept { return file == rhs.file; }
-    constexpr bool operator!=(const File& rhs) const noexcept { return file != rhs.file; }
+    constexpr bool operator==(const File &rhs) const noexcept { return file == rhs.file; }
+    constexpr bool operator!=(const File &rhs) const noexcept { return file != rhs.file; }
 
-    constexpr bool operator==(const underlying& rhs) const noexcept { return file == rhs; }
-    constexpr bool operator!=(const underlying& rhs) const noexcept { return file != rhs; }
+    constexpr bool operator==(const underlying &rhs) const noexcept { return file == rhs; }
+    constexpr bool operator!=(const underlying &rhs) const noexcept { return file != rhs; }
 
-    constexpr bool operator>=(const File& rhs) const noexcept {
+    constexpr bool operator>=(const File &rhs) const noexcept {
         return static_cast<int>(file) >= static_cast<int>(rhs.file);
     }
-    constexpr bool operator<=(const File& rhs) const noexcept {
+    constexpr bool operator<=(const File &rhs) const noexcept {
         return static_cast<int>(file) <= static_cast<int>(rhs.file);
     }
 
-    constexpr bool operator>(const File& rhs) const noexcept {
+    constexpr bool operator>(const File &rhs) const noexcept {
         return static_cast<int>(file) > static_cast<int>(rhs.file);
     }
 
-    constexpr bool operator<(const File& rhs) const noexcept {
+    constexpr bool operator<(const File &rhs) const noexcept {
         return static_cast<int>(file) < static_cast<int>(rhs.file);
     }
 
-    constexpr File& operator+=(int rhs) noexcept {
+    constexpr File &operator+=(int rhs) noexcept {
         file = underlying(static_cast<int>(file) + rhs);
         return *this;
     }
@@ -239,20 +234,20 @@ class Rank {
 
     [[nodiscard]] constexpr underlying internal() const noexcept { return rank_; }
 
-    constexpr bool operator==(const Rank& rhs) const noexcept { return rank_ == rhs.rank_; }
-    constexpr bool operator!=(const Rank& rhs) const noexcept { return rank_ != rhs.rank_; }
+    constexpr bool operator==(const Rank &rhs) const noexcept { return rank_ == rhs.rank_; }
+    constexpr bool operator!=(const Rank &rhs) const noexcept { return rank_ != rhs.rank_; }
 
-    constexpr bool operator==(const underlying& rhs) const noexcept { return rank_ == rhs; }
-    constexpr bool operator!=(const underlying& rhs) const noexcept { return rank_ != rhs; }
+    constexpr bool operator==(const underlying &rhs) const noexcept { return rank_ == rhs; }
+    constexpr bool operator!=(const underlying &rhs) const noexcept { return rank_ != rhs; }
 
-    constexpr bool operator>=(const Rank& rhs) const noexcept {
+    constexpr bool operator>=(const Rank &rhs) const noexcept {
         return static_cast<int>(rank_) >= static_cast<int>(rhs.rank_);
     }
-    constexpr bool operator<=(const Rank& rhs) const noexcept {
+    constexpr bool operator<=(const Rank &rhs) const noexcept {
         return static_cast<int>(rank_) <= static_cast<int>(rhs.rank_);
     }
 
-    constexpr Rank& operator+=(int rhs) noexcept {
+    constexpr Rank &operator+=(int rhs) noexcept {
         rank_ = underlying(static_cast<int>(rank_) + rhs);
         return *this;
     }
@@ -329,39 +324,39 @@ class Square {
         assert(str.size() >= 2);
     }
 
-    constexpr Square operator^(const Square& s) const noexcept {
+    constexpr Square operator^(const Square &s) const noexcept {
         return Square(static_cast<underlying>(static_cast<int>(sq) ^ s.index()));
     };
 
-    constexpr bool operator==(const Square& rhs) const noexcept { return sq == rhs.sq; }
+    constexpr bool operator==(const Square &rhs) const noexcept { return sq == rhs.sq; }
 
-    constexpr bool operator!=(const Square& rhs) const noexcept { return sq != rhs.sq; }
+    constexpr bool operator!=(const Square &rhs) const noexcept { return sq != rhs.sq; }
 
-    constexpr bool operator>(const Square& rhs) const noexcept {
+    constexpr bool operator>(const Square &rhs) const noexcept {
         return static_cast<int>(sq) > static_cast<int>(rhs.sq);
     }
 
-    constexpr bool operator>=(const Square& rhs) const noexcept {
+    constexpr bool operator>=(const Square &rhs) const noexcept {
         return static_cast<int>(sq) >= static_cast<int>(rhs.sq);
     }
 
-    constexpr bool operator<(const Square& rhs) const noexcept {
+    constexpr bool operator<(const Square &rhs) const noexcept {
         return static_cast<int>(sq) < static_cast<int>(rhs.sq);
     }
 
-    constexpr bool operator<=(const Square& rhs) const noexcept {
+    constexpr bool operator<=(const Square &rhs) const noexcept {
         return static_cast<int>(sq) <= static_cast<int>(rhs.sq);
     }
 
-    constexpr Square operator+(const Square& rhs) const noexcept {
+    constexpr Square operator+(const Square &rhs) const noexcept {
         return Square(static_cast<underlying>(static_cast<int>(sq) + static_cast<int>(rhs.sq)));
     }
 
-    constexpr Square operator-(const Square& rhs) const noexcept {
+    constexpr Square operator-(const Square &rhs) const noexcept {
         return Square(static_cast<underlying>(static_cast<int>(sq) - static_cast<int>(rhs.sq)));
     }
 
-    constexpr Square& operator++() noexcept {
+    constexpr Square &operator++() noexcept {
         sq = static_cast<underlying>(static_cast<int>(sq) + 1);
         return *this;
     }
@@ -372,7 +367,7 @@ class Square {
         return tmp;
     }
 
-    constexpr Square& operator--() noexcept {
+    constexpr Square &operator--() noexcept {
         sq = static_cast<underlying>(static_cast<int>(sq) - 1);
         return *this;
     }
@@ -402,8 +397,7 @@ class Square {
      * @brief Check if the square is light.
      * @return
      */
-    [[nodiscard]] constexpr bool is_light() const noexcept { return (file() + rank()) & 1;
-    }
+    [[nodiscard]] constexpr bool is_light() const noexcept { return (file() + rank()) & 1; }
 
     /**
      * @brief Check if the square is dark.
@@ -471,7 +465,7 @@ class Square {
      * @brief Flips the square vertically.
      * @return
      */
-    constexpr Square& flip() noexcept {
+    constexpr Square &flip() noexcept {
         sq = static_cast<underlying>(static_cast<int>(sq) ^ 56);
         return *this;
     }
@@ -538,7 +532,7 @@ class Square {
     underlying sq;
 };
 
-inline std::ostream& operator<<(std::ostream& os, const Square& sq) {
+inline std::ostream &operator<<(std::ostream &os, const Square &sq) {
     os << static_cast<std::string>(sq);
     return os;
 }
@@ -608,32 +602,32 @@ class Bitboard {
     constexpr bool operator==(std::uint64_t rhs) const noexcept { return bits == rhs; }
     constexpr bool operator!=(std::uint64_t rhs) const noexcept { return bits != rhs; }
 
-    constexpr Bitboard operator&(const Bitboard& rhs) const noexcept { return Bitboard(bits & rhs.bits); }
-    constexpr Bitboard operator|(const Bitboard& rhs) const noexcept { return Bitboard(bits | rhs.bits); }
-    constexpr Bitboard operator^(const Bitboard& rhs) const noexcept { return Bitboard(bits ^ rhs.bits); }
+    constexpr Bitboard operator&(const Bitboard &rhs) const noexcept { return Bitboard(bits & rhs.bits); }
+    constexpr Bitboard operator|(const Bitboard &rhs) const noexcept { return Bitboard(bits | rhs.bits); }
+    constexpr Bitboard operator^(const Bitboard &rhs) const noexcept { return Bitboard(bits ^ rhs.bits); }
     constexpr Bitboard operator~() const noexcept { return Bitboard(~bits); }
 
-    constexpr Bitboard& operator&=(const Bitboard& rhs) noexcept {
+    constexpr Bitboard &operator&=(const Bitboard &rhs) noexcept {
         bits &= rhs.bits;
         return *this;
     }
 
-    constexpr Bitboard& operator|=(const Bitboard& rhs) noexcept {
+    constexpr Bitboard &operator|=(const Bitboard &rhs) noexcept {
         bits |= rhs.bits;
         return *this;
     }
 
-    constexpr Bitboard& operator^=(const Bitboard& rhs) noexcept {
+    constexpr Bitboard &operator^=(const Bitboard &rhs) noexcept {
         bits ^= rhs.bits;
         return *this;
     }
 
-    constexpr bool operator==(const Bitboard& rhs) const noexcept { return bits == rhs.bits; }
-    constexpr bool operator!=(const Bitboard& rhs) const noexcept { return bits != rhs.bits; }
-    constexpr bool operator||(const Bitboard& rhs) const noexcept { return bits || rhs.bits; }
-    constexpr bool operator&&(const Bitboard& rhs) const noexcept { return bits && rhs.bits; }
+    constexpr bool operator==(const Bitboard &rhs) const noexcept { return bits == rhs.bits; }
+    constexpr bool operator!=(const Bitboard &rhs) const noexcept { return bits != rhs.bits; }
+    constexpr bool operator||(const Bitboard &rhs) const noexcept { return bits || rhs.bits; }
+    constexpr bool operator&&(const Bitboard &rhs) const noexcept { return bits && rhs.bits; }
 
-    constexpr Bitboard& set(int index) noexcept {
+    constexpr Bitboard &set(int index) noexcept {
         assert(index >= 0 && index < 64);
         bits |= (1ULL << index);
         return *this;
@@ -644,13 +638,13 @@ class Bitboard {
         return bits & (1ULL << index);
     }
 
-    constexpr Bitboard& clear(int index) noexcept {
+    constexpr Bitboard &clear(int index) noexcept {
         assert(index >= 0 && index < 64);
         bits &= ~(1ULL << index);
         return *this;
     }
 
-    constexpr Bitboard& clear() noexcept {
+    constexpr Bitboard &clear() noexcept {
         bits = 0;
         return *this;
     }
@@ -739,26 +733,24 @@ class Bitboard {
 
     [[nodiscard]] constexpr std::uint64_t getBits() const noexcept { return bits; }
 
-    friend std::ostream& operator<<(std::ostream& os, const Bitboard& bb);
+    friend std::ostream &operator<<(std::ostream &os, const Bitboard &bb);
 
    private:
     std::uint64_t bits;
 };
 
-inline std::ostream& operator<<(std::ostream& os, const Bitboard& bb) {
+inline std::ostream &operator<<(std::ostream &os, const Bitboard &bb) {
     os << std::string(bb);
     return os;
 }
 
-constexpr Bitboard operator&(std::uint64_t lhs, const Bitboard& rhs) { return rhs & lhs; }
-constexpr Bitboard operator|(std::uint64_t lhs, const Bitboard& rhs) { return rhs | lhs; }
+constexpr Bitboard operator&(std::uint64_t lhs, const Bitboard &rhs) { return rhs & lhs; }
+constexpr Bitboard operator|(std::uint64_t lhs, const Bitboard &rhs) { return rhs | lhs; }
 }  // namespace shogi
 
 namespace shogi {
 class Board;
 }  // namespace shogi
-
-
 
 namespace shogi {
 
@@ -799,12 +791,12 @@ class PieceType {
 
     explicit operator std::string() const {
         if (pt == underlying::NONE) return " ";
-        constexpr static const char* pieceTypeStr[] = {"p", "n", "b", "r", "q", "k"};
+        constexpr static const char *pieceTypeStr[] = {"p", "n", "b", "r", "q", "k"};
         return pieceTypeStr[static_cast<int>(pt)];
     }
 
-    constexpr bool operator==(const PieceType& rhs) const noexcept { return pt == rhs.pt; }
-    constexpr bool operator!=(const PieceType& rhs) const noexcept { return pt != rhs.pt; }
+    constexpr bool operator==(const PieceType &rhs) const noexcept { return pt == rhs.pt; }
+    constexpr bool operator!=(const PieceType &rhs) const noexcept { return pt != rhs.pt; }
 
     constexpr operator int() const noexcept { return static_cast<int>(pt); }
 
@@ -822,7 +814,7 @@ class PieceType {
     underlying pt;
 };
 
-inline std::ostream& operator<<(std::ostream& os, const PieceType& pt) {
+inline std::ostream &operator<<(std::ostream &os, const PieceType &pt) {
     os << static_cast<std::string>(pt);
     return os;
 }
@@ -857,19 +849,19 @@ class Piece {
                                           : static_cast<underlying>(static_cast<int>(color.internal()) * 6 + type)) {}
     constexpr Piece(std::string_view p) : piece(underlying::NONE) { piece = convertCharToUnderlying(p[0]); }
 
-    constexpr bool operator<(const Piece& rhs) const noexcept { return piece < rhs.piece; }
-    constexpr bool operator>(const Piece& rhs) const noexcept { return piece > rhs.piece; }
-    constexpr bool operator==(const Piece& rhs) const noexcept { return piece == rhs.piece; }
-    constexpr bool operator!=(const Piece& rhs) const noexcept { return piece != rhs.piece; }
+    constexpr bool operator<(const Piece &rhs) const noexcept { return piece < rhs.piece; }
+    constexpr bool operator>(const Piece &rhs) const noexcept { return piece > rhs.piece; }
+    constexpr bool operator==(const Piece &rhs) const noexcept { return piece == rhs.piece; }
+    constexpr bool operator!=(const Piece &rhs) const noexcept { return piece != rhs.piece; }
 
-    constexpr bool operator==(const underlying& rhs) const noexcept { return piece == rhs; }
-    constexpr bool operator!=(const underlying& rhs) const noexcept { return piece != rhs; }
+    constexpr bool operator==(const underlying &rhs) const noexcept { return piece == rhs; }
+    constexpr bool operator!=(const underlying &rhs) const noexcept { return piece != rhs; }
 
-    constexpr bool operator==(const PieceType& rhs) const noexcept { return type() == rhs; }
-    constexpr bool operator!=(const PieceType& rhs) const noexcept { return type() != rhs; }
+    constexpr bool operator==(const PieceType &rhs) const noexcept { return type() == rhs; }
+    constexpr bool operator!=(const PieceType &rhs) const noexcept { return type() != rhs; }
 
     explicit operator std::string() const {
-        constexpr static const char* pieceStr[] = {"P", "N", "B", "R", "Q", "K",  //
+        constexpr static const char *pieceStr[] = {"P", "N", "B", "R", "Q", "K",  //
                                                    "p", "n", "b", "r", "q", "k"};
         if (piece == NONE) return ".";
         return pieceStr[static_cast<int>(piece)];
@@ -1206,16 +1198,12 @@ class attacks {
 #    include <sstream>
 #endif
 
-
-
 namespace shogi::constants {
 
 constexpr Bitboard DEFAULT_CHECKMASK = Bitboard(0xFFFFFFFFFFFFFFFFull);
 constexpr auto STARTPOS              = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 constexpr auto MAX_MOVES             = 256;
 }  // namespace shogi::constants
-
-
 
 namespace shogi {
 
@@ -1295,12 +1283,9 @@ class Move {
 
 }  // namespace shogi
 
-
-
 #include <cstddef>
 #include <iterator>
 #include <stdexcept>
-
 
 namespace shogi {
 class Movelist {
@@ -1308,13 +1293,13 @@ class Movelist {
     using value_type      = Move;
     using size_type       = int;
     using difference_type = std::ptrdiff_t;
-    using reference       = value_type&;
-    using const_reference = const value_type&;
-    using pointer         = value_type*;
-    using const_pointer   = const value_type*;
+    using reference       = value_type &;
+    using const_reference = const value_type &;
+    using pointer         = value_type *;
+    using const_pointer   = const value_type *;
 
-    using iterator       = value_type*;
-    using const_iterator = const value_type*;
+    using iterator       = value_type *;
+    using const_iterator = const value_type *;
 
     using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
@@ -1392,7 +1377,7 @@ class Movelist {
      * @brief Add a move to the end of the movelist.
      * @param move
      */
-    constexpr void add(value_type&& move) noexcept {
+    constexpr void add(value_type &&move) noexcept {
         assert(size_ < constants::MAX_MOVES);
         moves_[size_++] = move;
     }
@@ -1485,7 +1470,8 @@ class movegen {
     [[nodiscard]] static Bitboard generateKingMoves(Square sq, Bitboard seen, Bitboard movable_square);
 
     template <Color::underlying c>
-    [[nodiscard]] static Bitboard generateCastleMoves(const Board &board, Square sq, Bitboard seen, Bitboard pinHV) noexcept;
+    [[nodiscard]] static Bitboard generateCastleMoves(const Board &board, Square sq, Bitboard seen,
+                                                      Bitboard pinHV) noexcept;
 
     template <typename T>
     static void whileBitboardAdd(Movelist &movelist, Bitboard mask, T func);
@@ -1502,8 +1488,6 @@ class movegen {
 };
 
 }  // namespace shogi
-
-
 
 namespace shogi {
 class Zobrist {
@@ -3385,8 +3369,6 @@ inline void attacks::initAttacks() {
 }
 }  // namespace shogi
 
-
-
 namespace shogi {
 
 inline auto movegen::init_squares_between() {
@@ -4642,7 +4624,6 @@ class StreamParser {
 }  // namespace shogi::pgn
 
 #include <sstream>
-
 
 namespace shogi {
 class usi {

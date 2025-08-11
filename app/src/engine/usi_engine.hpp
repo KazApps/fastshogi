@@ -5,7 +5,6 @@
 #include <vector>
 
 #include <expected.hpp>
-#include <shogi.hpp>
 
 #ifdef _WIN64
 #    include <engine/process/process_win.hpp>
@@ -13,8 +12,8 @@
 #    include <engine/process/process_posix.hpp>
 #endif
 
-#include <engine/option/option_factory.hpp>
 #include <engine/option/options.hpp>
+#include <shogi/shogi.hpp>
 #include <types/engine_config.hpp>
 
 namespace fastshogi::engine {

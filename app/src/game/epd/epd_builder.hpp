@@ -3,9 +3,8 @@
 #include <sstream>
 #include <string>
 
-#include <shogi.hpp>
-
 #include <matchmaking/match/match.hpp>
+#include <shogi/shogi.hpp>
 
 namespace fastshogi::epd {
 

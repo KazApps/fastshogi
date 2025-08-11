@@ -4,12 +4,11 @@
 #include <algorithm>
 #include <regex>
 
-#include <shogi.hpp>
-
 #include <core/globals/globals.hpp>
 #include <core/helper.hpp>
 #include <core/logger/logger.hpp>
 #include <core/time/time.hpp>
+#include <shogi/shogi.hpp>
 #include <types/tournament.hpp>
 
 namespace fastshogi {

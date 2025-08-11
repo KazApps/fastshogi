@@ -1,10 +1,9 @@
 #pragma once
 
-#include <shogi.hpp>
-
 #include <cli/cli.hpp>
 #include <game/book/opening_book.hpp>
 #include <matchmaking/player.hpp>
+#include <shogi/shogi.hpp>
 #include <types/match_data.hpp>
 
 namespace fastshogi {

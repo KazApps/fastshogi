@@ -3,10 +3,9 @@
 #include <fstream>
 #include <memory>
 
-#include <shogi.hpp>
-
 #include <core/logger/logger.hpp>
 #include <game/book/opening.hpp>
+#include <shogi/shogi.hpp>
 
 #ifdef USE_ZLIB
 #    include <gzip/gzstream.h>

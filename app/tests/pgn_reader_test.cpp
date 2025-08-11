@@ -2,8 +2,9 @@
 
 #include <memory>
 
-#include <shogi.hpp>
 #include <doctest/doctest.hpp>
+
+#include <shogi/shogi.hpp>
 
 namespace fastshogi {
 TEST_SUITE("PGN Reader") {
