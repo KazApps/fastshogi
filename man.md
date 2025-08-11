@@ -97,23 +97,6 @@ The following options are available:
 - -maxmoves N  
     Enables draw adjudication if the game reaches N moves without a result.
 
-- -tb PATHS  
-    Adjudicate games using Syzygy tablebases. PATHS must be a semicolon-separated (on Windows) or colon-separated (other platforms)
-    list of paths to the tablebase directories.
-    Only the WDL tablebase files are required.
-
-- -tbpieces N  
-    Only use tablebase adjudication for positions with N pieces or less.
-
-- -tbignore50  
-    Disable the fifty move rule for tablebase adjudication.
-
-- -tbadjudicate SETTING
-    Control when tablebase adjudication is applied. SETTING can be:
-    - WIN_LOSS: Only adjudicate won/lost positions
-    - DRAW: Only adjudicate drawn positions
-    - BOTH: Adjudicate both wins and draws (default)
-
 - -openings file=NAME format=(epd|pgn) [order=ORDER] [plies=PLIES] [start=START]  
     Specifies an opening book file and its format for game starting positions.
 
@@ -122,7 +105,7 @@ The following options are available:
     - PLIES - number of plies for pgn. Defaults to max available plies.
     - START - starting index of the opening book. Default is 1.
 
-- -pgnout file=NAME notation=(san|lan|uci) [nodes=(true|false)] [seldepth=(true|false)] [nps=(true|false)] [hashfull=(true|false)] [tbhits=(true|false)] [timeleft=(true|false)] [latency=(true|false)] [min=(true|false)] [match_line=REGEX]
+- -pgnout file=NAME notation=(san|lan|uci) [nodes=(true|false)] [seldepth=(true|false)] [nps=(true|false)] [hashfull=(true|false)] [timeleft=(true|false)] [latency=(true|false)] [min=(true|false)] [match_line=REGEX]
     Export games in PGN format with specified notations and optional tracking of nodes, seldepth, and others.
 
     - notation:
@@ -135,7 +118,6 @@ The following options are available:
     - seldepth - Track seldepth. Default is false.
     - nps - Track nps. Default is false.
     - hashfull - Track hashfull. Default is false.
-    - tbhits - Track tbhits. Default is false.
     - timeleft - Track time left at end of move. Default is false.
     - latency - Track difference between measured time and engine reported time at end of move. Default is false.
     - min - Minimal PGN format. Default is false.
