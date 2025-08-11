@@ -1,7 +1,6 @@
 #include <game/book/epd_reader.hpp>
 
 #include <fstream>
-#include <iostream>
 #include <string>
 #include <vector>
 

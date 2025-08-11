@@ -14,9 +14,9 @@ namespace fastshogi::util {
 template <typename T, typename ID>
 class CachedEntry : public ScopeEntry {
    public:
-    template <typename... ARGS>
-    CachedEntry(const ID &identifier, ARGS &&...arg)
-        : ScopeEntry(false), entry_(std::make_unique<T>(std::forward<ARGS>(arg)...)), id(identifier) {}
+    template <typename... Args>
+    CachedEntry(const ID &identifier, Args &&...arg)
+        : ScopeEntry(false), entry_(std::make_unique<T>(std::forward<Args>(arg)...)), id(identifier) {}
 
     [[nodiscard]] auto &get() noexcept { return entry_; }
 

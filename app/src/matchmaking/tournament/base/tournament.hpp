@@ -8,8 +8,6 @@
 
 #include <affinity/affinity_manager.hpp>
 #include <core/filesystem/file_writer.hpp>
-#include <core/globals/globals.hpp>
-#include <core/logger/logger.hpp>
 #include <core/memory/cache.hpp>
 #include <core/threading/threadpool.hpp>
 #include <engine/uci_engine.hpp>

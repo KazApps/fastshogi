@@ -4,7 +4,6 @@
 #include <cli/sanitize.hpp>
 #include <core/filesystem/file_system.hpp>
 #include <core/logger/logger.hpp>
-#include <core/rand.hpp>
 #include <matchmaking/scoreboard.hpp>
 #include <types/engine_config.hpp>
 #include <types/tournament.hpp>

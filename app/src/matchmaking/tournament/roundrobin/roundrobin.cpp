@@ -9,7 +9,6 @@
 #include <vector>
 
 #include <core/logger/logger.hpp>
-#include <core/memory/scope_guard.hpp>
 #include <core/rand.hpp>
 #include <game/pgn/pgn_builder.hpp>
 #include <matchmaking/tournament/roundrobin/scheduler.hpp>

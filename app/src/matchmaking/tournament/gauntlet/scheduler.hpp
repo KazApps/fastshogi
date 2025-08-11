@@ -1,6 +1,5 @@
 #pragma once
 
-#include <core/config/config.hpp>
 #include <game/book/opening_book.hpp>
 #include <matchmaking/tournament/schedule/base_scheduler.hpp>
 

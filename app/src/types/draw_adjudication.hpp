@@ -1,7 +1,6 @@
 #pragma once
 
 #include <core/helper.hpp>
-#include <types/enums.hpp>
 
 namespace fastshogi::config {
 

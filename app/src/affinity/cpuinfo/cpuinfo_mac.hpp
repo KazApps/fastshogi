@@ -1,8 +1,6 @@
 #pragma once
 
-#include <map>
 #include <thread>
-#include <vector>
 
 #include <affinity/cpuinfo/cpu_info.hpp>
 #include <core/logger/logger.hpp>

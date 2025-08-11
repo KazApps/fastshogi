@@ -1,9 +1,7 @@
 #pragma once
 
-#include <cstdint>
 #include <optional>
 
-#include <core/config/config.hpp>
 #include <game/book/opening_book.hpp>
 #include <matchmaking/tournament/schedule/scheduler.hpp>
 

@@ -7,7 +7,6 @@
 #include <string>
 
 #define FMT_HEADER_ONLY
-#include <fmt/include/fmt/core.h>
 #include "fmt/include/fmt/std.h"
 
 namespace fastshogi::time {

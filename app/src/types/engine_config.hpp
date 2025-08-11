@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 
-#include <core/helper.hpp>
 #include <game/timecontrol/timecontrol.hpp>
 #include <types/enums.hpp>
 

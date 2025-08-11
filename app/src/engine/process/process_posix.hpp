@@ -7,7 +7,6 @@
 #    include <array>
 #    include <cassert>
 #    include <chrono>
-#    include <cstdint>
 #    include <iostream>
 #    include <memory>
 #    include <optional>
@@ -21,15 +20,10 @@
 #    include <poll.h>   // poll
 #    include <signal.h>
 #    include <spawn.h>
-#    include <string.h>
 #    include <sys/types.h>  // pid_t
 #    include <sys/wait.h>
 #    include <unistd.h>  // _exit, fork
-#    include <unistd.h>
 #    include <csignal>
-#    include <stdexcept>
-#    include <string>
-#    include <vector>
 
 #    include <affinity/affinity.hpp>
 #    include <core/globals/globals.hpp>

@@ -5,7 +5,6 @@
 #include <iostream>
 
 #include <core/helper.hpp>
-#include <types/enums.hpp>
 
 #include <json.hpp>
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 
 #include <types/engine_config.hpp>
 #include <types/tournament.hpp>

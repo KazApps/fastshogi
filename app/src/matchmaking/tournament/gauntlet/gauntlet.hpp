@@ -2,17 +2,9 @@
 
 #include <vector>
 
-#include <affinity/affinity_manager.hpp>
-#include <core/filesystem/file_writer.hpp>
-#include <core/globals/globals.hpp>
-#include <core/memory/cache.hpp>
-#include <core/rand.hpp>
 #include <core/threading/threadpool.hpp>
 #include <game/book/opening_book.hpp>
-#include <matchmaking/match/match.hpp>
 #include <matchmaking/scoreboard.hpp>
-#include <matchmaking/sprt/sprt.hpp>
-#include <matchmaking/stats.hpp>
 #include <types/tournament.hpp>
 
 #include <matchmaking/tournament/gauntlet/scheduler.hpp>

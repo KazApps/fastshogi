@@ -1,6 +1,5 @@
 #include <matchmaking/tournament/tournament_manager.hpp>
 
-#include <core/printing/printing.h>
 #include <cli/cli.hpp>
 #include <cli/cli_args.hpp>
 #include <core/config/config.hpp>
@@ -9,7 +8,6 @@
 #include <core/rand.hpp>
 #include <matchmaking/tournament/gauntlet/gauntlet.hpp>
 #include <matchmaking/tournament/roundrobin/roundrobin.hpp>
-#include <matchmaking/tournament/tournament_manager.hpp>
 #include <stdexcept>
 
 namespace fastshogi {

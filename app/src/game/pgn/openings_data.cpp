@@ -3545,5 +3545,5 @@ std::unordered_map<std::string_view, Opening> EPD_TO_OPENING = {
     {"r1bq1rk1/pppnn1bp/3p2p1/3Ppp2/2P1P3/2N2P2/PP2B1PP/R1BQNRK1 w - -", {"E99", "King's Indian Defense: Orthodox Variation, Classical System, Traditional Line"}},
 
 };
-              
+
 }  // namespace fastshogi::pgn

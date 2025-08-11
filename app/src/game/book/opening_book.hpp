@@ -6,7 +6,6 @@
 #include <vector>
 
 #include <core/config/config.hpp>
-#include <core/helper.hpp>
 #include <core/rand.hpp>
 #include <game/book/epd_reader.hpp>
 #include <game/book/pgn_reader.hpp>

@@ -4,7 +4,6 @@
 #include <string_view>
 #include <utility>
 
-#include <core/logger/logger.hpp>
 #include <cli/cli.hpp>
 #include <engine/uci_engine.hpp>
 #include <matchmaking/elo/elo_pentanomial.hpp>
@@ -12,7 +11,6 @@
 #include <matchmaking/sprt/sprt.hpp>
 #include <matchmaking/stats.hpp>
 #include <types/engine_config.hpp>
-#include <types/enums.hpp>
 #include <types/match_data.hpp>
 
 namespace fastshogi {

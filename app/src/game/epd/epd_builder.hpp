@@ -5,9 +5,7 @@
 
 #include <shogi.hpp>
 
-#include <core/config/config.hpp>
 #include <matchmaking/match/match.hpp>
-#include <types/tournament.hpp>
 
 namespace fastshogi::epd {
 

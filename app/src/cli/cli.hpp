@@ -11,7 +11,6 @@
 #include <core/printing/printing.h>
 #include <cli/cli_args.hpp>
 #include <cli/man.hpp>
-#include <core/config/config.hpp>
 #include <matchmaking/scoreboard.hpp>
 #include <types/engine_config.hpp>
 #include <types/tournament.hpp>

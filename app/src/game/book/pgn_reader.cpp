@@ -1,7 +1,6 @@
 #include <game/book/pgn_reader.hpp>
 
 #include <fstream>
-#include <iostream>
 #include <memory>
 
 #include <shogi.hpp>

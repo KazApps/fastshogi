@@ -1,9 +1,7 @@
 #pragma once
 
 #include <fstream>
-#include <map>
 #include <string>
-#include <vector>
 
 #include <affinity/cpuinfo/cpu_info.hpp>
 #include <core/logger/logger.hpp>
