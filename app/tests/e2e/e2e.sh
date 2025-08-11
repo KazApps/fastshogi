@@ -5,6 +5,9 @@ set -x
 # Compile the random_mover
 g++ -O3 -std=c++17 app/tests/mock/engine/random_mover.cpp -o app/tests/mock/engine/random_mover
 
+# Ensure the missing_engine.sh script is executable for the test
+chmod +x app/tests/mock/engine/missing_engine.sh
+
 # Compile fastshogi
 make -j build=debug $1
 
