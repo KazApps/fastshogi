@@ -29,7 +29,6 @@ SRC_FILES        := \
 	$(SRCDIR)/game/book/opening_book.cpp \
 	$(SRCDIR)/game/book/pgn_reader.cpp \
 	$(SRCDIR)/game/pgn/pgn_builder.cpp \
-	$(SRCDIR)/game/pgn/openings_data.cpp \
 	$(SRCDIR)/game/timecontrol/timecontrol.cpp \
 	$(SRCDIR)/main.cpp \
 	$(SRCDIR)/matchmaking/elo/elo_pentanomial.cpp \

@@ -5,7 +5,6 @@
 #include <string>
 #include <string_view>
 
-#include <game/pgn/openings_data.hpp>
 #include <matchmaking/match/match.hpp>
 #include <shogi/shogi.hpp>
 #include <types/tournament.hpp>
@@ -36,8 +35,6 @@ class PgnBuilder {
 
     std::string addMove(shogi::Board &board, const MoveData &move, std::size_t move_number, int dots, bool illegal,
                         bool last) noexcept;
-
-    std::optional<Opening> getOpeningClassification(bool is_frc_variant) const;
 
     // Adds a comment to the pgn. The comment is formatted as {first, args}
     template <typename First, typename... Args>

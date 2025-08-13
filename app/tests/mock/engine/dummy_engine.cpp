@@ -32,7 +32,6 @@ int main(int argc, char const *argv[]) {
             cout << "option name Threads type spin default 1 min 1 max 1024" << endl;
             cout << "option name Hash type spin default 1 min 1 max 500000" << endl;
             cout << "option name MultiPV type spin default 1 min 1 max 256" << endl;
-            cout << "option name USI_Shogi960 type check default false" << endl;
             cout << "line0" << endl;
             cout << "line1" << endl;
             cout << "usiok" << endl;

@@ -23,8 +23,6 @@ PgnBuilder::PgnBuilder(const config::Pgn &pgn_config, const MatchData &match, st
     const auto &white_player = match.players.white;
     const auto &black_player = match.players.black;
 
-    const auto is_frc_variant = match.variant == VariantType::FRC;
-
     addHeader("Event", pgn_config_.event_name);
     addHeader("Site", pgn_config_.site);
     addHeader("Date", match_.date);
@@ -33,13 +31,9 @@ PgnBuilder::PgnBuilder(const config::Pgn &pgn_config, const MatchData &match, st
     addHeader("Black", black_player.config.name);
     addHeader("Result", getResultFromMatch(white_player, black_player));
 
-    if (match_.fen != shogi::constants::STARTPOS || is_frc_variant) {
+    if (match_.fen != shogi::constants::STARTPOS) {
         addHeader("SetUp", "1");
         addHeader("FEN", match_.fen);
-    }
-
-    if (is_frc_variant) {
-        addHeader("Variant", "Shogi960");
     }
 
     if (!pgn_config_.min) {
@@ -57,13 +51,6 @@ PgnBuilder::PgnBuilder(const config::Pgn &pgn_config, const MatchData &match, st
         }
     }
 
-    const auto opening = getOpeningClassification(is_frc_variant);
-
-    if (!pgn_config_.min && opening) {
-        addHeader("ECO", opening->eco);
-        addHeader("Opening", opening->name);
-    }
-
     pgn_ << "\n";
     // add body
 
@@ -71,7 +58,6 @@ PgnBuilder::PgnBuilder(const config::Pgn &pgn_config, const MatchData &match, st
     // otherwise move the move onto the next line
 
     shogi::Board board = shogi::Board();
-    board.set960(is_frc_variant);
     board.setFen(match_.fen);
 
     std::size_t move_number = int(board.sideToMove() == shogi::Color::BLACK) + 2 * board.fullMoveNumber() - 1;
@@ -118,35 +104,6 @@ void PgnBuilder::addHeader(std::string_view name, const T &value) noexcept {
         }
     }
     pgn_ << "[" << name << " \"" << value << "\"]\n";
-}
-
-std::optional<Opening> PgnBuilder::getOpeningClassification(bool is_frc_variant) const {
-    shogi::Board opening_board;
-    opening_board.set960(is_frc_variant);
-    opening_board.setFen(match_.fen);
-
-    if (is_frc_variant) {
-        return std::nullopt;
-    }
-
-    auto find_opening = [](const std::string_view fen) -> std::optional<Opening> {
-        if (auto it = EPD_TO_OPENING.find(fen); it != EPD_TO_OPENING.end()) return it->second;
-        return std::nullopt;
-    };
-
-    auto current_opening = find_opening(opening_board.getFen(false));
-
-    for (const auto &move : match_.moves) {
-        if (!move.legal) break;
-
-        opening_board.makeMove<true>(shogi::usi::usiToMove(opening_board, move.move));
-
-        if (auto opening = find_opening(opening_board.getFen(false))) {
-            current_opening = opening;
-        }
-    }
-
-    return current_opening;
 }
 
 std::string PgnBuilder::moveNotation(shogi::Board &board, const std::string &move) const noexcept {

@@ -42,9 +42,6 @@ struct EngineConfiguration {
     // USI options
     std::vector<std::pair<std::string, std::string>> options;
 
-    // Shogi variant
-    VariantType variant = VariantType::STANDARD;
-
     template <typename T, typename Predicate>
     std::optional<T> getOption(std::string_view option_name, Predicate transform) const {
         const auto it = std::find_if(options.begin(), options.end(),
@@ -57,6 +54,6 @@ struct EngineConfiguration {
         return std::nullopt;
     }
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(EngineConfiguration, name, dir, cmd, args, restart, options, limit, variant)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(EngineConfiguration, name, dir, cmd, args, restart, options, limit)
 
 }  // namespace fastshogi

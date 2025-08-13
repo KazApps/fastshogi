@@ -37,7 +37,6 @@ TEST_SUITE("Player Test") {
         config.limit.tc.fixed_time = 1000;
         config.limit.tc.increment  = 0;
         config.limit.tc.time       = 0;
-        config.limit.tc.moves      = 0;
         config.limit.tc.timemargin = 0;
 
         engine::UsiEngine usi_engine = engine::UsiEngine(config, false);
@@ -68,7 +67,6 @@ TEST_SUITE("Player Test") {
         config.limit.tc.fixed_time = 0;
         config.limit.tc.increment  = 0;
         config.limit.tc.time       = 1000;
-        config.limit.tc.moves      = 0;
         config.limit.tc.timemargin = 0;
 
         engine::UsiEngine usi_engine = engine::UsiEngine(config, false);

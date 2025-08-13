@@ -60,10 +60,6 @@ void sanitize(config::Tournament& config) {
     }
 #endif
 
-    if (config.variant == VariantType::FRC && config.opening.file.empty()) {
-        throw std::runtime_error("Error: Please specify a Shogi960 opening book");
-    }
-
     if (config.opening.file.empty()) {
         Logger::print<Logger::Level::WARN>(
             "Warning: No opening book specified! Consider using one, otherwise all games will be "

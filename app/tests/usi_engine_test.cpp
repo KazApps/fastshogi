@@ -40,7 +40,7 @@ TEST_SUITE("Usi Engine Communication Tests") {
             std::cout << line.line << std::endl;
         }
 
-        CHECK(usi_engine.output().size() == 12);
+        CHECK(usi_engine.output().size() == 11);
         CHECK(usi_engine.output()[0].line == "argv[1]: arg1");
         CHECK(usi_engine.output()[1].line == "argv[2]: arg2");
         CHECK(usi_engine.output()[2].line == "argv[3]: arg3");
@@ -69,7 +69,7 @@ TEST_SUITE("Usi Engine Communication Tests") {
             std::cout << line.line << std::endl;
         }
 
-        CHECK(usi_engine.output().size() == 15);
+        CHECK(usi_engine.output().size() == 14);
         CHECK(usi_engine.output()[0].line == "argv[1]: --backend=multiplexing");
         CHECK(usi_engine.output()[1].line ==
               "argv[2]: --backend-opts=backend=cuda-fp16,(gpu=0),(gpu=1),(gpu=2),(gpu=3)");
@@ -88,7 +88,7 @@ TEST_SUITE("Usi Engine Communication Tests") {
 
         CHECK(usi_engine.start());
 
-        CHECK(usi_engine.output().size() == 12);
+        CHECK(usi_engine.output().size() == 11);
         CHECK(usi_engine.output()[0].line == "argv[1]: arg1");
         CHECK(usi_engine.output()[1].line == "argv[2]: arg2");
         CHECK(usi_engine.output()[2].line == "argv[3]: arg3");
@@ -100,16 +100,15 @@ TEST_SUITE("Usi Engine Communication Tests") {
         auto usiOutput = usi_engine.output();
 
         CHECK(usi);
-        CHECK(usiOutput.size() == 9);
+        CHECK(usiOutput.size() == 8);
         CHECK(usiOutput[0].line == "id name dummy_engine");
         CHECK(usiOutput[1].line == "id author fastshogi");
         CHECK(usiOutput[2].line == "option name Threads type spin default 1 min 1 max 1024");
         CHECK(usiOutput[3].line == "option name Hash type spin default 1 min 1 max 500000");
         CHECK(usiOutput[4].line == "option name MultiPV type spin default 1 min 1 max 256");
-        CHECK(usiOutput[5].line == "option name USI_Shogi960 type check default false");
-        CHECK(usiOutput[6].line == "line0");
-        CHECK(usiOutput[7].line == "line1");
-        CHECK(usiOutput[8].line == "usiok");
+        CHECK(usiOutput[5].line == "line0");
+        CHECK(usiOutput[6].line == "line1");
+        CHECK(usiOutput[7].line == "usiok");
         CHECK(usi_engine.isready() == engine::process::Status::OK);
 
         CHECK(usi_engine.writeEngine("sleep"));
@@ -135,16 +134,15 @@ TEST_SUITE("Usi Engine Communication Tests") {
         const auto res = usi_engine.readEngine("usiok");
 
         CHECK(res == engine::process::Status::OK);
-        CHECK(usi_engine.output().size() == 9);
+        CHECK(usi_engine.output().size() == 8);
         CHECK(usi_engine.output()[0].line == "id name dummy_engine");
         CHECK(usi_engine.output()[1].line == "id author fastshogi");
         CHECK(usi_engine.output()[2].line == "option name Threads type spin default 1 min 1 max 1024");
         CHECK(usi_engine.output()[3].line == "option name Hash type spin default 1 min 1 max 500000");
         CHECK(usi_engine.output()[4].line == "option name MultiPV type spin default 1 min 1 max 256");
-        CHECK(usi_engine.output()[5].line == "option name USI_Shogi960 type check default false");
-        CHECK(usi_engine.output()[6].line == "line0");
-        CHECK(usi_engine.output()[7].line == "line1");
-        CHECK(usi_engine.output()[8].line == "usiok");
+        CHECK(usi_engine.output()[5].line == "line0");
+        CHECK(usi_engine.output()[6].line == "line1");
+        CHECK(usi_engine.output()[7].line == "usiok");
 
         CHECK(usi_engine.writeEngine("isready"));
         const auto res2 = usi_engine.readEngine("readyok");
@@ -177,16 +175,15 @@ TEST_SUITE("Usi Engine Communication Tests") {
         const auto res = usi_engine->readEngine("usiok");
 
         CHECK(res == engine::process::Status::OK);
-        CHECK(usi_engine->output().size() == 9);
+        CHECK(usi_engine->output().size() == 8);
         CHECK(usi_engine->output()[0].line == "id name dummy_engine");
         CHECK(usi_engine->output()[1].line == "id author fastshogi");
         CHECK(usi_engine->output()[2].line == "option name Threads type spin default 1 min 1 max 1024");
         CHECK(usi_engine->output()[3].line == "option name Hash type spin default 1 min 1 max 500000");
         CHECK(usi_engine->output()[4].line == "option name MultiPV type spin default 1 min 1 max 256");
-        CHECK(usi_engine->output()[5].line == "option name USI_Shogi960 type check default false");
-        CHECK(usi_engine->output()[6].line == "line0");
-        CHECK(usi_engine->output()[7].line == "line1");
-        CHECK(usi_engine->output()[8].line == "usiok");
+        CHECK(usi_engine->output()[5].line == "line0");
+        CHECK(usi_engine->output()[6].line == "line1");
+        CHECK(usi_engine->output()[7].line == "usiok");
 
         usi_engine = std::make_unique<MockUsiEngine>(config, false);
 
@@ -196,16 +193,15 @@ TEST_SUITE("Usi Engine Communication Tests") {
         const auto res2 = usi_engine->readEngine("usiok");
 
         CHECK(res2 == engine::process::Status::OK);
-        CHECK(usi_engine->output().size() == 9);
+        CHECK(usi_engine->output().size() == 8);
         CHECK(usi_engine->output()[0].line == "id name dummy_engine");
         CHECK(usi_engine->output()[1].line == "id author fastshogi");
         CHECK(usi_engine->output()[2].line == "option name Threads type spin default 1 min 1 max 1024");
         CHECK(usi_engine->output()[3].line == "option name Hash type spin default 1 min 1 max 500000");
         CHECK(usi_engine->output()[4].line == "option name MultiPV type spin default 1 min 1 max 256");
-        CHECK(usi_engine->output()[5].line == "option name USI_Shogi960 type check default false");
-        CHECK(usi_engine->output()[6].line == "line0");
-        CHECK(usi_engine->output()[7].line == "line1");
-        CHECK(usi_engine->output()[8].line == "usiok");
+        CHECK(usi_engine->output()[5].line == "line0");
+        CHECK(usi_engine->output()[6].line == "line1");
+        CHECK(usi_engine->output()[7].line == "usiok");
     }
 
     TEST_CASE("Restarting the engine") {
@@ -220,16 +216,15 @@ TEST_SUITE("Usi Engine Communication Tests") {
         const auto res = usi_engine->readEngine("usiok");
 
         CHECK(res == engine::process::Status::OK);
-        CHECK(usi_engine->output().size() == 9);
+        CHECK(usi_engine->output().size() == 8);
         CHECK(usi_engine->output()[0].line == "id name dummy_engine");
         CHECK(usi_engine->output()[1].line == "id author fastshogi");
         CHECK(usi_engine->output()[2].line == "option name Threads type spin default 1 min 1 max 1024");
         CHECK(usi_engine->output()[3].line == "option name Hash type spin default 1 min 1 max 500000");
         CHECK(usi_engine->output()[4].line == "option name MultiPV type spin default 1 min 1 max 256");
-        CHECK(usi_engine->output()[5].line == "option name USI_Shogi960 type check default false");
-        CHECK(usi_engine->output()[6].line == "line0");
-        CHECK(usi_engine->output()[7].line == "line1");
-        CHECK(usi_engine->output()[8].line == "usiok");
+        CHECK(usi_engine->output()[5].line == "line0");
+        CHECK(usi_engine->output()[6].line == "line1");
+        CHECK(usi_engine->output()[7].line == "usiok");
 
         usi_engine = std::make_unique<MockUsiEngine>(config, false);
 
@@ -239,16 +234,15 @@ TEST_SUITE("Usi Engine Communication Tests") {
         const auto res2 = usi_engine->readEngine("usiok");
 
         CHECK(res2 == engine::process::Status::OK);
-        CHECK(usi_engine->output().size() == 9);
+        CHECK(usi_engine->output().size() == 8);
         CHECK(usi_engine->output()[0].line == "id name dummy_engine");
         CHECK(usi_engine->output()[1].line == "id author fastshogi");
         CHECK(usi_engine->output()[2].line == "option name Threads type spin default 1 min 1 max 1024");
         CHECK(usi_engine->output()[3].line == "option name Hash type spin default 1 min 1 max 500000");
         CHECK(usi_engine->output()[4].line == "option name MultiPV type spin default 1 min 1 max 256");
-        CHECK(usi_engine->output()[5].line == "option name USI_Shogi960 type check default false");
-        CHECK(usi_engine->output()[6].line == "line0");
-        CHECK(usi_engine->output()[7].line == "line1");
-        CHECK(usi_engine->output()[8].line == "usiok");
+        CHECK(usi_engine->output()[5].line == "line0");
+        CHECK(usi_engine->output()[6].line == "line1");
+        CHECK(usi_engine->output()[7].line == "usiok");
     }
 
     TEST_CASE("Sending usi options and expect Threads to be first") {
@@ -257,7 +251,6 @@ TEST_SUITE("Usi Engine Communication Tests") {
         config.options = {
             {"Hash", "1600"},
             {"MultiPV", "3"},
-            {"USI_Shogi960", "true"},
             {"Threads", "4"},
         };
 
@@ -266,13 +259,12 @@ TEST_SUITE("Usi Engine Communication Tests") {
         CHECK(usi_engine->start());
 
         CHECK(usi_engine->refreshUsi());
-        const auto res = usi_engine->readEngine("option set: setoption name USI_Shogi960");
+        const auto res = usi_engine->readEngine("option set: setoption name MultiPV value 3");
 
         CHECK(res == engine::process::Status::OK);
-        CHECK(usi_engine->output().size() == 4);
+        CHECK(usi_engine->output().size() == 3);
         CHECK(usi_engine->output()[0].line == "option set: setoption name Threads value 4");
         CHECK(usi_engine->output()[1].line == "option set: setoption name Hash value 1600");
         CHECK(usi_engine->output()[2].line == "option set: setoption name MultiPV value 3");
-        CHECK(usi_engine->output()[3].line == "option set: setoption name USI_Shogi960 value true");
     }
 }

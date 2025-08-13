@@ -30,7 +30,6 @@ struct Tournament {
     ResignAdjudication resign     = {};
     MaxMovesAdjudication maxmoves = {};
 
-    VariantType variant = VariantType::STANDARD;
     TournamentType type = TournamentType::ROUNDROBIN;
     int gauntlet_seeds  = 1;
 
@@ -59,9 +58,9 @@ struct Tournament {
 
     Log log = {};
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Tournament, resign, draw, maxmoves, opening, pgn, epd, sprt, config_name, seed,
-                                   variant, type, gauntlet_seeds, ratinginterval, scoreinterval, wait, autosaveinterval,
-                                   games, rounds, concurrency, force_concurrency, recover, noswap, reverse,
-                                   report_penta, affinity, show_latency, log)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Tournament, resign, draw, maxmoves, opening, pgn, epd, sprt, config_name, seed, type,
+                                   gauntlet_seeds, ratinginterval, scoreinterval, wait, autosaveinterval, games, rounds,
+                                   concurrency, force_concurrency, recover, noswap, reverse, report_penta, affinity,
+                                   show_latency, log)
 
 }  // namespace fastshogi::config

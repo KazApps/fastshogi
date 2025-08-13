@@ -34,7 +34,7 @@ TEST_SUITE("PGN Reader") {
             for (const auto& move : moves) {
                 shogi::Move i_move = shogi::usi::parseSan(board, move);
 
-                usi_moves.push_back(shogi::usi::moveToUsi(i_move, board.shogi960()));
+                usi_moves.push_back(shogi::usi::moveToUsi(i_move));
                 board.makeMove(i_move);
             }
             return usi_moves;
@@ -59,7 +59,7 @@ TEST_SUITE("PGN Reader") {
             }
 
             for (size_t i = 0; i < correct.size(); i++) {
-                CHECK(shogi::usi::moveToUsi(games[0].moves[i], false) == correct[i]);
+                CHECK(shogi::usi::moveToUsi(games[0].moves[i]) == correct[i]);
             }
         }
 
@@ -84,7 +84,7 @@ TEST_SUITE("PGN Reader") {
             }
 
             for (size_t i = 0; i < correct.size(); i++) {
-                CHECK(shogi::usi::moveToUsi(games[1].moves[i], false) == correct[i]);
+                CHECK(shogi::usi::moveToUsi(games[1].moves[i]) == correct[i]);
             }
         }
 
@@ -107,7 +107,7 @@ TEST_SUITE("PGN Reader") {
             }
 
             for (size_t i = 0; i < correct.size(); i++) {
-                CHECK(shogi::usi::moveToUsi(games[2].moves[i], false) == correct[i]);
+                CHECK(shogi::usi::moveToUsi(games[2].moves[i]) == correct[i]);
             }
         }
     }

@@ -142,11 +142,10 @@ class Output {
         const auto& limit = config.limit;
 
         if (limit.tc.time + limit.tc.increment > 0) {
-            auto moves     = limit.tc.moves > 0 ? fmt::format("{}/", limit.tc.moves) : "";
             auto time      = limit.tc.time / 1000.0;
             auto increment = limit.tc.increment > 0 ? fmt::format("+{:.2g}", limit.tc.increment / 1000.0) : "";
 
-            return fmt::format("{}{}{}", moves, time, increment);
+            return fmt::format("{}{}", time, increment);
         } else if (limit.tc.fixed_time > 0) {
             auto time = limit.tc.fixed_time / 1000.0;
 

@@ -16,8 +16,6 @@ TimeControl::TimeControl(const Limits &limits) : limits_(limits) {
     } else {
         time_left_ = limits_.time + limits_.increment;
     }
-
-    moves_left_ = limits_.moves;
 }
 
 std::chrono::milliseconds TimeControl::getTimeoutThreshold() const noexcept {
@@ -25,15 +23,6 @@ std::chrono::milliseconds TimeControl::getTimeoutThreshold() const noexcept {
 }
 
 bool TimeControl::updateTime(const int64_t elapsed_millis) noexcept {
-    if (limits_.moves > 0) {
-        if (moves_left_ == 1) {
-            moves_left_ = limits_.moves;
-            time_left_ += limits_.time;
-        } else {
-            moves_left_--;
-        }
-    }
-
     if (limits_.fixed_time == 0 && limits_.time + limits_.increment == 0) {
         return true;
     }
@@ -61,11 +50,9 @@ std::ostream &operator<<(std::ostream &os, const TimeControl &tc) {
         return os;
     }
 
-    if (tc.limits_.moves == 0 && tc.limits_.time == 0 && tc.limits_.increment == 0) {
+    if (tc.limits_.time == 0 && tc.limits_.increment == 0) {
         os << "-";
     }
-
-    if (tc.limits_.moves > 0) os << tc.limits_.moves << "/";
 
     if (tc.limits_.time + tc.limits_.increment > 0) os << (tc.limits_.time / 1000.0);
 

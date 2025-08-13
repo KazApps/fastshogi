@@ -10,9 +10,8 @@ namespace fastshogi::epd {
 
 class EpdBuilder {
    public:
-    EpdBuilder(const VariantType &variant, const MatchData &match) {
+    EpdBuilder(const MatchData &match) {
         shogi::Board board = shogi::Board();
-        board.set960(variant == VariantType::FRC);
         board.setFen(match.fen);
 
         for (const auto &move : match.moves) {

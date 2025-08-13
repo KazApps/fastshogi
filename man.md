@@ -50,12 +50,6 @@ The following options are available:
 - -games N  
     Play N games in each round. Default value is 2. Setting this higher than 2 does not provide meaningful results.
 
-- -variant VARIANT  
-    Choose between the following game variants:
-
-    - standard - play Standard Shogi (default)
-    - fischerandom - play Fischer Random Shogi
-
 - -tournament TYPE
     Choose type of tournament:
 
@@ -189,7 +183,7 @@ The following options are available:
     - cmd=COMMAND - Specify engine command.
     - name=NAME - Set engine name (must be unique).
     - args="ARGS" - Pass multiple arguments using args="ARG1 ARG2".
-    - tc=TC - Time control in Cute-Chess format (moves/minutes:seconds+increment).
+    - tc=TC - Time control in Cute-Chess format (minutes:seconds+increment).
     - timemargin=N - Time margin for exceeding time limit.
     - st=ST - Movetime in seconds.
     - nodes=NODES - Max number of nodes to search.

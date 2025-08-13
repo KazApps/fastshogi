@@ -1470,8 +1470,7 @@ class movegen {
     [[nodiscard]] static Bitboard generateKingMoves(Square sq, Bitboard seen, Bitboard movable_square);
 
     template <Color::underlying c>
-    [[nodiscard]] static Bitboard generateCastleMoves(const Board &board, Square sq, Bitboard seen,
-                                                      Bitboard pinHV) noexcept;
+    [[nodiscard]] static Bitboard generateCastleMoves(const Board &board, Square sq, Bitboard seen) noexcept;
 
     template <typename T>
     static void whileBitboardAdd(Movelist &movelist, Bitboard mask, T func);
@@ -1828,9 +1827,8 @@ class Board {
     Board(PrivateCtor) {}
 
    public:
-    explicit Board(std::string_view fen = constants::STARTPOS, bool shogi960 = false) {
+    explicit Board(std::string_view fen = constants::STARTPOS) {
         prev_states_.reserve(256);
-        shogi960_ = shogi960;
         assert(setFenInternal<true>(constants::STARTPOS));
         setFenInternal<true>(fen);
     }
@@ -2345,37 +2343,11 @@ class Board {
     [[nodiscard]] std::uint32_t halfMoveClock() const noexcept { return hfm_; }
     [[nodiscard]] std::uint32_t fullMoveNumber() const noexcept { return 1 + plies_ / 2; }
 
-    void set960(bool is960) {
-        shogi960_ = is960;
-        if (!original_fen_.empty()) setFen(original_fen_);
-    }
-
-    /**
-     * @brief Checks if the current position is a shogi960, aka. FRC/DFRC position.
-     * @return
-     */
-    [[nodiscard]] bool shogi960() const noexcept { return shogi960_; }
-
     /**
      * @brief Get the castling rights as a string
      * @return
      */
     [[nodiscard]] std::string getCastleString() const {
-        static const auto get_file = [](const CastlingRights &cr, Color c, CastlingRights::Side side) {
-            auto file = static_cast<std::string>(cr.getRookFile(c, side));
-            return c == Color::WHITE ? std::toupper(file[0]) : file[0];
-        };
-
-        if (shogi960_) {
-            std::string ss;
-
-            for (auto color : {Color::WHITE, Color::BLACK})
-                for (auto side : {CastlingRights::Side::KING_SIDE, CastlingRights::Side::QUEEN_SIDE})
-                    if (cr_.has(color, side)) ss += get_file(cr_, color, side);
-
-            return ss;
-        }
-
         std::string ss;
 
         if (cr_.has(Color::WHITE, CastlingRights::Side::KING_SIDE)) ss += 'K';
@@ -2573,17 +2545,15 @@ class Board {
          */
         static PackedBoard encode(const Board &board) { return encodeState(board); }
 
-        static PackedBoard encode(std::string_view fen, bool shogi960 = false) { return encodeState(fen, shogi960); }
+        static PackedBoard encode(std::string_view fen) { return encodeState(fen); }
 
         /**
          * @brief Creates a Board object from a PackedBoard
          * @param compressed
-         * @param shogi960 If the board is a shogi960 position, set this to true
          * @return
          */
-        static Board decode(const PackedBoard &compressed, bool shogi960 = false) {
-            Board board     = Board(PrivateCtor::CREATE);
-            board.shogi960_ = shogi960;
+        static Board decode(const PackedBoard &compressed) {
+            Board board = Board(PrivateCtor::CREATE);
             decode(board, compressed);
             return board;
         }
@@ -2639,12 +2609,7 @@ class Board {
             return packed;
         }
 
-        static PackedBoard encodeState(std::string_view fen, bool shogi960 = false) {
-            // fallback to slower method
-            if (shogi960) {
-                return encodeState(Board(fen, true));
-            }
-
+        static PackedBoard encodeState(std::string_view fen) {
             PackedBoard packed{};
 
             while (fen[0] == ' ') fen.remove_prefix(1);
@@ -2672,8 +2637,6 @@ class Board {
                 if (i == 'q') cr.setCastlingRight(Color::BLACK, queen_side, File::FILE_A);
 
                 assert(i == 'K' || i == 'Q' || i == 'k' || i == 'q');
-
-                continue;
             }
 
             const auto parts = split_string_view<8>(position, '/');
@@ -2865,8 +2828,6 @@ class Board {
     Square ep_sq_        = Square::NO_SQ;
     std::uint8_t hfm_    = 0;
 
-    bool shogi960_ = false;
-
     std::array<std::array<Bitboard, 2>, 2> castling_path = {};
 
    private:
@@ -2994,21 +2955,6 @@ class Board {
             const auto king_side  = CastlingRights::Side::KING_SIDE;
             const auto queen_side = CastlingRights::Side::QUEEN_SIDE;
 
-            if (!shogi960_) {
-                if (i == 'K')
-                    cr_.setCastlingRight(Color::WHITE, king_side, File::FILE_H);
-                else if (i == 'Q')
-                    cr_.setCastlingRight(Color::WHITE, queen_side, File::FILE_A);
-                else if (i == 'k')
-                    cr_.setCastlingRight(Color::BLACK, king_side, File::FILE_H);
-                else if (i == 'q')
-                    cr_.setCastlingRight(Color::BLACK, queen_side, File::FILE_A);
-                else
-                    return false;
-
-                continue;
-            }
-
             // shogi960 castling detection
             const auto color   = isupper(i) ? Color::WHITE : Color::BLACK;
             const auto king_sq = kingSq(color);
@@ -3109,7 +3055,6 @@ class Board {
     }
 
     // store the original fen string
-    // useful when setting up a frc position and the user called set960(true) afterwards
     std::string original_fen_;
 };
 
@@ -3466,7 +3411,7 @@ template <Color::underlying c>
     auto king_sq          = board.kingSq(~c);
     Bitboard map_king_atk = attacks::king(king_sq) & enemy_empty;
 
-    if (map_king_atk == Bitboard(0ull) && !board.shogi960()) return 0ull;
+    if (map_king_atk == Bitboard(0ull)) return 0ull;
 
     auto occ     = board.occ() ^ Bitboard::fromSquare(king_sq);
     auto queens  = board.pieces(PieceType::QUEEN, c);
@@ -3704,8 +3649,7 @@ inline void movegen::generatePawnMoves(const Board &board, Movelist &moves, Bitb
 }
 
 template <Color::underlying c>
-[[nodiscard]] inline Bitboard movegen::generateCastleMoves(const Board &board, Square sq, Bitboard seen,
-                                                           Bitboard pin_hv) noexcept {
+[[nodiscard]] inline Bitboard movegen::generateCastleMoves(const Board &board, Square sq, Bitboard seen) noexcept {
     if (!Square::back_rank(sq, c) || !board.castlingRights().has(c)) return 0ull;
 
     const auto rights = board.castlingRights();
@@ -3724,9 +3668,7 @@ template <Color::underlying c>
         const auto king_to = Square::castling_king_square(is_king_side, c);
         if (between(sq, king_to) & seen) continue;
 
-        // Shogi960: Rook is pinned on the backrank.
         const auto from_rook_bb = Bitboard::fromSquare(Square(rights.getRookFile(c, side), sq.rank()));
-        if (board.shogi960() && (pin_hv & board.us(board.sideToMove()) & from_rook_bb)) continue;
 
         moves |= from_rook_bb;
     }
@@ -3784,7 +3726,7 @@ inline void movegen::legalmoves(Movelist &movelist, const Board &board, int piec
                          [&](Square sq) { return generateKingMoves(sq, seen, movable_square); });
 
         if (mt != MoveGenType::CAPTURE && checks == 0) {
-            Bitboard moves_bb = generateCastleMoves<c>(board, king_sq, seen, pin_hv);
+            Bitboard moves_bb = generateCastleMoves<c>(board, king_sq, seen);
 
             while (moves_bb) {
                 Square to = moves_bb.pop();
@@ -4631,17 +4573,16 @@ class usi {
     /**
      * @brief Converts an internal move to a USI string
      * @param move
-     * @param shogi960
      * @return
      */
-    [[nodiscard]] static std::string moveToUsi(const Move &move, bool shogi960 = false) noexcept(false) {
+    [[nodiscard]] static std::string moveToUsi(const Move &move) noexcept(false) {
         // Get the from and to squares
         Square from_sq = move.from();
         Square to_sq   = move.to();
 
         // If the move is not a shogi960 castling move and is a king moving more than one square,
         // update the to square to be the correct square for a regular castling move
-        if (!shogi960 && move.typeOf() == Move::CASTLING) {
+        if (move.typeOf() == Move::CASTLING) {
             to_sq = Square(to_sq > from_sq ? File::FILE_G : File::FILE_C, from_sq.rank());
         }
 
@@ -4678,15 +4619,8 @@ class usi {
 
         auto pt = board.at(source).type();
 
-        // castling in shogi960
-        if (board.shogi960() && pt == PieceType::KING && board.at(target).type() == PieceType::ROOK &&
-            board.at(target).color() == board.sideToMove()) {
-            return Move::make<Move::CASTLING>(source, target);
-        }
-
         // convert to king captures rook
-        // in shogi960 the move should be sent as king captures rook already!
-        if (!board.shogi960() && pt == PieceType::KING && Square::distance(target, source) == 2) {
+        if (pt == PieceType::KING && Square::distance(target, source) == 2) {
             target = Square(target > source ? File::FILE_H : File::FILE_A, source.rank());
             return Move::make<Move::CASTLING>(source, target);
         }

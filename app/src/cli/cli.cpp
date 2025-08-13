@@ -117,19 +117,8 @@ TimeControl::Limits parseTc(const std::string &tcString) {
     TimeControl::Limits tc;
 
     std::string remainingStringVector = tcString;
-    const bool has_moves              = str_utils::contains(tcString, "/");
     const bool has_inc                = str_utils::contains(tcString, "+");
     const bool has_minutes            = str_utils::contains(tcString, ":");
-
-    if (has_moves) {
-        const auto moves = str_utils::splitString(tcString, '/');
-        if (moves[0] == "inf" || moves[0] == "infinite") {
-            tc.moves = 0;
-        } else {
-            tc.moves = std::stoi(moves[0]);
-        }
-        remainingStringVector = moves[1];
-    }
 
     if (has_inc) {
         const auto inc        = str_utils::splitString(remainingStringVector, '+');
@@ -568,15 +557,6 @@ void parseRepeat(const std::vector<std::string> &params, ArgumentData &argument_
     }
 }
 
-void parseVariant(const std::vector<std::string> &params, ArgumentData &argument_data) {
-    std::string val;
-
-    parseValue(params, val);
-
-    if (val == "fischerandom") argument_data.tournament_config.variant = VariantType::FRC;
-    if (val != "fischerandom" && val != "standard") throw std::runtime_error("Unknown variant.");
-}
-
 void parseTournament(const std::vector<std::string> &params, ArgumentData &argument_data) {
     std::string val;
 
@@ -706,7 +686,6 @@ OptionsParser::OptionsParser(const cli::Args &args) {
     addOption("-help", parseHelp);
     addOption("recover", parseRecover);
     addOption("repeat", parseRepeat);
-    addOption("variant", parseVariant);
     addOption("tournament", parseTournament);
     addOption("quick", parseQuick);
     addOption("use-affinity", parseAffinity);
@@ -715,11 +694,6 @@ OptionsParser::OptionsParser(const cli::Args &args) {
     addOption("testEnv", parseTestEnv);
 
     parse(args);
-
-    // apply the variant type to all configs
-    for (auto &config : argument_data_.configs) {
-        config.variant = argument_data_.tournament_config.variant;
-    }
 
     cli::sanitize(argument_data_.tournament_config);
 

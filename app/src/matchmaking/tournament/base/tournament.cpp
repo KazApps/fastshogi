@@ -210,7 +210,7 @@ void BaseTournament::playGame(const GamePair<EngineConfiguration, EngineConfigur
         }
 
         if (!config.epd.file.empty()) {
-            file_writer_epd_->write(epd::EpdBuilder(config.variant, match_data).get());
+            file_writer_epd_->write(epd::EpdBuilder(match_data).get());
         }
 
         const auto result = pgn::PgnBuilder::getResultFromMatch(match_data.players.white, match_data.players.black);

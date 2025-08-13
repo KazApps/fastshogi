@@ -149,10 +149,6 @@ bool UsiEngine::go(const TimeControl &our_tc, const TimeControl &enemy_tc, shogi
         }
     }
 
-    if (our_tc.isMoves()) {
-        input << " movestogo " << our_tc.getMovesLeft();
-    }
-
     return writeEngine(input.str());
 }
 
@@ -342,15 +338,6 @@ bool UsiEngine::refreshUsi() {
         } catch (const std::exception &e) {
             Logger::print<Logger::Level::WARN>("Warning; Failed to set option {} with value {} for engine {}: {}",
                                                option.first, option.second, config_.name, e.what());
-        }
-    }
-
-    if (config_.variant == VariantType::FRC) {
-        try {
-            sendSetoption("USI_Shogi960", "true");
-        } catch (const std::exception &e) {
-            Logger::print<Logger::Level::WARN>("Warning; Failed to set USI_Shogi960 option for engine {}: {}",
-                                               config_.name, e.what());
         }
     }
 

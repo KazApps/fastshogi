@@ -12,13 +12,13 @@ TEST_SUITE("Option Parsing Tests") {
             "-engine",
             "dir=./",
             "cmd=app/tests/mock/engine/dummy_engine",
-            "tc=10/9.64",
+            "tc=9.64",
             "st=5",
             "name=Alexandria-EA649FED",
             "-engine",
             "dir=./",
             "cmd=app/tests/mock/engine/dummy_engine",
-            "tc=40/1:9.65+0.1",
+            "tc=1:9.65+0.1",
         };
 
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; cannot use tc and st together!", std::runtime_error);
@@ -104,17 +104,6 @@ TEST_SUITE("Option Parsing Tests") {
                              std::runtime_error);
     }
 
-    TEST_CASE("Should throw no shogi960 opening book") {
-        const auto args = cli::Args{
-            "fastshogi.exe",
-            "-variant",
-            "fischerandom",
-        };
-
-        CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error: Please specify a Shogi960 opening book",
-                             std::runtime_error);
-    }
-
     TEST_CASE("Should throw not enough engines") {
         const auto args = cli::Args{
             "fastshogi.exe", "-engine", "dir=./", "cmd=app/tests/mock/engine/dummy_engine", "depth=5",
@@ -128,7 +117,7 @@ TEST_SUITE("Option Parsing Tests") {
         const auto args = cli::Args{
             "fastshogi.exe",    "-engine", "dir=./", "cmd=app/tests/mock/engine/dummy_engine",
             "depth=5",          "-engine", "dir=./", "cmd=app/tests/mock/engine/dummy_engine",
-            "tc=40/1:9.65+0.1",
+            "tc=1:9.65+0.1",
         };
 
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; please specify a name for each engine!",
@@ -141,12 +130,12 @@ TEST_SUITE("Option Parsing Tests") {
             "-engine",
             "dir=./",
             "cmd=app/tests/mock/engine/dummy_engine",
-            "tc=10/0+0",
+            "tc=0+0",
             "name=Alexandria-EA649FED",
             "-engine",
             "dir=./",
             "cmd=app/tests/mock/engine/dummy_engine",
-            "tc=10/0+0",
+            "tc=0+0",
         };
 
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; no TimeControl specified!", std::runtime_error);
@@ -158,13 +147,13 @@ TEST_SUITE("Option Parsing Tests") {
             "-engine",
             "dir=./",
             "cmd=app/tests/mock/engine/dummy_engine",
-            "tc=10/1+0",
+            "tc=1+0",
             "name=Alexandria-EA649FED",
             "-engine",
             "dir=./",
             "cmd=app/tests/mock/engine/dummy_engine",
             "name=Alexandria-EA649FED",
-            "tc=10/1+0",
+            "tc=1+0",
         };
 
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args},
@@ -178,14 +167,14 @@ TEST_SUITE("Option Parsing Tests") {
             "-engine",
             "dir=./",
             "cmd=app/tests/mock/engine/dummy_engine",
-            "tc=10/1+0",
+            "tc=1+0",
             "restart=true",
             "name=Alexandria-EA649FED",
             "-engine",
             "dir=./",
             "cmd=app/tests/mock/engine/dummy_engine",
             "name=Alexandria-27E42728",
-            "tc=10/1+0",
+            "tc=1+0",
         };
 
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args},
@@ -208,7 +197,7 @@ TEST_SUITE("Option Parsing Tests") {
                                     "-engine",
                                     "dir=./",
                                     "cmd=app/tests/mock/engine/dummy_engine",
-                                    "tc=40/1:9.65+0.1",
+                                    "tc=1:9.65+0.1",
                                     "timemargin=243",
                                     "plies=7",
                                     "option.Threads=1",
@@ -240,7 +229,6 @@ TEST_SUITE("Option Parsing Tests") {
         EngineConfiguration config0 = configs[0];
         EngineConfiguration config1 = configs[1];
         CHECK(config0.name == "Alexandria-EA649FED");
-        CHECK(config0.limit.tc.moves == 0);
         CHECK(config0.limit.tc.time == 0);
         CHECK(config0.limit.tc.increment == 0);
         CHECK(config0.limit.tc.timemargin == 0);
@@ -252,7 +240,6 @@ TEST_SUITE("Option Parsing Tests") {
         CHECK(config0.options.at(1).first == "Hash");
         CHECK(config0.options.at(1).second == "16");
         CHECK(config1.name == "Alexandria-27E42728");
-        CHECK(config1.limit.tc.moves == 40);
         CHECK(config1.limit.tc.time == 69650);
         CHECK(config1.limit.tc.fixed_time == 0);
         CHECK(config1.limit.tc.increment == 100);
@@ -276,7 +263,7 @@ TEST_SUITE("Option Parsing Tests") {
                                     "dir=./",
                                     "cmd=app/tests/mock/engine/dummy_engine",
                                     "name=Alexandria-27E42728",
-                                    "tc=10/9.64",
+                                    "tc=9.64",
                                     "-recover",
                                     "-concurrency",
                                     "2",
@@ -312,8 +299,6 @@ TEST_SUITE("Option Parsing Tests") {
                                     "order=sequential",
                                     "plies=16",
                                     "start=4",
-                                    "-variant",
-                                    "fischerandom",
                                     "-srand",
                                     "1234",
                                     "-report",
@@ -342,7 +327,6 @@ TEST_SUITE("Option Parsing Tests") {
         CHECK(gameOptions.autosaveinterval == 4);
         CHECK(gameOptions.games == 1);
         CHECK(gameOptions.rounds == 256);
-        CHECK(gameOptions.variant == VariantType::FRC);
         CHECK(gameOptions.draw.move_number == 40);
         CHECK(gameOptions.draw.move_count == 3);
         CHECK(gameOptions.draw.score == 15);

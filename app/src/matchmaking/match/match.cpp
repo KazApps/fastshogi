@@ -59,8 +59,6 @@ Match::Match(const book::Opening& opening)
       draw_tracker_(config::TournamentConfig->draw),
       resign_tracker_(config::TournamentConfig->resign),
       maxmoves_tracker_(config::TournamentConfig->maxmoves) {
-    board_.set960(config::TournamentConfig->variant == VariantType::FRC);
-
     const auto success = isFen(opening_.fen_epd) ? board_.setFen(opening_.fen_epd) : board_.setEpd(opening_.fen_epd);
 
     if (!success) {
@@ -79,7 +77,7 @@ Match::Match(const book::Opening& opening)
     start_position_ = fen == constants::STARTPOS ? "startpos" : fen;
 
     const auto insert_move = [&](const auto& opening_move) {
-        const auto move = usi::moveToUsi(opening_move, board_.shogi960());
+        const auto move = usi::moveToUsi(opening_move);
         board_.makeMove<true>(opening_move);
 
         return MoveData(move, "0.00", 0, 0, 0, 0, 0, true, true);
@@ -201,8 +199,6 @@ void Match::start(engine::UsiEngine& white, engine::UsiEngine& black) {
     }
 
     const auto end = clock::now();
-
-    data_.variant = config::TournamentConfig->variant;
 
     data_.end_time = time::datetime_iso();
     data_.duration = time::duration(chrono::duration_cast<chrono::seconds>(end - start));

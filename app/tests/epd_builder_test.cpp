@@ -15,7 +15,7 @@ TEST_SUITE("EPD Builder Tests") {
 
         std::string expected = "rnbqkb1r/pppp1ppp/5n2/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - hmvc 2; fmvn 3;\n";
 
-        epd::EpdBuilder epd_builder = epd::EpdBuilder(VariantType::STANDARD, match_data);
+        epd::EpdBuilder epd_builder = epd::EpdBuilder(match_data);
         CHECK(epd_builder.get() == expected);
     }
 
@@ -29,7 +29,7 @@ TEST_SUITE("EPD Builder Tests") {
 
         std::string expected = "r2q1rk1/1bpp2pp/4pn2/p1nP1p2/1bP5/2N1BNP1/1PQ1PPBP/R4RK1 w - - hmvc 3; fmvn 3;\n";
 
-        epd::EpdBuilder epd_builder = epd::EpdBuilder(VariantType::STANDARD, match_data);
+        epd::EpdBuilder epd_builder = epd::EpdBuilder(match_data);
         CHECK(epd_builder.get() == expected);
     }
 }
