@@ -1,5 +1,6 @@
 #include <game/book/pgn_reader.hpp>
 
+#include <iostream>
 #include <memory>
 
 #include <doctest/doctest.hpp>

@@ -1,8 +1,9 @@
+#include <iostream>
 #include <random>
 
 #include "../../../src/shogi/shogi.hpp"
 
-using namespace shogi;
+using namespace fastshogi::shogi;
 
 std::mt19937 gen;
 

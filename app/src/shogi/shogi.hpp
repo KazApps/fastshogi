@@ -2,6 +2,7 @@
 MIT License
 
 Copyright (c) 2023 disservin
+Copyright (c) 2025 Kazuki Yamashita
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,16 +26,38 @@ THIS FILE IS AUTO GENERATED DO NOT CHANGE MANUALLY.
 
 Source: https://github.com/Disservin/chess-library
 
-VERSION: 0.8.2
+VERSION: 0.1.0
 */
 
-#ifndef SHOGI_HPP
-#define SHOGI_HPP
+#pragma once
 
-#include <functional>
-#include <utility>
-
+#include <algorithm>
+#include <array>
+#include <bitset>
+#include <cassert>
+#include <cctype>
+#include <cstddef>
 #include <cstdint>
+#include <functional>
+#include <istream>
+#include <iterator>
+#include <optional>
+#include <ostream>
+#include <sstream>
+#include <stdexcept>
+#include <string>
+#include <string_view>
+#include <utility>
+#include <vector>
+
+// check if charconv header is available
+#if __has_include(<charconv>)
+#    define SHOGI_USE_CHARCONV
+#    include <charconv>
+#else
+#    include <sstream>
+#endif
+
 #ifdef SHOGI_USE_PEXT
 #    include <immintrin.h>
 #endif
@@ -42,22 +65,13 @@ VERSION: 0.8.2
 #if __cpp_lib_bitops >= 201907L
 #    include <bit>
 #endif
-#include <algorithm>
-#include <bitset>
-#include <cassert>
-#include <iostream>
-#include <string>
 
 #if defined(_MSC_VER)
 #    include <intrin.h>
 #    include <nmmintrin.h>
 #endif
 
-#include <string_view>
-
-#include <ostream>
-
-namespace shogi {
+namespace fastshogi::shogi {
 
 class Color {
    public:
@@ -122,12 +136,6 @@ constexpr Color::underlying operator~(Color::underlying color) {
            : color == Color::underlying::BLACK ? Color::underlying::WHITE
                                                : Color::underlying::NONE;
 }
-
-}  // namespace shogi
-
-#include <vector>
-
-namespace shogi {
 namespace utils {
 
 // Split a string by a delimiter
@@ -151,10 +159,6 @@ namespace utils {
 constexpr char tolower(char c) { return (c >= 'A' && c <= 'Z') ? (c - 'A' + 'a') : c; }
 
 }  // namespace utils
-
-}  // namespace shogi
-
-namespace shogi {
 
 #define SHOGI_DECLARE_RANK(N)                            \
     static constexpr auto SQ_A##N = underlying::SQ_A##N; \
@@ -559,10 +563,6 @@ constexpr Square operator+(Square sq, Direction dir) {
 
 #undef SHOGI_DECLARE_RANK
 
-}  // namespace shogi
-
-namespace shogi {
-
 class Bitboard {
    public:
     constexpr Bitboard() : bits(0) {}
@@ -746,13 +746,8 @@ inline std::ostream &operator<<(std::ostream &os, const Bitboard &bb) {
 
 constexpr Bitboard operator&(std::uint64_t lhs, const Bitboard &rhs) { return rhs & lhs; }
 constexpr Bitboard operator|(std::uint64_t lhs, const Bitboard &rhs) { return rhs | lhs; }
-}  // namespace shogi
 
-namespace shogi {
 class Board;
-}  // namespace shogi
-
-namespace shogi {
 
 class PieceType {
    public:
@@ -931,9 +926,7 @@ class Piece {
         }
     }
 };
-}  // namespace shogi
 
-namespace shogi {
 class attacks {
     using U64 = std::uint64_t;
 
@@ -1184,28 +1177,13 @@ class attacks {
      */
     static inline void initAttacks();
 };
-}  // namespace shogi
 
-#include <array>
-#include <cctype>
-#include <optional>
-
-// check if charconv header is available
-#if __has_include(<charconv>)
-#    define SHOGI_USE_CHARCONV
-#    include <charconv>
-#else
-#    include <sstream>
-#endif
-
-namespace shogi::constants {
+namespace constants {
 
 constexpr Bitboard DEFAULT_CHECKMASK = Bitboard(0xFFFFFFFFFFFFFFFFull);
 constexpr auto STARTPOS              = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 constexpr auto MAX_MOVES             = 256;
-}  // namespace shogi::constants
-
-namespace shogi {
+}  // constants
 
 class Move {
    public:
@@ -1281,13 +1259,6 @@ class Move {
     std::int16_t score_;
 };
 
-}  // namespace shogi
-
-#include <cstddef>
-#include <iterator>
-#include <stdexcept>
-
-namespace shogi {
 class Movelist {
    public:
     using value_type      = Move;
@@ -1403,9 +1374,7 @@ class Movelist {
     std::array<value_type, constants::MAX_MOVES> moves_;
     size_type size_ = 0;
 };
-}  // namespace shogi
 
-namespace shogi {
 enum PieceGenType {
     PAWN   = 1,
     KNIGHT = 2,
@@ -1486,9 +1455,6 @@ class movegen {
     friend class Board;
 };
 
-}  // namespace shogi
-
-namespace shogi {
 class Zobrist {
     using U64                              = std::uint64_t;
     static constexpr U64 RANDOM_ARRAY[781] = {
@@ -1701,11 +1667,8 @@ class Zobrist {
     friend class Board;
 };
 
-}  // namespace shogi
-
-namespace shogi {
-
 namespace detail {
+
 inline std::optional<int> parseStringViewToInt(std::string_view sv) {
     if (sv.empty()) return std::nullopt;
 
@@ -1740,6 +1703,7 @@ inline std::optional<int> parseStringViewToInt(std::string_view sv) {
 
     return std::nullopt;
 }
+
 }  // namespace detail
 
 enum class GameResult { WIN, LOSE, DRAW, NONE };
@@ -3165,10 +3129,6 @@ inline CheckType Board::givesCheck(const Move &m) const noexcept {
     return CheckType::NO_CHECK;  // Prevent a compiler warning
 }
 
-}  // namespace  shogi
-
-namespace shogi {
-
 template <Direction direction>
 [[nodiscard]] inline constexpr Bitboard attacks::shift(const Bitboard b) {
     switch (direction) {
@@ -3312,9 +3272,6 @@ inline void attacks::initAttacks() {
         initSliders(static_cast<Square>(i), RookTable, RookMagics[i], sliderAttacks<true>);
     }
 }
-}  // namespace shogi
-
-namespace shogi {
 
 inline auto movegen::init_squares_between() {
     std::array<std::array<Bitboard, 64>, 64> squares_between_bb{};
@@ -3824,11 +3781,7 @@ inline const std::array<std::array<Bitboard, 64>, 64> movegen::SQUARES_BETWEEN_B
     return movegen::init_squares_between();
 }();
 
-}  // namespace shogi
-
-#include <istream>
-
-namespace shogi::pgn {
+namespace pgn {
 
 namespace detail {
 
@@ -4563,11 +4516,9 @@ class StreamParser {
 
     bool dont_advance_after_body = false;
 };
-}  // namespace shogi::pgn
 
-#include <sstream>
+}  // namespace pgn
 
-namespace shogi {
 class usi {
    public:
     /**
@@ -5105,6 +5056,5 @@ class usi {
         return true;
     }
 };
-}  // namespace shogi
 
-#endif
+}  // namespace fastshogi::shogi
