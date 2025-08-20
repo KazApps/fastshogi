@@ -304,6 +304,8 @@ tl::expected<bool, std::string> UsiEngine::start() {
         return tl::make_unexpected("Couldn't start engine process");
     }
 
+    initialized_ = true;
+
     // Wait for the engine to start
     if (!usi()) {
         return tl::make_unexpected("Couldn't write usi to engine");
@@ -312,8 +314,6 @@ tl::expected<bool, std::string> UsiEngine::start() {
     if (!usiok(startup_time_)) {
         return tl::make_unexpected("Engine didn't respond to usiok after startup");
     }
-
-    initialized_ = true;
 
     return true;
 }
