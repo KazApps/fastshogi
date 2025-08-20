@@ -32,6 +32,7 @@
     "track_seldepth": false,
     "track_nps": false,
     "track_hashfull": false,
+    "track_pv": false,
     "track_timeleft": false,
     "track_latency": false,
     "min": false,

@@ -99,7 +99,7 @@ The following options are available:
     - PLIES - number of plies for pgn. Defaults to max available plies.
     - START - starting index of the opening book. Default is 1.
 
-- -pgnout file=NAME notation=(san|lan|usi) [nodes=(true|false)] [seldepth=(true|false)] [nps=(true|false)] [hashfull=(true|false)] [timeleft=(true|false)] [latency=(true|false)] [min=(true|false)] [match_line=REGEX]
+- -pgnout file=NAME notation=(san|lan|usi) [nodes=(true|false)] [seldepth=(true|false)] [nps=(true|false)] [hashfull=(true|false)] [timeleft=(true|false)] [latency=(true|false)] [pv=(true|false)] [min=(true|false)] [match_line=REGEX]
     Export games in PGN format with specified notations and optional tracking of nodes, seldepth, and others.
 
     - notation:
@@ -112,6 +112,7 @@ The following options are available:
     - seldepth - Track seldepth. Default is false.
     - nps - Track nps. Default is false.
     - hashfull - Track hashfull. Default is false.
+    - pv - Track the full pv. Default is false.
     - timeleft - Track time left at end of move. Default is false.
     - latency - Track difference between measured time and engine reported time at end of move. Default is false.
     - min - Minimal PGN format. Default is false.

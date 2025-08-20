@@ -18,6 +18,7 @@ struct Pgn {
     bool track_seldepth   = false;
     bool track_nps        = false;
     bool track_hashfull   = false;
+    bool track_pv         = false;
     bool track_timeleft   = false;
     bool track_latency    = false;
     bool min              = false;
