@@ -10,7 +10,7 @@
 #include <matchmaking/tournament/tournament_manager.hpp>
 
 namespace fastshogi {
-const char* version = "alpha 1.4.0 ";
+const char* version = "v0.0.1-alpha ";
 }
 
 namespace ch = std::chrono;
