@@ -18,7 +18,7 @@ jobs:
         config:
           # Linux
           - {
-            name: "Ubuntu 22.04 GCC x86-64",
+            name: "Alpine 3.22 GCC x86-64",
             os: ubuntu-22.04,
             compiler: g++,
             shell: "bash {0}",
@@ -26,9 +26,12 @@ jobs:
             arch: "x86-64",
             extra_ldflags: "",
             platform: "linux",
+            docker: true,
+            docker_platform: "linux/amd64",
+            image: "alpine:3.22",
           }
           - {
-            name: "Ubuntu 22.04 GCC ARM64",
+            name: "Alpine 3.22 GCC ARM64",
             os: ubuntu-22.04-arm,
             compiler: g++,
             shell: "bash {0}",
@@ -36,9 +39,12 @@ jobs:
             arch: "arm64",
             extra_ldflags: "",
             platform: "linux",
+            docker: true,
+            docker_platform: "linux/arm64",
+            image: "alpine:3.22",
           }
           - {
-            name: "Ubuntu 22.04 GCC RISC-V",
+            name: "Alpine 3.22 GCC RISC-V",
             os: ubuntu-22.04,
             compiler: g++,
             shell: "bash {0}",
@@ -46,7 +52,7 @@ jobs:
             extra_ldflags: "-latomic",
             docker: true,
             docker_platform: "linux/riscv64",
-            image: "riscv64/ubuntu:22.04",
+            image: "riscv64/alpine:3.22",
             arch: "risc-v",
             platform: "linux",
           }
@@ -138,7 +144,7 @@ jobs:
         uses: docker/setup-qemu-action@v3
 
       # Build RISC-V in Docker
-      - name: Build in Docker (RISC-V)
+      - name: Build in Docker
         if: matrix.config.docker == true
         run: |
           sudo apt-get update
@@ -147,12 +153,12 @@ jobs:
             -v ${{ github.workspace }}:/workspace \
             -w /workspace \
             ${{ matrix.config.image }} \
-            bash -c "
-              apt-get update &&
-              apt-get install -y build-essential g++ make &&
+            sh -c "
+              apk add --no-cache build-base g++ make &&
               make -j2 build=release EXTRA_LDFLAGS='${{ matrix.config.extra_ldflags }}' NATIVE='${{ matrix.config.native }}' COMPILER='${{ matrix.config.compiler }}' COMPILE_MSG='compiled for ${{ matrix.config.os }} ${{ env.COMMIT_DATE }}-${{ env.COMMIT_SHA }} (CI)' &&
               strip ./fastshogi${{ matrix.config.ext }} || true &&
-              mv fastshogi${{ matrix.config.ext }} fastshogi-${{ matrix.config.platform }}${{ matrix.config.ext }} &&
+              find . -type f \( -name "*.o" -o -name "*.d" \) -delete &&
+              find . -type d -name "sha" -exec rm -rf {} + &&
               ./fastshogi* -version
             "
 
@@ -162,11 +168,9 @@ jobs:
         run: |
           make -j2 build=release EXTRA_LDFLAGS='${{ matrix.config.extra_ldflags }}' NATIVE="$NATIVE" COMPILER="$COMPILER" COMPILE_MSG="compiled for ${{ matrix.config.os }} ${{ env.COMMIT_DATE }}-${{ env.COMMIT_SHA }} (CI)"
           strip ./fastshogi$EXT || true
+          find . -type f \( -name "*.o" -o -name "*.d" \) -delete
+          find . -type d -name "sha" -exec rm -rf {} +
           ./fastshogi* -version
-
-      - name: Find and remove empty files
-        run: rm -rf *.o *.d sha
-        shell: bash
 
       - name: Archive binaries
         uses: actions/upload-artifact@v4

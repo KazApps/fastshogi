@@ -1,0 +1,81 @@
+name: Create Release
+
+on:
+  workflow_call:
+    secrets:
+      token:
+        required: true
+jobs:
+  Artifacts:
+    name: ${{ matrix.config.os }} ${{ matrix.config.arch }} binary
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: startsWith(github.ref_name, 'v') && github.ref_type == 'tag'
+    strategy:
+      matrix:
+        config:
+          # Linux
+          - {
+            os: "ubuntu",
+            arch: "x86-64",
+            platform: "linux",
+            archive_ext: "tar",
+          }
+          - { os: ubuntu, arch: "arm64", platform: "linux", archive_ext: "tar" }
+          - {
+            os: "ubuntu",
+            arch: "risc-v",
+            platform: "linux",
+            archive_ext: "tar",
+          }
+
+          # macOS
+          - { os: "macos", arch: "x86-64", platform: "mac", archive_ext: "tar" }
+          - { os: "macos", arch: "arm64", platform: "mac", archive_ext: "tar" }
+
+          # Windows (MSYS2 / MinGW)
+          - {
+            os: "windows",
+            archive_ext: "zip",
+            arch: "x86-64",
+            platform: "windows",
+          }
+          - {
+            os: "windows",
+            archive_ext: "zip",
+            arch: "arm64",
+            platform: "windows",
+          }
+
+    defaults:
+      run:
+        shell: bash {0}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Download artifact from compilation
+        uses: actions/download-artifact@v4
+        with:
+          name: fastshogi-${{ matrix.config.platform }}-${{ matrix.config.arch }}
+          path: fastshogi-${{ matrix.config.platform }}-${{ matrix.config.arch }}
+
+      - name: Create tar
+        if: matrix.config.os != 'windows'
+        run: |
+          chmod +x ./fastshogi-${{ matrix.config.platform }}-${{ matrix.config.arch }}/fastshogi
+          tar -cvf fastshogi-${{ matrix.config.platform }}-${{ matrix.config.arch }}.tar fastshogi-${{ matrix.config.platform }}-${{ matrix.config.arch }}
+      - name: Create zip
+        if: matrix.config.os == 'windows'
+        run: |
+          zip -r fastshogi-${{ matrix.config.platform }}-${{ matrix.config.arch }}.zip fastshogi-${{ matrix.config.platform }}-${{ matrix.config.arch }}
+      - name: Release
+        uses: softprops/action-gh-release@6cbd405e2c4e67a21c47fa9e383d020e4e28b836 # v2.3.3
+        if: github.ref_type == 'tag'
+        with:
+          draft: true
+          generate_release_notes: true
+          files: fastshogi-${{ matrix.config.platform }}-${{ matrix.config.arch }}.${{ matrix.config.archive_ext }}
+          token: ${{ secrets.token }}
