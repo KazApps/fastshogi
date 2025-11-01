@@ -1,5 +1,3 @@
-#include <doctest/doctest.hpp>
-
 #include <core/printing/printing.h>
 #include <cli/cli.hpp>
 #include <cli/cli_args.hpp>
@@ -7,6 +5,8 @@
 #include <core/globals/globals.hpp>
 #include <core/rand.hpp>
 #include <matchmaking/tournament/tournament_manager.hpp>
+
+#include <doctest/doctest.hpp>
 
 using namespace fastshogi;
 

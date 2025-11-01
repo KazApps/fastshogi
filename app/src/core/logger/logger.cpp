@@ -1,6 +1,7 @@
 #include <core/logger/logger.hpp>
 
 #include <chrono>
+#include <iostream>
 #include <thread>
 #include <variant>
 
@@ -42,7 +43,7 @@ void Logger::openFile(const std::string &file) {
     }
 #endif
 
-    Logger::should_log_ = true;
+    should_log_ = true;
 
     // verify that the file was opened
 
@@ -50,7 +51,7 @@ void Logger::openFile(const std::string &file) {
         [&](auto &&arg) {
             if (!arg.is_open()) {
                 std::cerr << "Failed to open log file." << std::endl;
-                Logger::should_log_ = false;
+                should_log_ = false;
             }
         },
         log_);
