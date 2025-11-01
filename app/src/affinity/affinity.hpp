@@ -11,8 +11,8 @@
 #    include <pthread.h>
 #else
 #    include <sched.h>
-#    include <unistd.h>
 #    include <sys/syscall.h>
+#    include <unistd.h>
 #endif
 
 namespace fastshogi {
@@ -53,7 +53,7 @@ template <typename F>
     return groupAffinities;
 }
 
-} // namespace detail
+}  // namespace detail
 
 [[nodiscard]] inline bool setThreadAffinity(const std::vector<int>& cpus, HANDLE thread_handle) noexcept {
     LOG_TRACE("Setting affinity mask for thread handle: {}", thread_handle);

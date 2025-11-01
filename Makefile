@@ -50,7 +50,7 @@ install-manpage: manpage ## Install the man page to $(MANDIR)
 update-man: ## Update man like page
 	lowdown -Tterm man.md > fastshogi-tmp-man-page
 	xxd -i fastshogi-tmp-man-page | sed 's/fastshogi_tmp_man_page/man/g' | sed 's/fastshogi_tmp_man_page_len/man_len/g' | sed 's/unsigned char/inline unsigned char/g' | sed 's/unsigned int/inline unsigned int/g' > temp.hpp
-	printf '/* Generate with make update-man*/\n#pragma once\n' > ./app/src/cli/man.hpp
+	printf '/* Generate with make update-man */\n#pragma once\n' > ./app/src/cli/man.hpp
 	echo 'namespace fastshogi::man {' >> ./app/src/cli/man.hpp
 	cat temp.hpp >> ./app/src/cli/man.hpp
 	echo '}' >> ./app/src/cli/man.hpp

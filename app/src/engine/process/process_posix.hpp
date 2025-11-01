@@ -498,7 +498,7 @@ class Process : public IProcess {
         int read_end() const { return fds_[0]; }
         int write_end() const { return fds_[1]; }
 
-    private:
+       private:
         void initialize() {
             if (pipe(fds_.data()) != 0) throw std::runtime_error("pipe() failed");
             if (fcntl(fds_[0], F_SETFD, FD_CLOEXEC) == -1 || fcntl(fds_[1], F_SETFD, FD_CLOEXEC) == -1)
