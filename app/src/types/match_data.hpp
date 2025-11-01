@@ -68,6 +68,22 @@ struct MatchData {
         date       = time::datetime("%Y.%m.%d").value_or("-");
     }
 
+    std::optional<PlayerInfo> getLosingPlayer() const {
+        const auto check = [&](const PlayerInfo& player) { return player.result == shogi::GameResult::LOSE; };
+
+        if (check(players.white)) return players.white;
+        if (check(players.black)) return players.black;
+        return std::nullopt;
+    }
+
+    std::optional<PlayerInfo> getWinningPlayer() const {
+        const auto check = [&](const PlayerInfo& player) { return player.result == shogi::GameResult::WIN; };
+
+        if (check(players.white)) return players.white;
+        if (check(players.black)) return players.black;
+        return std::nullopt;
+    }
+
     GamePair<PlayerInfo, PlayerInfo> players;
 
     std::string start_time;
