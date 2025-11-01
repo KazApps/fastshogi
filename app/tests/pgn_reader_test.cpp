@@ -1,13 +1,13 @@
-#include <game/book/pgn_reader.hpp>
-
 #include <iostream>
-#include <memory>
+
+#include <game/book/pgn_reader.hpp>
+#include <shogi/shogi.hpp>
+#include <types/exception.hpp>
 
 #include <doctest/doctest.hpp>
 
-#include <shogi/shogi.hpp>
-
 namespace fastshogi {
+
 TEST_SUITE("PGN Reader") {
     TEST_CASE("Read PGN file") {
         book::PgnReader reader("app/tests/data/test.pgn");
@@ -153,7 +153,8 @@ TEST_SUITE("PGN Reader") {
         std::unique_ptr<book::PgnReader> reader;
 
         CHECK_THROWS_WITH_AS(reader = std::make_unique<book::PgnReader>("app/tests/data/das.pgn"),
-                             "Failed to open file: app/tests/data/das.pgn", std::runtime_error);
+                             "Failed to open file: app/tests/data/das.pgn", fastshogi_exception);
     }
 }
+
 }  // namespace fastshogi

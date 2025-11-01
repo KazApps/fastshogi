@@ -2,6 +2,9 @@
 
 #include <stdexcept>
 #include <type_traits>
+
+#include <types/exception.hpp>
+
 #include "usioption.hpp"
 
 namespace fastshogi {
@@ -16,7 +19,7 @@ class SpinOption : public USIOption {
         this->maxValue = parseValue(maxValue);
 
         if (this->minValue > this->maxValue) {
-            throw std::invalid_argument("Min value cannot be greater than max value.");
+            throw fastshogi_exception("Min value cannot be greater than max value.");
         }
     }
 
@@ -28,7 +31,7 @@ class SpinOption : public USIOption {
         if (isValid(value)) {
             this->value = parsedValue;
         } else {
-            throw std::out_of_range("Value is out of the allowed range.");
+            throw fastshogi_exception("Value is out of the allowed range.");
         }
     }
 
@@ -54,7 +57,7 @@ class SpinOption : public USIOption {
         } else if constexpr (std::is_floating_point<T>::value) {
             return static_cast<T>(std::stod(valueStr));
         } else {
-            throw std::invalid_argument("Unsupported type for SpinOption.");
+            throw fastshogi_exception("Unsupported type for SpinOption.");
         }
     }
 };

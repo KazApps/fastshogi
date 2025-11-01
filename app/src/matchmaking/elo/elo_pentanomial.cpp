@@ -4,6 +4,8 @@
 #include <iomanip>
 #include <sstream>
 
+#include <matchmaking/stats.hpp>
+
 namespace fastshogi::elo {
 
 EloPentanomial::EloPentanomial(const Stats& stats) {

@@ -16,8 +16,10 @@
 namespace fastshogi {
 
 namespace engine {
+
 class UsiEngine;
-}
+
+}  // namespace engine
 
 using engines = std::pair<const engine::UsiEngine&, const engine::UsiEngine&>;
 

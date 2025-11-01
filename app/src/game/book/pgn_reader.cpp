@@ -6,6 +6,7 @@
 #include <core/logger/logger.hpp>
 #include <game/book/opening.hpp>
 #include <shogi/shogi.hpp>
+#include <types/exception.hpp>
 
 #ifdef USE_ZLIB
 #    include <gzip/gzstream.h>
@@ -83,23 +84,23 @@ PgnReader::PgnReader(const std::string& pgn_file_path, int plies_limit)
         input_stream = std::make_unique<igzstream>(file_name_.c_str());
 
         if (dynamic_cast<igzstream*>(input_stream.get())->rdbuf()->is_open() == false) {
-            throw std::runtime_error("Failed to open file: " + file_name_);
+            throw fastshogi_exception("Failed to open file: " + file_name_);
         }
 #else
-        throw std::runtime_error("Compressed book is provided but program wasn't compiled with zlib.");
+        throw fastshogi_exception("Compressed book is provided but program wasn't compiled with zlib.");
 #endif
     } else {
         input_stream = std::make_unique<std::ifstream>(file_name_);
 
         if (dynamic_cast<std::ifstream*>(input_stream.get())->is_open() == false) {
-            throw std::runtime_error("Failed to open file: " + file_name_);
+            throw fastshogi_exception("Failed to open file: " + file_name_);
         }
     }
 
     shogi::pgn::StreamParser parser(*input_stream);
     parser.readGames(*vis);
     if (pgns_.empty()) {
-        throw std::runtime_error("No openings found in file: " + file_name_);
+        throw fastshogi_exception("No openings found in file: " + file_name_);
     }
 }
 

@@ -5,6 +5,7 @@
 const std::string path = "./app/tests/mock/engine/";
 
 namespace fastshogi {
+
 TEST_SUITE("Player Test") {
     TEST_CASE("Test Player Constructor") {
         EngineConfiguration config;
@@ -83,4 +84,5 @@ TEST_SUITE("Player Test") {
         CHECK(player.getTimeControl().getTimeLeft() == -1000);
     }
 }
+
 }  // namespace fastshogi

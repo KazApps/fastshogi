@@ -12,14 +12,17 @@
 #include <cli/man.hpp>
 #include <matchmaking/scoreboard.hpp>
 #include <types/engine_config.hpp>
+#include <types/exception.hpp>
 #include <types/tournament.hpp>
 
 #define FMT_HEADER_ONLY
 #include <fmt/include/fmt/core.h>
 
 namespace fastshogi {
+
 extern const char *version;
-}
+
+}  // namespace fastshogi
 
 namespace fastshogi::cli {
 
@@ -86,8 +89,8 @@ class OptionsParser {
     OptionsParser(const cli::Args &args);
 
     static void throwMissing(std::string_view name, std::string_view key, std::string_view value) {
-        throw std::runtime_error("Unrecognized " + std::string(name) + " option \"" + std::string(key) +
-                                 "\" with value \"" + std::string(value) + "\".");
+        throw fastshogi_exception("Unrecognized " + std::string(name) + " option \"" + std::string(key) +
+                                  "\" with value \"" + std::string(value) + "\".");
     }
 
     static void printHelp() {
@@ -123,7 +126,7 @@ class OptionsParser {
         for (int i = 1; i < args.argc(); i++) {
             const std::string arg = args[i];
             if (options_.count(arg) == 0) {
-                throw std::runtime_error("Unrecognized option: " + arg + " parsing failed.");
+                throw fastshogi_exception("Unrecognized option: " + arg + " parsing failed.");
             }
 
             try {
@@ -142,7 +145,7 @@ class OptionsParser {
                     fmt::format("Error while reading option \"{}\" with value \"{}\"", arg, std::string(args[i]));
                 auto msg = fmt::format("Reason: {}", e.what());
 
-                throw std::runtime_error(err + "\n" + msg);
+                throw fastshogi_exception(err + "\n" + msg);
             }
         }
         if (!each.empty()) {
@@ -152,7 +155,7 @@ class OptionsParser {
                 auto err = fmt::format("Error while reading option \"{}\" with value \"{}\"", "-each", each.back());
                 auto msg = fmt::format("Reason: {}", e.what());
 
-                throw std::runtime_error(err + "\n" + msg);
+                throw fastshogi_exception(err + "\n" + msg);
             }
         }
     }

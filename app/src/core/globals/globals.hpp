@@ -9,8 +9,10 @@
 namespace fastshogi {
 
 namespace atomic {
+
 extern std::atomic_bool stop;
 extern std::atomic_bool abnormal_termination;
+
 }  // namespace atomic
 
 /**
@@ -49,4 +51,5 @@ void stopProcesses();
 
 // Set the signal handler for SIGINT (Ctrl+C) to trigger the stop flag.
 void setCtrlCHandler();
+
 }  // namespace fastshogi

@@ -4,6 +4,7 @@
 
 #include <game/book/opening_book.hpp>
 #include <matchmaking/tournament/schedule/scheduler.hpp>
+#include <types/exception.hpp>
 
 namespace fastshogi {
 
@@ -25,7 +26,7 @@ class TournamentSchedulerBase : public Scheduler {
         current_round = (played_games / games) + 1;
 
         if (n_players < 2 || n_rounds < 1 || n_games_per_round < 1) {
-            throw std::invalid_argument("Invalid number of players, rounds, or games per round");
+            throw fastshogi_exception("Invalid number of players, rounds, or games per round");
         }
     }
 

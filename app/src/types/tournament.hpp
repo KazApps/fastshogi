@@ -58,6 +58,7 @@ struct Tournament {
 
     Log log = {};
 };
+
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Tournament, resign, draw, maxmoves, opening, pgn, epd, sprt, config_name, seed, type,
                                    gauntlet_seeds, ratinginterval, scoreinterval, wait, autosaveinterval, games, rounds,
                                    concurrency, force_concurrency, recover, noswap, reverse, report_penta, affinity,

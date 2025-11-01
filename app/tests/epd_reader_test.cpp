@@ -1,6 +1,7 @@
-#include <game/book/epd_reader.hpp>
-
 #include <memory>
+
+#include <game/book/epd_reader.hpp>
+#include <types/exception.hpp>
 
 #include <doctest/doctest.hpp>
 
@@ -23,7 +24,7 @@ TEST_SUITE("EPD Reader") {
         std::unique_ptr<book::EpdReader> reader;
 
         CHECK_THROWS_WITH_AS(reader = std::make_unique<book::EpdReader>("app/tests/data/das.epd"),
-                             "Failed to open file: app/tests/data/das.epd", std::runtime_error);
+                             "Failed to open file: app/tests/data/das.epd", fastshogi_exception);
     }
 }
 

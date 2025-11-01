@@ -8,9 +8,12 @@
 #include <core/rand.hpp>
 #include <engine/compliance.hpp>
 #include <matchmaking/tournament/tournament_manager.hpp>
+#include <types/exception.hpp>
 
 namespace fastshogi {
+
 const char* version = "v0.0.1-alpha";
+
 }
 
 namespace ch = std::chrono;
@@ -38,6 +41,11 @@ int main(int argc, char const* argv[]) {
                 Logger::print("Tournament was interrupted.");
             }
         }
+    } catch (const fastshogi_exception& e) {
+        stopProcesses();
+
+        Logger::print("{}", e.what());
+        return EXIT_FAILURE;
     } catch (const std::exception& e) {
         stopProcesses();
 

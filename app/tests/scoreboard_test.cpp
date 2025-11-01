@@ -71,4 +71,5 @@ TEST_SUITE("ScoreBoard") {
     //     CHECK(result.getResults() == results);
     // }
 }
+
 }  // namespace fastshogi

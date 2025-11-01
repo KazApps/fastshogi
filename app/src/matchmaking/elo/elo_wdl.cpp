@@ -5,7 +5,6 @@
 #include <sstream>
 
 #define FMT_HEADER_ONLY
-#include <fmt/include/fmt/core.h>
 #include "fmt/include/fmt/std.h"
 
 namespace fastshogi::elo {
@@ -75,4 +74,5 @@ std::string EloWDL::los() const noexcept {
 }
 
 double EloWDL::getScore() const noexcept { return score_; }
+
 }  // namespace fastshogi::elo

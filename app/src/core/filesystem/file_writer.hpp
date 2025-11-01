@@ -56,6 +56,7 @@ class FileWriter {
             }
         }
     }
+
     std::ofstream file_;
     std::mutex file_mutex_;
     std::uint32_t crc32_;

@@ -39,4 +39,5 @@ class RoundRobin : public BaseTournament {
     std::mutex output_mutex_;
     std::mutex game_gen_mutex_;
 };
+
 }  // namespace fastshogi

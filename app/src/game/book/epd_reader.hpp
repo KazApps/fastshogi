@@ -20,4 +20,5 @@ class EpdReader {
     std::vector<util::heap_string> openings_;
     std::string epd_file_;
 };
+
 }  // namespace fastshogi::book

@@ -27,4 +27,5 @@ class GauntletScheduler : public TournamentSchedulerBase {
    private:
     std::size_t n_seeds;
 };
+
 }  // namespace fastshogi

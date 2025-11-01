@@ -10,9 +10,9 @@
 
 #    include <core/logger/logger.hpp>
 
-namespace fastshogi {
+#    include "types/exception.hpp"
 
-namespace engine::process {
+namespace fastshogi::engine::process {
 
 inline bool CreatePipeEx(LPHANDLE lpReadPipe, LPHANDLE lpWritePipe, LPSECURITY_ATTRIBUTES lpPipeAttributes) {
     static std::atomic<long> pipeSerialNumber{0};
@@ -82,7 +82,7 @@ class Pipe {
         sa.bInheritHandle = TRUE;
 
         if (!CreatePipeEx(&handles_[0], &handles_[1], &sa)) {
-            throw std::runtime_error("CreatePipeEx() failed");
+            throw fastshogi_exception("CreatePipeEx() failed");
         }
     }
 
@@ -114,7 +114,6 @@ class Pipe {
     std::array<HANDLE, 2> handles_;
 };
 
-}  // namespace engine::process
-}  // namespace fastshogi
+}  // namespace fastshogi::engine::process
 
 #endif

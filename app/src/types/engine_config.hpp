@@ -6,7 +6,6 @@
 #include <vector>
 
 #include <game/timecontrol/timecontrol.hpp>
-#include <types/enums.hpp>
 
 #include <json.hpp>
 
@@ -18,6 +17,7 @@ struct Limit {
     uint64_t nodes = 0;
     uint64_t plies = 0;
 };
+
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Limit, tc, nodes, plies)
 
 struct EngineConfiguration {
@@ -54,6 +54,7 @@ struct EngineConfiguration {
         return std::nullopt;
     }
 };
+
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(EngineConfiguration, name, dir, cmd, args, restart, options, limit)
 
 }  // namespace fastshogi

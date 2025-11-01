@@ -10,6 +10,7 @@
 #include <core/logger/logger.hpp>
 #include <core/time/time.hpp>
 #include <shogi/shogi.hpp>
+#include <types/exception.hpp>
 #include <types/tournament.hpp>
 
 namespace fastshogi {
@@ -83,7 +84,7 @@ Match::Match(const book::Opening& opening)
         auto fen                     = to_escaped_string(opening_.fen_epd);
 
         Logger::print<Logger::Level::FATAL>("Failed to set position from opening book, invalid FEN or EPD: {}", fen);
-        throw std::runtime_error("Failed to set position from opening book, invalid FEN or EPD: " + fen);
+        throw fastshogi_exception("Failed to set position from opening book, invalid FEN or EPD: " + fen);
     }
 
     const auto fen = board_.getFen();

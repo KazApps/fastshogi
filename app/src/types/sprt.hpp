@@ -16,6 +16,7 @@ struct Sprt {
     // bayesian model only available when -penta report=false
     std::string model = "normalized";
 };
+
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Sprt, alpha, beta, elo0, elo1, model, enabled)
 
 }  // namespace fastshogi::config

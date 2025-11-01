@@ -1,8 +1,7 @@
 #pragma once
 
+#include <cmath>
 #include <string>
-
-#include <matchmaking/stats.hpp>
 
 namespace fastshogi::elo {
 

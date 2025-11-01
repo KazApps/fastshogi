@@ -147,4 +147,5 @@ class UsiEngine {
 
     const bool realtime_logging_;
 };
+
 }  // namespace fastshogi::engine

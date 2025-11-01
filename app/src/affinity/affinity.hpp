@@ -15,9 +15,7 @@
 #    include <unistd.h>
 #endif
 
-namespace fastshogi {
-
-namespace affinity {
+namespace fastshogi::affinity {
 
 #ifdef _WIN64
 
@@ -175,6 +173,5 @@ template <typename F>
 #    endif
 }
 #endif
-}  // namespace affinity
 
-}  // namespace fastshogi
+}  // namespace fastshogi::affinity

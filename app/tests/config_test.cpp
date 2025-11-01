@@ -89,6 +89,6 @@ TEST_SUITE("Start from config") {
     }
 
     TEST_CASE("Check version is included") {
-        CHECK(str_utils::startsWith(cli::OptionsParser::Version, "fastshogi tests "));
+        CHECK(str_utils::startsWith(cli::OptionsParser::Version, "fastshogi tests"));
     }
 }

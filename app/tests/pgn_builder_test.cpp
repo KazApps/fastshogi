@@ -3,6 +3,7 @@
 #include <doctest/doctest.hpp>
 
 namespace fastshogi {
+
 TEST_SUITE("PGN Builder Tests") {
     TEST_CASE("PGN Creation") {
         MatchData match_data;

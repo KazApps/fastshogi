@@ -9,6 +9,7 @@ namespace fastshogi::config {
 struct Epd {
     std::string file;
 };
+
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Epd, file)
 
 }  // namespace fastshogi::config

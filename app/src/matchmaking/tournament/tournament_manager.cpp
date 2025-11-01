@@ -8,7 +8,7 @@
 #include <core/rand.hpp>
 #include <matchmaking/tournament/gauntlet/gauntlet.hpp>
 #include <matchmaking/tournament/roundrobin/roundrobin.hpp>
-#include <stdexcept>
+#include <types/exception.hpp>
 
 namespace fastshogi {
 
@@ -46,11 +46,12 @@ void TournamentManager::start(const cli::Args& args) {
             tournament = std::make_unique<Gauntlet>(options.getResults());
             break;
         default:
-            throw std::runtime_error("Unsupported tournament type: " +
-                                     std::to_string(static_cast<int>(config::TournamentConfig->type)));
+            throw fastshogi_exception("Unsupported tournament type: " +
+                                      std::to_string(static_cast<int>(config::TournamentConfig->type)));
     }
 
     LOG_INFO("Starting tournament...");
     tournament->start();
 }
+
 }  // namespace fastshogi

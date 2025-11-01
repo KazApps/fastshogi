@@ -16,8 +16,10 @@
 namespace fastshogi {
 
 namespace atomic {
+
 std::atomic_bool stop                 = false;
 std::atomic_bool abnormal_termination = false;
+
 }  // namespace atomic
 
 util::ThreadVector<ProcessInformation> process_list;

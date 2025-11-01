@@ -5,12 +5,14 @@
 #include <vector>
 
 #include <core/memory/heap_str.hpp>
+#include <types/exception.hpp>
 
 #ifdef USE_ZLIB
 #    include <gzip/gzstream.h>
 #endif
 
 namespace {
+
 std::istream& safeGetline(std::istream& is, std::string& t) {
     t.clear();
 
@@ -40,6 +42,7 @@ std::istream& safeGetline(std::istream& is, std::string& t) {
         }
     }
 }
+
 }  // namespace
 
 namespace fastshogi::book {
@@ -53,16 +56,16 @@ EpdReader::EpdReader(const std::string& epd_file_path) : epd_file_(epd_file_path
         input_stream = std::make_unique<igzstream>(epd_file_path.c_str());
 
         if (dynamic_cast<igzstream*>(input_stream.get())->rdbuf()->is_open() == false) {
-            throw std::runtime_error("Failed to open file: " + epd_file_path);
+            throw fastshogi_exception("Failed to open file: " + epd_file_path);
         }
 #else
-        throw std::runtime_error("Compressed book is provided but program wasn't compiled with zlib.");
+        throw fastshogi_exception("Compressed book is provided but program wasn't compiled with zlib.");
 #endif
     } else {
         input_stream = std::make_unique<std::ifstream>(epd_file_path);
 
         if (dynamic_cast<std::ifstream*>(input_stream.get())->is_open() == false) {
-            throw std::runtime_error("Failed to open file: " + epd_file_path);
+            throw fastshogi_exception("Failed to open file: " + epd_file_path);
         }
     }
 
@@ -72,7 +75,7 @@ EpdReader::EpdReader(const std::string& epd_file_path) : epd_file_(epd_file_path
     }
 
     if (openings_.empty()) {
-        throw std::runtime_error("No openings found in file: " + epd_file_path);
+        throw fastshogi_exception("No openings found in file: " + epd_file_path);
     }
 }
 

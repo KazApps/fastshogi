@@ -6,9 +6,11 @@
 #include <core/logger/logger.hpp>
 #include <matchmaking/scoreboard.hpp>
 #include <types/engine_config.hpp>
+#include <types/exception.hpp>
 #include <types/tournament.hpp>
 
 namespace {
+
 // Parse -name key=value key=value
 void parseDashOptions(const std::vector<std::string> &params,
                       const std::function<void(std::string, std::string)> &func) {
@@ -64,12 +66,9 @@ bool parseIntList(std::istringstream &iss, std::vector<int> &list) {
             case '-':
                 if (!(iss >> int2) || int2 <= int1) return true;
                 for (int i = int1 + 1; i <= int2; i++) list.emplace_back(i);
-                if (!(iss >> c))
-                    return false;
-                else if (c == ',')
-                    return parseIntList(iss, list);
+                if (!(iss >> c)) return false;
+                if (c == ',') return parseIntList(iss, list);
                 return true;
-                break;
             case ',':
                 return parseIntList(iss, list);
             default:
@@ -104,14 +103,17 @@ bool containsEqualSign(const std::vector<std::string> &params) {
     }
     return false;
 }
+
 }  // namespace
 
 namespace fastshogi::cli {
+
 using json = nlohmann::json;
 
 namespace engine {
+
 TimeControl::Limits parseTc(const std::string &tcString) {
-    if (str_utils::contains(tcString, "hg")) throw std::runtime_error("Hourglass time control not supported.");
+    if (str_utils::contains(tcString, "hg")) throw fastshogi_exception("Hourglass time control not supported.");
     if (tcString == "infinite" || tcString == "inf") return {};
 
     TimeControl::Limits tc;
@@ -151,7 +153,7 @@ void parseEngineKeyValues(EngineConfiguration &engineConfig, const std::string &
     else if (key == "timemargin") {
         engineConfig.limit.tc.timemargin = std::stoi(value);
         if (engineConfig.limit.tc.timemargin < 0) {
-            throw std::runtime_error("The value for timemargin cannot be a negative number.");
+            throw fastshogi_exception("The value for timemargin cannot be a negative number.");
         }
     } else if (key == "nodes")
         engineConfig.limit.nodes = std::stoll(value);
@@ -163,7 +165,7 @@ void parseEngineKeyValues(EngineConfiguration &engineConfig, const std::string &
         engineConfig.args = value;
     else if (key == "restart") {
         if (value != "on" && value != "off") {
-            throw std::runtime_error("Invalid parameter (must be either \"on\" or \"off\"): " + value);
+            throw fastshogi_exception("Invalid parameter (must be either \"on\" or \"off\"): " + value);
         }
         engineConfig.restart = value == "on";
     } else if (isEngineSettableOption(key)) {
@@ -173,7 +175,7 @@ void parseEngineKeyValues(EngineConfiguration &engineConfig, const std::string &
         engineConfig.options.emplace_back(strippedKey, value);
     } else if (key == "proto") {
         if (value != "usi") {
-            throw std::runtime_error("Unsupported protocol.");
+            throw fastshogi_exception("Unsupported protocol.");
         }
     } else
         OptionsParser::throwMissing("engine", key, value);
@@ -240,7 +242,7 @@ void parsePgnOut(const std::vector<std::string> &params, ArgumentData &argument_
         argument_data.tournament_config.pgn.min  = std::find(params.begin(), params.end(), "min") != params.end();
     }
     if (argument_data.tournament_config.pgn.file.empty())
-        throw std::runtime_error("Please specify filename for pgn output.");
+        throw fastshogi_exception("Please specify filename for pgn output.");
 }
 
 void parseEpdOut(const std::vector<std::string> &params, ArgumentData &argument_data) {
@@ -257,7 +259,7 @@ void parseEpdOut(const std::vector<std::string> &params, ArgumentData &argument_
         parseValue(params, argument_data.tournament_config.epd.file);
     }
     if (argument_data.tournament_config.epd.file.empty())
-        throw std::runtime_error("Please specify filename for epd output.");
+        throw fastshogi_exception("Please specify filename for epd output.");
 }
 
 void parseOpening(const std::vector<std::string> &params, ArgumentData &argument_data) {
@@ -272,7 +274,7 @@ void parseOpening(const std::vector<std::string> &params, ArgumentData &argument
 
 #ifndef NO_STD_FILESYSTEM
             if (!std::filesystem::exists(value)) {
-                throw std::runtime_error("Opening file does not exist: " + value);
+                throw fastshogi_exception("Opening file does not exist: " + value);
             }
 #endif
         } else if (key == "format") {
@@ -296,9 +298,9 @@ void parseOpening(const std::vector<std::string> &params, ArgumentData &argument
         } else if (key == "start") {
             argument_data.tournament_config.opening.start = std::stoi(value);
             if (argument_data.tournament_config.opening.start < 1)
-                throw std::runtime_error("Starting offset must be at least 1!");
+                throw fastshogi_exception("Starting offset must be at least 1!");
         } else if (key == "policy") {
-            if (value != "round") throw std::runtime_error("Unsupported opening book policy.");
+            if (value != "round") throw fastshogi_exception("Unsupported opening book policy.");
         } else {
             OptionsParser::throwMissing("openings", key, value);
         }
@@ -341,7 +343,7 @@ void parseDraw(const std::vector<std::string> &params, ArgumentData &argument_da
             if (std::stoi(value) >= 0) {
                 argument_data.tournament_config.draw.score = std::stoi(value);
             } else {
-                throw std::runtime_error("Score cannot be negative.");
+                throw fastshogi_exception("Score cannot be negative.");
             }
         } else {
             OptionsParser::throwMissing("draw", key, value);
@@ -361,7 +363,7 @@ void parseResign(const std::vector<std::string> &params, ArgumentData &argument_
             if (std::stoi(value) >= 0) {
                 argument_data.tournament_config.resign.score = std::stoi(value);
             } else {
-                throw std::runtime_error("Score cannot be negative.");
+                throw fastshogi_exception("Score cannot be negative.");
             }
         } else {
             OptionsParser::throwMissing("resign", key, value);
@@ -413,13 +415,14 @@ void parseLog(const std::vector<std::string> &params, ArgumentData &argument_dat
 }
 
 namespace json_config {
+
 void loadJson(ArgumentData &argument_data, const std::string &filename) {
     Logger::print<Logger::Level::INFO>("Loading config file: {}", filename);
 
     std::ifstream f(filename);
 
     if (!f.is_open()) {
-        throw std::runtime_error("File not found: " + filename);
+        throw fastshogi_exception("File not found: " + filename);
     }
 
     json jsonfile = json::parse(f);
@@ -574,7 +577,7 @@ void parseTournament(const std::vector<std::string> &params, ArgumentData &argum
         return;
     }
 
-    throw std::runtime_error("Unsupported tournament format. Only supports roundrobin and gauntlet.");
+    throw fastshogi_exception("Unsupported tournament format. Only supports roundrobin and gauntlet.");
 }
 
 void parseQuick(const std::vector<std::string> &params, ArgumentData &argument_data) {
@@ -596,7 +599,7 @@ void parseQuick(const std::vector<std::string> &params, ArgumentData &argument_d
             else if (str_utils::endsWith(value, ".epd"))
                 argument_data.tournament_config.opening.format = FormatType::EPD;
             else
-                throw std::runtime_error("Please include the .pgn or .epd file extension for the opening book.");
+                throw fastshogi_exception("Please include the .pgn or .epd file extension for the opening book.");
         } else {
             OptionsParser::throwMissing("quick", key, value);
         }
@@ -625,7 +628,8 @@ void parseAffinity(const std::vector<std::string> &params, ArgumentData &argumen
     argument_data.tournament_config.affinity = true;
     if (params.size() > 0) {
         auto iss = std::istringstream(params[0]);
-        if (parseIntList(iss, argument_data.tournament_config.affinity_cpus)) throw std::runtime_error("Bad cpu list.");
+        if (parseIntList(iss, argument_data.tournament_config.affinity_cpus))
+            throw fastshogi_exception("Bad cpu list.");
     }
 }
 
@@ -639,7 +643,7 @@ void parseDebug(const std::vector<std::string> &, ArgumentData &) {
         "The 'debug' option does not exist in fastshogi."
         " Use the 'log' option instead to write all engine input"
         " and output into a text file.";
-    throw std::runtime_error(error_message);
+    throw fastshogi_exception(error_message);
 }
 
 void parseTestEnv(const std::vector<std::string> &, ArgumentData &argument_data) {
@@ -697,9 +701,8 @@ OptionsParser::OptionsParser(const cli::Args &args) {
 
     parse(args);
 
-    cli::sanitize(argument_data_.tournament_config);
-
-    cli::sanitize(argument_data_.configs);
+    sanitize(argument_data_.tournament_config);
+    sanitize(argument_data_.configs);
 }
 
 }  // namespace fastshogi::cli

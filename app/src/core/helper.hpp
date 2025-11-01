@@ -70,4 +70,5 @@ template <typename T>
     // remove delimiter at the end
     return result.substr(0, result.size() - delimiter.size());
 }
+
 }  // namespace fastshogi::str_utils

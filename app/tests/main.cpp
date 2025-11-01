@@ -2,7 +2,9 @@
 #include <doctest/doctest.hpp>
 
 namespace fastshogi {
-const char* version = "tests ";
+
+const char* version = "tests";
+
 }
 
 int main(int argc, char** argv) {

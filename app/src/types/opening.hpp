@@ -14,6 +14,7 @@ struct Opening {
     int plies         = -1;
     int start         = 1;
 };
+
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Opening, file, format, order, plies, start)
 
 }  // namespace fastshogi::config

@@ -10,12 +10,14 @@
 namespace fastshogi::pgn {
 
 namespace str {
+
 template <typename T>
 std::string to_string(const T &obj) {
     std::stringstream ss;
     ss << obj;
     return ss.str();
 }
+
 }  // namespace str
 
 PgnBuilder::PgnBuilder(const config::Pgn &pgn_config, const MatchData &match, std::size_t round_id)

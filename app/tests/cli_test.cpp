@@ -1,5 +1,6 @@
 #include <cli/cli.hpp>
 #include <cli/cli_args.hpp>
+#include <types/exception.hpp>
 
 #include <doctest/doctest.hpp>
 
@@ -21,7 +22,7 @@ TEST_SUITE("Option Parsing Tests") {
             "tc=1:9.65+0.1",
         };
 
-        CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; cannot use tc and st together!", std::runtime_error);
+        CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; cannot use tc and st together!", fastshogi_exception);
     }
 
     TEST_CASE("Should throw no timecontrol specified") {
@@ -37,7 +38,7 @@ TEST_SUITE("Option Parsing Tests") {
             "name=Alexandria-27E42728",
         };
 
-        CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; no TimeControl specified!", std::runtime_error);
+        CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; no TimeControl specified!", fastshogi_exception);
     }
 
     TEST_CASE("Should throw error too much concurrency") {
@@ -49,7 +50,7 @@ TEST_SUITE("Option Parsing Tests") {
 
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args},
                              "Error: Concurrency exceeds number of CPUs. Use -force-concurrency to override.",
-                             std::runtime_error);
+                             fastshogi_exception);
     }
 
     TEST_CASE("Should throw too many games") {
@@ -58,7 +59,7 @@ TEST_SUITE("Option Parsing Tests") {
         };
 
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error: Exceeded -game limit! Must be less than 2",
-                             std::runtime_error);
+                             fastshogi_exception);
     }
 
     TEST_CASE("Should throw invalid sprt config") {
@@ -66,7 +67,7 @@ TEST_SUITE("Option Parsing Tests") {
             "fastshogi.exe", "-sprt", "alpha=0.05", "beta=0.05", "elo0=5", "elo1=-1.5", "model=bayesian",
         };
 
-        CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; SPRT: elo0 must be less than elo1!", std::runtime_error);
+        CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; SPRT: elo0 must be less than elo1!", fastshogi_exception);
     }
 
     TEST_CASE("Should throw invalid sprt config 2") {
@@ -75,7 +76,7 @@ TEST_SUITE("Option Parsing Tests") {
         };
 
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; SPRT: sum of alpha and beta must be less than 1!",
-                             std::runtime_error);
+                             fastshogi_exception);
     }
 
     TEST_CASE("Should throw invalid sprt config 3") {
@@ -83,7 +84,7 @@ TEST_SUITE("Option Parsing Tests") {
             "fastshogi.exe", "-sprt", "alpha=0.05", "beta=0.05", "elo0=4", "elo1=5", "model=dsadsa",
         };
 
-        CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; SPRT: invalid SPRT model!", std::runtime_error);
+        CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; SPRT: invalid SPRT model!", fastshogi_exception);
     }
 
     TEST_CASE("Should throw invalid sprt config 4") {
@@ -92,7 +93,7 @@ TEST_SUITE("Option Parsing Tests") {
         };
 
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; SPRT: alpha must be a decimal number between 0 and 1!",
-                             std::runtime_error);
+                             fastshogi_exception);
     }
 
     TEST_CASE("Should throw invalid sprt config 5") {
@@ -101,7 +102,7 @@ TEST_SUITE("Option Parsing Tests") {
         };
 
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; SPRT: beta must be a decimal number between 0 and 1!",
-                             std::runtime_error);
+                             fastshogi_exception);
     }
 
     TEST_CASE("Should throw not enough engines") {
@@ -110,7 +111,7 @@ TEST_SUITE("Option Parsing Tests") {
         };
 
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error: Need at least two engines to start!",
-                             std::runtime_error);
+                             fastshogi_exception);
     }
 
     TEST_CASE("Should throw no engine name") {
@@ -121,7 +122,7 @@ TEST_SUITE("Option Parsing Tests") {
         };
 
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; please specify a name for each engine!",
-                             std::runtime_error);
+                             fastshogi_exception);
     }
 
     TEST_CASE("Should throw invalid tc") {
@@ -138,7 +139,7 @@ TEST_SUITE("Option Parsing Tests") {
             "tc=0+0",
         };
 
-        CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; no TimeControl specified!", std::runtime_error);
+        CHECK_THROWS_WITH_AS(cli::OptionsParser{args}, "Error; no TimeControl specified!", fastshogi_exception);
     }
 
     TEST_CASE("Should throw engine with same name") {
@@ -158,7 +159,7 @@ TEST_SUITE("Option Parsing Tests") {
 
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args},
                              "Error: Engine with the same name are not allowed!: Alexandria-EA649FED",
-                             std::runtime_error);
+                             fastshogi_exception);
     }
 
     TEST_CASE("Should throw engine with invalid restart") {
@@ -180,7 +181,7 @@ TEST_SUITE("Option Parsing Tests") {
         CHECK_THROWS_WITH_AS(cli::OptionsParser{args},
                              "Error while reading option \"-engine\" with value \"name=Alexandria-EA649FED\"\nReason: "
                              "Invalid parameter (must be either \"on\" or \"off\"): true",
-                             std::runtime_error);
+                             fastshogi_exception);
     }
 
     TEST_CASE("General Config Parsing") {

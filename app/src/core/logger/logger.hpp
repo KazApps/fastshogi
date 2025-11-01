@@ -162,4 +162,5 @@ label, time, thread_id, message
 #define LOG_INFO_THREAD(...) Logger::info<true>(__VA_ARGS__)
 #define LOG_ERR_THREAD(...) Logger::err<true>(__VA_ARGS__)
 #define LOG_FATAL_THREAD(...) Logger::fatal<true>(__VA_ARGS__)
+
 }  // namespace fastshogi

@@ -11,6 +11,7 @@ struct ResignAdjudication {
 
     bool enabled = false;
 };
+
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(ResignAdjudication, move_count, score, twosided, enabled)
 
 }  // namespace fastshogi::config
