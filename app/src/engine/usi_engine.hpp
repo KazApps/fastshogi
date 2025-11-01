@@ -102,10 +102,10 @@ class UsiEngine {
     // Get the bestmove from the last output.
     [[nodiscard]] std::optional<std::string> bestmove() const;
 
-    [[nodiscard]] std::string lastInfoLine(bool exact = true) const;
+    [[nodiscard]] std::string lastInfoLine() const;
 
     // Get the last info from the last output.
-    [[nodiscard]] std::vector<std::string> lastInfo(bool exact = true) const;
+    [[nodiscard]] std::vector<std::string> lastInfo() const;
 
     // Get the last score type from the last output. cp or mate.
     [[nodiscard]] ScoreType lastScoreType() const;
