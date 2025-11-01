@@ -34,7 +34,7 @@ TEST_SUITE("Usi Engine Communication Tests") {
 
         engine::UsiEngine usi_engine = engine::UsiEngine(config, false);
 
-        CHECK(usi_engine.start());
+        CHECK(usi_engine.start(/*cpus*/ std::nullopt));
 
         for (const auto& line : usi_engine.output()) {
             std::cout << line.line << std::endl;
@@ -63,7 +63,7 @@ TEST_SUITE("Usi Engine Communication Tests") {
 
         engine::UsiEngine usi_engine = engine::UsiEngine(config, false);
 
-        CHECK(usi_engine.start());
+        CHECK(usi_engine.start(/*cpus*/ std::nullopt));
 
         for (const auto& line : usi_engine.output()) {
             std::cout << line.line << std::endl;
@@ -86,7 +86,7 @@ TEST_SUITE("Usi Engine Communication Tests") {
 
         engine::UsiEngine usi_engine = engine::UsiEngine(config, false);
 
-        CHECK(usi_engine.start());
+        CHECK(usi_engine.start(/*cpus*/ std::nullopt));
 
         CHECK(usi_engine.output().size() == 11);
         CHECK(usi_engine.output()[0].line == "argv[1]: arg1");
@@ -128,7 +128,7 @@ TEST_SUITE("Usi Engine Communication Tests") {
 
         engine::UsiEngine usi_engine = engine::UsiEngine(config, false);
 
-        CHECK(usi_engine.start());
+        CHECK(usi_engine.start(/*cpus*/ std::nullopt));
 
         CHECK(usi_engine.writeEngine("usi"));
         const auto res = usi_engine.readEngine("usiok");
@@ -169,7 +169,7 @@ TEST_SUITE("Usi Engine Communication Tests") {
 
         std::unique_ptr<engine::UsiEngine> usi_engine = std::make_unique<MockUsiEngine>(config, false);
 
-        CHECK(usi_engine->start());
+        CHECK(usi_engine->start(/*cpus*/ std::nullopt));
 
         CHECK(usi_engine->writeEngine("usi"));
         const auto res = usi_engine->readEngine("usiok");
@@ -187,7 +187,7 @@ TEST_SUITE("Usi Engine Communication Tests") {
 
         usi_engine = std::make_unique<MockUsiEngine>(config, false);
 
-        CHECK(usi_engine->start());
+        CHECK(usi_engine->start(/*cpus*/ std::nullopt));
 
         CHECK(usi_engine->writeEngine("usi"));
         const auto res2 = usi_engine->readEngine("usiok");
@@ -210,7 +210,7 @@ TEST_SUITE("Usi Engine Communication Tests") {
 
         std::unique_ptr<engine::UsiEngine> usi_engine = std::make_unique<MockUsiEngine>(config, false);
 
-        CHECK(usi_engine->start());
+        CHECK(usi_engine->start(/*cpus*/ std::nullopt));
 
         CHECK(usi_engine->writeEngine("usi"));
         const auto res = usi_engine->readEngine("usiok");
@@ -228,7 +228,7 @@ TEST_SUITE("Usi Engine Communication Tests") {
 
         usi_engine = std::make_unique<MockUsiEngine>(config, false);
 
-        CHECK(usi_engine->start());
+        CHECK(usi_engine->start(/*cpus*/ std::nullopt));
 
         CHECK(usi_engine->writeEngine("usi"));
         const auto res2 = usi_engine->readEngine("usiok");
@@ -256,7 +256,7 @@ TEST_SUITE("Usi Engine Communication Tests") {
 
         std::unique_ptr<engine::UsiEngine> usi_engine = std::make_unique<MockUsiEngine>(config, false);
 
-        CHECK(usi_engine->start());
+        CHECK(usi_engine->start(/*cpus*/ std::nullopt));
 
         CHECK(usi_engine->refreshUsi());
         const auto res = usi_engine->readEngine("option set: setoption name MultiPV value 3");

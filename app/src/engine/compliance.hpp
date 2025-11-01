@@ -61,7 +61,7 @@ inline bool compliant(int argc, char const *argv[]) {
     UsiEngine usi_engine(config, false);
 
     std::vector<std::pair<std::string, std::function<bool()>>> steps = {
-        {"Start the engine", [&usi_engine] { return usi_engine.start().has_value(); }},
+        {"Start the engine", [&usi_engine] { return usi_engine.start(/*cpus*/ std::nullopt).has_value(); }},
         {"Check if engine is ready", [&usi_engine] { return usi_engine.isready() == process::Status::OK; }},
         {"Check id name", [&usi_engine] { return usi_engine.idName().has_value(); }},
         {"Check id author", [&usi_engine] { return usi_engine.idAuthor().has_value(); }},

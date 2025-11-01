@@ -33,7 +33,7 @@ class UsiEngine {
 
     // Starts the engine, does nothing after the first call.
     // Returns false if the engine is not alive.
-    [[nodiscard]] tl::expected<bool, std::string> start();
+    [[nodiscard]] tl::expected<bool, std::string> start(const std::optional<std::vector<int>> &cpus);
 
     // Restarts the engine, if necessary and reapplies the options.
     bool refreshUsi();

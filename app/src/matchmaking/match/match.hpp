@@ -108,7 +108,7 @@ class Match {
     Match(const book::Opening& opening);
 
     // starts the match
-    void start(engine::UsiEngine& white, engine::UsiEngine& black);
+    void start(engine::UsiEngine& white, engine::UsiEngine& black, std::optional<std::vector<int>>& cpus);
 
     // returns the match data, only valid after the match has finished
     [[nodiscard]] const MatchData& get() const { return data_; }
