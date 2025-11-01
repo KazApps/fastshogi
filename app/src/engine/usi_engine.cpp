@@ -368,6 +368,11 @@ std::string UsiEngine::lastInfoLine() const {
     for (auto it = output_.rbegin(); it != output_.rend(); ++it) {
         const auto &line = it->line;
 
+        // skip "info string" lines
+        if (line.find("info string") != std::string::npos) {
+            continue;
+        }
+
         // only consider info lines with score and (multipv 1 if present)
         if (line.find("info") == std::string::npos || line.find(" score ") == std::string::npos ||
             (line.find(" multipv ") != std::string::npos && line.find(" multipv 1") == std::string::npos)) {
@@ -435,6 +440,11 @@ std::chrono::milliseconds UsiEngine::lastTime() const {
 
     for (auto it = output_.rbegin(); it != output_.rend(); ++it) {
         const auto &line = it->line;
+
+        // skip "info string" lines
+        if (line.find("info string") != std::string::npos) {
+            continue;
+        }
 
         if (line.find("info") == std::string::npos || line.find("time") == std::string::npos) {
             continue;

@@ -54,8 +54,7 @@ inline bool compliant(int argc, char const *argv[]) {
             std::cerr << "\r\033[1;31m Failed\033[0m Step " << step << ": " << description << std::endl;
             std::cerr << "\033[1;33m Your engine's output was:\033[0m" << std::endl;
 
-            for (const auto &line : usi_engine.lastOutput())
-                std::cerr << " " << line.line << std::endl;
+            for (const auto &line : usi_engine.lastOutput()) std::cerr << " " << line.line << std::endl;
 
             return false;
         }
