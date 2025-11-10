@@ -250,6 +250,7 @@ void UsiEngine::loadConfig(const EngineConfiguration &config) { config_ = config
 void UsiEngine::quit() {
     if (!initialized_) return;
     LOG_TRACE_THREAD("Sending quit to engine {}", config_.name);
+    writeEngine("stop");
     writeEngine("quit");
 }
 
